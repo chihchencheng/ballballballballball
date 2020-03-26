@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public abstract class GameObject {
@@ -15,6 +16,10 @@ public abstract class GameObject {
 		this.width = width;
 		this.height = height;
 		
+	}
+	
+	public void paint(Graphics g) {
+		g.drawImage(img,x,y,width,height,null);
 	}
 	
 
