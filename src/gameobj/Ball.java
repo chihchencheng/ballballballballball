@@ -11,12 +11,15 @@ import util.Global;
 
 public class Ball extends GameObject {
 	private int d;
+	private int a;
 
 	public Ball(String imgPath, int x, int y) {
-		super(imgPath, x, y, (int) (105 * Global.CHARACTER_SIZE_ADJ), (int) (105 * Global.CHARACTER_SIZE_ADJ));
+		super(imgPath, x, y, 
+			(int) (105 * Global.CHARACTER_SIZE_ADJ),
+			(int) (105 * Global.CHARACTER_SIZE_ADJ));
 		this.d = 4;
+		this.a=1;
 	}
-
 
 	public boolean isCollision(Ball ball) {
 		if (this.getLeft() > ball.getRight())
@@ -36,9 +39,9 @@ public class Ball extends GameObject {
 			this.y = 525;
 		} else if (this.y < 525) {
 			this.y += d;
+//			d+=a;
 		} 
 		return true;
-
 	}
 
 

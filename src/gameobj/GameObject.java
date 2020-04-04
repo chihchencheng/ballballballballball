@@ -68,6 +68,8 @@ public abstract class GameObject {
 	}
 
 	public void offset(int dx, int dy) {
+		this.x += dx;
+		this.y += dy;
 		this.left += dx;
 		this.right += dx;
 		this.top += dy;
@@ -98,6 +100,8 @@ public abstract class GameObject {
 			g.drawRect(this.x, this.y, this.width, this.height);
 			g.setColor(Color.black);
 
+		}else {
+			g.drawImage(img, this.x, this.y, this.width, this.height, null);
 		}
 
 	}
