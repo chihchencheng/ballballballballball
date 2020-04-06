@@ -1,6 +1,9 @@
 import javax.swing.JFrame;
 
+import controllers.ImageResourceController;
+import gameobj.Ball;
 import util.Global;
+import util.ImgPath;
 
 public class Main {
 
@@ -14,6 +17,7 @@ public class Main {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 
+		
 		long startTime = System.currentTimeMillis();
 		long passedUpdated = 0;
 		long lastRepaintTime = System.currentTimeMillis();
@@ -31,7 +35,7 @@ public class Main {
 				passedUpdated++;
 			}
 			if (currentTime - timer >= 1000) {
-				System.out.println("FPS: " + paintTimes);
+				Global.log("FPS: " + paintTimes);
 				paintTimes = 0;
 				timer = currentTime;
 			}
