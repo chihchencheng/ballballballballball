@@ -39,10 +39,10 @@ public class GameJPanel extends JPanel implements KeyListener, MouseCommandListe
 		sceneController.paint(g);
 	}
 
-	@Override // 印出trigTime可以知道當前滑鼠動作的毫秒數
+	@Override 
 	public void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
 		if (state != null && sceneController.getML() != null) {
-//          System.out.println("MouseState：" + state + " " + trigTime);
+
 			sceneController.getML().mouseTrig(e, state, trigTime);
 		}
 	}

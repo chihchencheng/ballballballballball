@@ -36,13 +36,13 @@ public class Main {
 		int paintTimes = 0;
 		long timer = System.currentTimeMillis();
 		while (true) {
-			long currentTime = System.currentTimeMillis();// 系統當前時間
-			long totalTime = currentTime - startTime;// 從開始到現在經過的時間
-			long targetTotalUpdated = totalTime / Global.MILLISEC_PER_UPDATE;// 開始到現在應該更新的次數
+			long currentTime = System.currentTimeMillis();
+			long totalTime = currentTime - startTime; 
+			long targetTotalUpdated = totalTime / Global.MILLISEC_PER_UPDATE;
 			// input
 			// input end
-			while (passedUpdated < targetTotalUpdated) {// 如果當前經過的次數小於實際應該要更新的次數
-				// update 更新追上當前次數
+			while (passedUpdated < targetTotalUpdated) {
+				
 				cs.update();
 				jp.update();
 				passedUpdated++;

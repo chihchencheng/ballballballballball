@@ -19,7 +19,7 @@ public class SceneController {
 			currentScene.sceneEnd();
 		}
 		currentScene = nextScene;
-		currentScene.sceneBegin(); // 要先呼叫SceneBegin才可以指定kl、ml
+		currentScene.sceneBegin(); // Need call SceneBegin first, then assign kl、ml
 		this.kl = currentScene.getKeyListener();
 		this.ml = currentScene.getMouseListener();
 	}

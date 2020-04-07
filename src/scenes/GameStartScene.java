@@ -11,7 +11,7 @@ import util.*;
 
 public class GameStartScene extends Scene {
 
-	// 設定本場景的mouseListener
+	// set up this scene mouseListener
 	public class MyMouseCommandListener implements MouseCommandListener {
 
 		@Override
@@ -128,7 +128,7 @@ public class GameStartScene extends Scene {
 
 	}
 
-	// 設定讓每個場景都能取得該場景設定的Listener
+	// set up for each scene to get scene Listener
 	@Override
 	public CommandSolver.KeyListener getKeyListener() {
 		return null;
