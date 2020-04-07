@@ -1,7 +1,11 @@
+import java.awt.event.KeyEvent;
+
 import javax.swing.JFrame;
 
 import controllers.ImageResourceController;
 import gameobj.Ball;
+import util.CommandSolver;
+import util.CommandSolver.Builder;
 import util.Global;
 import util.ImgPath;
 
@@ -17,6 +21,14 @@ public class Main {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 
+		CommandSolver cs = new CommandSolver.Builder(jp, Global.MILLISEC_PER_UPDATE,
+			new int[][] {
+			{KeyEvent.VK_UP},
+			{KeyEvent.VK_DOWN},
+			{KeyEvent.VK_LEFT},
+			{KeyEvent.VK_RIGHT},
+			}).enableMouseTrack(jp).keyTypedMode().trackChar().gen();
+			cs.start();
 		
 		long startTime = System.currentTimeMillis();
 		long passedUpdated = 0;
@@ -31,6 +43,7 @@ public class Main {
 			// input end
 			while (passedUpdated < targetTotalUpdated) {// 如果當前經過的次數小於實際應該要更新的次數
 				// update 更新追上當前次數
+				cs.update();
 				jp.update();
 				passedUpdated++;
 			}

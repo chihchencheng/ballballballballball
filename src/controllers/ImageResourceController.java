@@ -30,6 +30,7 @@ public class ImageResourceController {
 		imgPairs = new ArrayList<>();
 	}// for unable to create a new
 
+	// 讓外部取得唯一實體的方法
 	public static ImageResourceController getInstance() {
 		if (irc == null) {
 			irc = new ImageResourceController();
@@ -47,15 +48,28 @@ public class ImageResourceController {
 
 	private BufferedImage addImage(String path) {
 		try {
-			if(Global.IS_DEBUG) {
-				System.out.println("load img from:"+path);
+			if (Global.IS_DEBUG) {
+				Global.log("load img from:" + path);
 			}
 			BufferedImage img = ImageIO.read(getClass().getResource(path));
-			imgPairs.add(new KeyPair(path,img));
+			imgPairs.add(new KeyPair(path, img));
 			return img;
 		} catch (IOException e) {
 		}
 		return null;
+	}
+
+	public void tryRemoveImg(String path) {
+		for (int i = 0; i < imgPairs.size(); i++) {
+			if (imgPairs.get(i).path.equals(path)) {
+				imgPairs.remove(i);
+				i--;
+			}
+		}
+	}
+
+	public String getPath(int index) {
+		return imgPairs.get(index).path;
 	}
 
 	private KeyPair findKeyPair(String path) {
@@ -66,6 +80,10 @@ public class ImageResourceController {
 			}
 		}
 		return null;
+	}
+
+	public int length() {
+		return imgPairs.size();
 	}
 
 }
