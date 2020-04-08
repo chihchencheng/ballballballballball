@@ -15,9 +15,10 @@ public class Main {
 		JFrame f = new JFrame();
 		GameJPanel jp = new GameJPanel();
 		f.setTitle("Game test");
-		f.setSize(Global.FRAME_X, Global.FRAME_Y);
+		f.setSize((int)(Global.FRAME_X*Global.CHARACTER_SIZE_ADJ),
+				(int)(Global.FRAME_Y*Global.CHARACTER_SIZE_ADJ));
 		f.add(jp);
-//		f.setResizable(false);
+		f.setResizable(false);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 

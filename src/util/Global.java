@@ -9,8 +9,8 @@ public class Global {
 			System.out.println(str);
 		}
 	}
-
-	public static final int FRAME_X = 1608 + 8 + 8;
+	
+	public static final int FRAME_X = 1608 + 8 + 8;//
 	public static final int FRAME_Y = 828 + 31 + 8;//
 	public static final int SCREEN_X = FRAME_X - 8 - 8;
 	public static final int SCREEN_Y = FRAME_Y - 31 - 8;
@@ -25,7 +25,7 @@ public class Global {
 	public static final int FRAME_LIMIT = 60;
 	public static final long LIMIT_DELTA_TIME = 1000 / FRAME_LIMIT;
 	
-	// ¤è¦V
+	// 
     public static final int DOWN = 0;
     public static final int LEFT = 1;
     public static final int RIGHT = 2;
