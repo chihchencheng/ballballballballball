@@ -3,14 +3,14 @@ package gameobj;
 import java.awt.Graphics;
 
 import util.Global;
-import util.ImgPath;
 
-public class GameMainScene extends GameObject {
+public class Number extends GameObject {
 	
-	public GameMainScene() {
-		super(ImgPath.GAMESTART,0,0,
-			(int)(Global.FRAME_X*Global.CHARACTER_SIZE_ADJ),
-			(int)(Global.FRAME_Y*Global.CHARACTER_SIZE_ADJ));//1608, 828
+	public Number(String imgPath, int x, int y, int width, int height) {
+		super(imgPath,x,y,width,height);
+	}
+	public Number(String imgPath) {
+		super(imgPath);
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class GameMainScene extends GameObject {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-//		g.drawImage(img, 0, 0, 1608, 828, null);
+		// TODO Auto-generated method stub
 
 	}
 

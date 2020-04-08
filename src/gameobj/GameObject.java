@@ -30,11 +30,15 @@ public abstract class GameObject {
 		this.height = height;
 
 	}// end of constructor
-	
-	public GameObject() {
-		
+
+	public GameObject(String imgPath) {
+		this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
 	}
-	
+
+	public GameObject() {
+
+	}
+
 	public void setX(int x) {
 		this.x = x;
 	}
@@ -46,7 +50,7 @@ public abstract class GameObject {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+
 	public int getY() {
 		return this.y;
 	}
@@ -95,6 +99,10 @@ public abstract class GameObject {
 			return false;
 		return true;
 	}
+	
+	public BufferedImage getImg() {
+		return this.img;
+	}
 
 	public abstract void update();
 
@@ -108,7 +116,7 @@ public abstract class GameObject {
 			g.drawRect(this.x, this.y, this.width, this.height);
 			g.setColor(Color.black);
 
-		}else {
+		} else {
 			g.drawImage(img, this.x, this.y, this.width, this.height, null);
 		}
 

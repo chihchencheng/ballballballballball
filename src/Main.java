@@ -17,7 +17,7 @@ public class Main {
 		f.setTitle("Game test");
 		f.setSize(Global.FRAME_X, Global.FRAME_Y);
 		f.add(jp);
-		f.setResizable(false);
+//		f.setResizable(false);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 

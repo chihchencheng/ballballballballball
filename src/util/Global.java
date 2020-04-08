@@ -10,8 +10,8 @@ public class Global {
 		}
 	}
 
-	public static final int FRAME_X = 1206 + 8 + 8;
-	public static final int FRAME_Y = 621 + 31 + 8;
+	public static final int FRAME_X = 1608 + 8 + 8;
+	public static final int FRAME_Y = 828 + 31 + 8;//
 	public static final int SCREEN_X = FRAME_X - 8 - 8;
 	public static final int SCREEN_Y = FRAME_Y - 31 - 8;
 
@@ -32,9 +32,11 @@ public class Global {
     public static final int UP = 3;
     
     //ball table max
-    public static final int LIMIT = 36;
+    public static final int LIMIT = 42;
     public static final int startPoint = 630;// for locate 1st ball x
 
+    //
+    
 	
 	public static int random(int min, int max) {
 		return (int) (Math.random() * (max - min + 1) + min);
