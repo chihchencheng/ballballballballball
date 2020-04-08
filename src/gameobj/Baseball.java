@@ -1,10 +1,11 @@
 package gameobj;
 
+import util.ImgPath;
+
 public class Baseball extends Ball {
 
 	public Baseball(int x, int y) {
-		super("/resources/Baseball.png", x, y);
-		// TODO Auto-generated constructor stub
+		super(ImgPath.BASEBALL, x, y);
 	}
 
 }

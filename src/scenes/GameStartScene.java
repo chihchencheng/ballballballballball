@@ -22,6 +22,7 @@ public class GameStartScene extends Scene {
 	}// end of inner class
 
 	private MyMouseCommandListener mmcl;
+	private GameMainScene background;
 	private ArrayList<Ball> balls;
 	private ArrayList<Rect> rects;
 	private int[] xs;
@@ -30,6 +31,7 @@ public class GameStartScene extends Scene {
 
 	public GameStartScene(SceneController sceneController) {
 		super(sceneController);
+		background = new GameMainScene();
 		sceneBegin();
 		this.mmcl = new MyMouseCommandListener();
 	}
@@ -79,13 +81,13 @@ public class GameStartScene extends Scene {
 
 	@Override
 	public void paint(Graphics g) {
+		background.paint(g);
 		for (int i = 0; i < rects.size(); i++) {
-
 			rects.get(i).paint(g);
 		}
 
 		for (int i = 0; i < balls.size(); i++) {
-			Global.log(balls.get(i).toString());
+//			Global.log(balls.get(i).toString());
 			balls.get(i).paint(g);
 
 		}
@@ -95,7 +97,7 @@ public class GameStartScene extends Scene {
 	private void genBalls() {
 		xs = new int[6];
 		for (int i = 0; i < 6; i++) {
-			xs[i] = i * (int) (Global.UNIT_X * Global.CHARACTER_SIZE_ADJ) + Global.startPoint;
+			xs[i] = i * (int) (Global.UNIT_X * Global.CHARACTER_SIZE_ADJ)+ i + Global.startPoint;
 		}
 		if (balls.size() < Global.LIMIT && delay.isTrig()) {//
 			int r = Global.random(0, 4);
@@ -122,10 +124,13 @@ public class GameStartScene extends Scene {
 	}
 
 	public void genRect() {
-		rects.add(new Rect(xs[1] + 5, 559));
-		rects.add(new Rect(xs[3] + 5, 559));
-		rects.add(new Rect(xs[5] + 5, 559));
-
+		for(int i =0;i<6;i++) {
+			if(i%2 == 0) {
+				rects.add(new Rect(xs[i] + 5 , 540));
+			}else {
+				rects.add(new Rect(xs[i] + 5 , 500));
+			}
+		}
 	}
 
 	// set up for each scene to get scene Listener

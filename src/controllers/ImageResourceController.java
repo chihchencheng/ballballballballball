@@ -30,7 +30,7 @@ public class ImageResourceController {
 		imgPairs = new ArrayList<>();
 	}// for unable to create a new
 
-	// 讓外部取得唯一實體的方法
+	// the only method to get the only object
 	public static ImageResourceController getInstance() {
 		if (irc == null) {
 			irc = new ImageResourceController();

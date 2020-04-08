@@ -32,8 +32,8 @@ public class Global {
     public static final int UP = 3;
     
     //ball table max
-    public static final int LIMIT = 42;
-    public static final int startPoint = 603;// for locate 1st ball x
+    public static final int LIMIT = 36;
+    public static final int startPoint = 630;// for locate 1st ball x
 
 	
 	public static int random(int min, int max) {
