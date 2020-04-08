@@ -20,7 +20,7 @@ public abstract class Scene {
 
 	public abstract void paint(Graphics g);
 
-	// 設定讓每個場景都能取得該場景設定的Listener
+	// 
 	public abstract KeyListener getKeyListener();
 
 	public abstract MouseCommandListener getMouseListener();

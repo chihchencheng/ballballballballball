@@ -19,7 +19,7 @@ public class SceneController {
 			currentScene.sceneEnd();
 		}
 		currentScene = nextScene;
-		currentScene.sceneBegin(); // Need call SceneBegin first, then assign kl¡Bml
+		currentScene.sceneBegin(); // 
 		this.kl = currentScene.getKeyListener();
 		this.ml = currentScene.getMouseListener();
 	}

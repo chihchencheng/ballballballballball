@@ -13,17 +13,17 @@ import util.ImgPath;
 public class Renderer {
 
 //    private BufferedImage img;// ball icon
-//    private int characterIndex;// 角色編號
+//    private int characterIndex;// 
 //    
-//    // 動作控制
+//    // 
 //    private int currentStep;
 //    private int stepIndex;
 //    private int[] steps;
-//    // 動作控制 end
+//    // 
 //   
-//    // 動畫Delay
+//    // 
 //    private Delay delay;
-//    // 動畫Delay end
+//    // 
 //    
 //    public Renderer(int characterIndex, int[] steps, int delay){
 //        img = ImageResourceController.getInstance().tryGetImage(ImgPath.BASEBALL);

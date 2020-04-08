@@ -20,10 +20,10 @@ public class ImageResourceController {
 		}
 	}// end of inner class
 
-	// ³æ¨Ò
+	// 
 	private static ImageResourceController irc;
 
-	// ¤º®e
+	// 
 	private ArrayList<KeyPair> imgPairs;
 
 	private ImageResourceController() {

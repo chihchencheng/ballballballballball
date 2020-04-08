@@ -127,9 +127,9 @@ public class CommandSolver extends Thread {
 		private char currentChar;
 		// add @ 20191018 end
 
-		private boolean clear;// 是否在更新時清除上一幀指令
-		private boolean isKeyDeletion;// 更新時連鍵值都完整清除(不會觸發released)
-		private final Map<Integer, Byte> keyMap;// input to command
+		private boolean clear;// 
+		private boolean isKeyDeletion;// 
+		private final Map<Integer, Byte> keyMap;// 
 		private Map<Byte, Boolean> pressedMap;// command pressed/released
 
 		public CommandConverter(boolean clear, boolean isKeyDeletion, boolean isTrackChar) {
@@ -282,14 +282,14 @@ public class CommandSolver extends Thread {
 			currentState = state;
 		}
 
-		// 將當前的指令存入recorder並刷新(滑鼠暫時不刷新)指令集
+		// 
 		private void record(long time) {
 			recorder.add(new MouseData(currentEvent, currentState, time));
 			currentEvent = null;
 			currentState = null;
 		}
 
-		// 遊戲更新取得對應的指令
+		// 
 		public MouseData update() {
 			if (recorder.hasNext()) {
 				return recorder.next();
@@ -346,34 +346,34 @@ public class CommandSolver extends Thread {
 	}
 
 	private static class KeyTracker {
-		// 自定義行為列表
+		// 
 
 		private CommandConverter commandList;
-		// 紀錄每一次更新時的按鍵行為
+		// 
 		private CommandRecorder<KeyData> recorder;
 
-		// 導入行為列表
+		// 
 		private KeyTracker(boolean clear, boolean isKeyDeletion, boolean isTrackChar) {
 			commandList = new CommandConverter(clear, isKeyDeletion, isTrackChar);
 			recorder = new CommandRecorder<>();
 		}
 
-		// 新增自定義按鍵以及對應的指令 => 用於不同種類的input設定
+		// 
 		public void add(int key, int command) {
 			commandList.addKeyPair(key, command);
 		}
 
-		// 通過自定義按鍵去指定對應指令狀態
+		// 
 		public void trig(int key, boolean isPressed) {
 			commandList.updateCommandByKey(key, isPressed);
 		}
 
-		// 將當前的指令存入recorder並刷新指令集
+		// 
 		public void record(long time) {
 			recorder.add(commandList.release(time));
 		}
 
-		// 遊戲更新取得對應的指令
+		// 
 		public KeyData update() {
 			if (recorder.hasNext()) {
 				return recorder.next();
