@@ -1,10 +1,11 @@
 package gameobj;
 
+import util.ImgPath;
+
 public class Cheerball extends Ball {
 
 	public Cheerball(int x, int y) {
-		super("/resources/Cheerball.png", x, y);
-		// TODO Auto-generated constructor stub
+		super(ImgPath.CHEERBALL, x, y);
 	}
 
 }

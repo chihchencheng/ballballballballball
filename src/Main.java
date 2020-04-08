@@ -1,6 +1,13 @@
+import java.awt.event.KeyEvent;
+
 import javax.swing.JFrame;
 
+import controllers.ImageResourceController;
+import gameobj.Ball;
+import util.CommandSolver;
+import util.CommandSolver.Builder;
 import util.Global;
+import util.ImgPath;
 
 public class Main {
 
@@ -14,24 +21,34 @@ public class Main {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 
+		CommandSolver cs = new CommandSolver.Builder(jp, Global.MILLISEC_PER_UPDATE,
+			new int[][] {
+			{KeyEvent.VK_UP},
+			{KeyEvent.VK_DOWN},
+			{KeyEvent.VK_LEFT},
+			{KeyEvent.VK_RIGHT},
+			}).enableMouseTrack(jp).keyTypedMode().trackChar().gen();
+			cs.start();
+		
 		long startTime = System.currentTimeMillis();
 		long passedUpdated = 0;
 		long lastRepaintTime = System.currentTimeMillis();
 		int paintTimes = 0;
 		long timer = System.currentTimeMillis();
 		while (true) {
-			long currentTime = System.currentTimeMillis();// 系統當前時間
-			long totalTime = currentTime - startTime;// 從開始到現在經過的時間
-			long targetTotalUpdated = totalTime / Global.MILLISEC_PER_UPDATE;// 開始到現在應該更新的次數
+			long currentTime = System.currentTimeMillis();
+			long totalTime = currentTime - startTime; 
+			long targetTotalUpdated = totalTime / Global.MILLISEC_PER_UPDATE;
 			// input
 			// input end
-			while (passedUpdated < targetTotalUpdated) {// 如果當前經過的次數小於實際應該要更新的次數
-				// update 更新追上當前次數
+			while (passedUpdated < targetTotalUpdated) {
+				
+				cs.update();
 				jp.update();
 				passedUpdated++;
 			}
 			if (currentTime - timer >= 1000) {
-				System.out.println("FPS: " + paintTimes);
+				Global.log("FPS: " + paintTimes);
 				paintTimes = 0;
 				timer = currentTime;
 			}

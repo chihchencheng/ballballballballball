@@ -24,7 +24,18 @@ public class Global {
 
 	public static final int FRAME_LIMIT = 60;
 	public static final long LIMIT_DELTA_TIME = 1000 / FRAME_LIMIT;
+	
+	// ¤è¦V
+    public static final int DOWN = 0;
+    public static final int LEFT = 1;
+    public static final int RIGHT = 2;
+    public static final int UP = 3;
+    
+    //ball table max
+    public static final int LIMIT = 36;
+    public static final int startPoint = 630;// for locate 1st ball x
 
+	
 	public static int random(int min, int max) {
 		return (int) (Math.random() * (max - min + 1) + min);
 	}

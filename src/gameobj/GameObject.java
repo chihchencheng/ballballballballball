@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import controllers.ImageResourceController;
 import graph.Rect;
 import util.Global;
 
@@ -22,23 +23,30 @@ public abstract class GameObject {
 	protected int bottom;
 
 	public GameObject(String imgPath, int x, int y, int width, int height) {
-		try {
-			this.img = ImageIO.read(getClass().getResource(imgPath));
-		} catch (IOException ex) {
-
-		}
-
+		this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 
 	}// end of constructor
+	
+	public GameObject() {
+		
+	}
+	
+	public void setX(int x) {
+		this.x = x;
+	}
 
 	public int getX() {
 		return this.x;
 	}
 
+	public void setY(int y) {
+		this.y = y;
+	}
+	
 	public int getY() {
 		return this.y;
 	}

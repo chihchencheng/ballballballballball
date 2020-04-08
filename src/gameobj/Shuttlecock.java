@@ -1,10 +1,11 @@
 package gameobj;
 
+import util.ImgPath;
+
 public class Shuttlecock extends Ball {
 
 	public Shuttlecock(int x, int y) {
-		super("/resources/Shuttlecock.png", x, y);
-		// TODO Auto-generated constructor stub
+		super(ImgPath.SHUTTLECOCK, x, y);
 	}
 
 }

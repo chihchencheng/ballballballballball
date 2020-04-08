@@ -1,76 +1,72 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import controllers.ImageResourceController;
+import controllers.SceneController;
 import gameobj.*;
+import scenes.*;
 import util.*;
+import util.CommandSolver.KeyListener;
+import util.CommandSolver.MouseCommandListener;
 
-public class GameJPanel extends JPanel {
-	public static final int LIMIT = 42;
-
-	class MyListener extends MouseAdapter {
-		@Override
-		public void mouseMoved(MouseEvent e) {
-
-		}
-	}// end of inner class
-
-	private ArrayList<Ball> balls;
+public class GameJPanel extends JPanel implements KeyListener, MouseCommandListener {
+	private SceneController sceneController;
+	private Scene scene;
 	private Delay delay;
 
 	public GameJPanel() {
-		balls = new ArrayList<Ball>();
-		delay = new Delay(120);
-		delay.start();
-		this.addMouseMotionListener(new MyListener());
+		sceneController = new SceneController();
+		sceneController.changeScene(new GameStartScene(sceneController));
+
 	}// end of constructor
 
 	public void update() {
+//		if(delay.isTrig()) {
+//			scene = new SecondScene(sceneController);
+//		sceneController.changeScene(new GameStartScene(sceneController));
+//			sceneController.changeScene(scene);
+//			delay.stop();
+//		}
+		sceneController.update();
+	}
 
-		if (balls.size() < LIMIT) {// && delay.isTrig()
-			int r = Global.random(0, 4);
-			int[] x = { 603, 689, 775, 861, 947, 1033 };
-			switch (r) {
-			case 0:
-				balls.add(new Volleyball(x[balls.size() % 6], 0));
-				break;
-			case 1:
-				balls.add(new Basketball(x[balls.size() % 6], 0));
-				break;
-			case 2:
-				balls.add(new Baseball(x[balls.size() % 6], 0));
-				break;
-			case 3:
-				balls.add(new Cheerball(x[balls.size() % 6], 0));
-				break;
-			case 4:
-				balls.add(new Shuttlecock(x[balls.size() % 6], 0));
-				break;
-			}
+	@Override
+	public void paintComponent(Graphics g) {
+		sceneController.paint(g);
+	}
+
+	@Override 
+	public void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
+		if (state != null && sceneController.getML() != null) {
+
+			sceneController.getML().mouseTrig(e, state, trigTime);
+		}
+	}
+
+	@Override
+	public void keyPressed(int commandCode, long trigTime) {
+		if (sceneController.getKL() != null) {
+			sceneController.getKL().keyPressed(commandCode, trigTime);
+		}
+	}
+
+	@Override
+	public void keyReleased(int commandCode, long trigTime) {
+		if (sceneController.getKL() != null) {
+			sceneController.getKL().keyReleased(commandCode, trigTime);
 		}
 
-		for (int i = 0; i < balls.size(); i++) {
-			if (!balls.get(i).move()) {
-				balls.remove(i);
-				i--;
-			}
+	}
+
+	@Override
+	public void keyTyped(char c, long trigTime) {
+		if (sceneController.getKL() != null) {
+			sceneController.getKL().keyTyped(c, trigTime);
 		}
 
-		for (int i = 0; i < balls.size() - 6; i++) {
-			System.out.println();
-			if (balls.get(i + 6).isCollision(balls.get(i))) {
-				balls.get(i + 6).offset(0, -4);
-			}
-
-		}
-	}// end of update
-
-	public void paint(Graphics g) {
-		for (int i = 0; i < balls.size(); i++) {
-			balls.get(i).paint(g);
-
-		}
 	}
 }// end of class
