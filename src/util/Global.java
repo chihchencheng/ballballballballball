@@ -2,7 +2,7 @@ package util;
 
 public class Global {
 	// Debug Mode
-	public static final boolean IS_DEBUG = true;
+	public static final boolean IS_DEBUG = false;
 
 	public static void log(String str) {
 		if (IS_DEBUG) {
@@ -36,6 +36,7 @@ public class Global {
     public static final int startPoint = 630;// for locate 1st ball x
 
     //
+    public static final int SPEED = 4;
     
 	
 	public static int random(int min, int max) {

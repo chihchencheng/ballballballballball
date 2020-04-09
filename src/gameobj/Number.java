@@ -7,7 +7,7 @@ import util.Global;
 public class Number extends GameObject {
 	
 	public Number(String imgPath, int x, int y, int width, int height) {
-		super(imgPath,x,y,width,height);
+		super(imgPath,x,y,width,height,true);
 	}
 	public Number(String imgPath) {
 		super(imgPath);

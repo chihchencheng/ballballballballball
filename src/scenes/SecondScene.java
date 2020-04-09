@@ -8,7 +8,7 @@ import gameobj.Ball;
 import gameobj.Baseball;
 import gameobj.Basketball;
 import gameobj.Cheerball;
-import gameobj.Rect;
+//import gameobj.Rect;
 import gameobj.Shuttlecock;
 import gameobj.Volleyball;
 import util.CommandSolver.KeyListener;
@@ -17,7 +17,7 @@ import util.Delay;
 import util.Global;
 
 public class SecondScene extends Scene {
-
+	
 	private Delay delay;
 
 	public SecondScene(SceneController sceneController) {

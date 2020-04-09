@@ -13,21 +13,33 @@ import util.Global;
 
 public abstract class GameObject {
 	protected BufferedImage img;
-	protected int x;
-	protected int y;
-	protected int width;
-	protected int height;
-	protected int left;
-	protected int top;
-	protected int right;
-	protected int bottom;
+	private Rect collider;
+	protected Rect rect;
 
-	public GameObject(String imgPath, int x, int y, int width, int height) {
+	public GameObject(String imgPath,int x, int y, int width, int height, boolean isBindCollider) {
 		this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
+		this.rect = Rect.genWithXY(x, y, width, height);
+        if(isBindCollider){
+        	this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
+            this.collider = this.rect;
+        }else{
+            this.collider =  Rect.genWithXY(x, y, width, height);
+        }
+
+	}// end of constructor
+	
+	public GameObject(String imgPath,int x, int y, int width, int height,
+			int colliderW, int colliderH, boolean isBindCollider) {
+		
+		this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
+		this.rect = Rect.genWithXY(x, y, width, height);
+        if(isBindCollider){
+        	this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
+            this.rect = this.collider = Rect.genWithXY(x, y, colliderW, colliderH);
+            
+        }else{
+            this.collider =  Rect.genWithXY(x, y, colliderW, colliderH);
+        }
 
 	}// end of constructor
 
@@ -35,70 +47,60 @@ public abstract class GameObject {
 		this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
 	}
 
-	public GameObject() {
-
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
 
 	public int getX() {
-		return this.x;
-	}
-
-	public void setY(int y) {
-		this.y = y;
+		return this.rect.centerX();
 	}
 
 	public int getY() {
-		return this.y;
+		return this.rect.centerY();
 	}
 
-	public int getLeft() {
-		return this.x;
+	public int width() {
+		return this.rect.width();
 	}
 
-	public int getTop() {
-		return this.y;
-	}
-
-	public int getRight() {
-		return this.x + this.width;
-	}
-
-	public int getBottom() {
-		return this.y + this.height;
-	}
-
-	public int getWidth() {
-		return this.width;
-	}
-
-	public int getHeight() {
-		return this.height;
+	public int height() {
+		return this.rect.height();
 	}
 
 	public void offset(int dx, int dy) {
-		this.x += dx;
-		this.y += dy;
-		this.left += dx;
-		this.right += dx;
-		this.top += dy;
-		this.bottom += dy;
+		this.rect.offset(dx, dy);
+		this.collider.offset(dx, dy);
+	}
+
+	public void setX(int x) {
+		this.rect.offset(x - this.rect.centerX(), 0);
+		this.collider.offset(x - this.collider.centerX(), 0);
+	}
+
+	public void setY(int y) {
+		this.rect.offset(0, y - this.rect.centerY());
+		this.collider.offset(0, y - this.collider.centerY());
 	}
 
 	public boolean isCollision(GameObject obj) {
-		if (this.getLeft() > obj.getRight())
+		if (this.collider == null || obj.collider == null) {
 			return false;
-		if (this.getRight() < obj.getLeft())
-			return false;
-		if (this.getTop() > obj.getBottom())
-			return false;
-		if (this.getBottom() < obj.getTop())
-			return false;
-		return true;
+		}
+		return Rect.intersects(this.collider, obj.collider);
 	}
+	
+	public Rect collider() {
+		return this.collider;
+	}
+	
+//	public boolean isCollision(GameObject obj) {
+//		if (this.getLeft() > obj.getRight())
+//			return false;
+//		if (this.getRight() < obj.getLeft())
+//			return false;
+//		if (this.getTop() > obj.getBottom())
+//			return false;
+//		if (this.getBottom() < obj.getTop())
+//			return false;
+//		return true;
+//	}
 	
 	public BufferedImage getImg() {
 		return this.img;
@@ -110,15 +112,24 @@ public abstract class GameObject {
 
 	public void paint(Graphics g) {
 		paintComponent(g);
+		g.drawImage(img, this.rect.left(), this.rect.top(),this.rect.width(),this.rect.height(), null);
 		if (Global.IS_DEBUG) {
-			g.drawImage(img, this.x, this.y, this.width, this.height, null);
-			g.setColor(Color.RED);
-			g.drawRect(this.x, this.y, this.width, this.height);
-			g.setColor(Color.black);
+//			g.drawImage(img, this.x, this.y, this.width, this.height, null);
+//			g.setColor(Color.RED);
+//			g.drawRect(this.x, this.y, this.width, this.height);
+//			g.setColor(Color.black);
 
-		} else {
-			g.drawImage(img, this.x, this.y, this.width, this.height, null);
-		}
+
+			g.setColor(Color.RED);
+			g.drawRect(this.rect.left(), this.rect.top(), this.rect.width(), this.rect.height());
+			g.setColor(Color.BLUE);
+			g.drawRect(this.collider.left(), this.collider.top(), this.collider.width(), this.collider.height());
+			g.setColor(Color.BLACK);
+		} 
+//		else {
+////			g.drawImage(img, this.x, this.y, this.width, this.height, null);
+//			g.drawImage(img, this.rect.left(), this.rect.top(), null);
+//		}
 
 	}
 

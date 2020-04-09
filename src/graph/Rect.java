@@ -1,5 +1,9 @@
 package graph;
 
+import java.awt.Graphics;
+
+import util.Global;
+
 public class Rect {
 	private int left;
 	private int top;
@@ -12,11 +16,20 @@ public class Rect {
 		this.right = right;
 		this.bottom = bottom;
 	}
-
+	
 	public static Rect genWithCenter(int x, int y, int width, int height) {
 		int left = x - width / 2;
 		int right = left + width;
 		int top = y - height / 2;
+		int bottom = top + height;
+		return new Rect(left, top, right, bottom);
+	}
+	
+
+	public static Rect genWithXY(int x, int y, int width, int height) {
+		int left = x ;
+		int right = left + width;
+		int top = y ;
 		int bottom = top + height;
 		return new Rect(left, top, right, bottom);
 	}
@@ -102,5 +115,12 @@ public class Rect {
 
 	public int height() {
 		return this.bottom - this.top;
+	}
+	
+	public void paint(Graphics g) {
+		if(Global.IS_DEBUG) {
+			g.drawRect(left, top, width(), height());
+		}
+		
 	}
 }

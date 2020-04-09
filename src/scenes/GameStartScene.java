@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import controllers.*;
 import gameobj.*;
 import gameobj.Number;
+import graph.Rect;
 import util.CommandSolver.*;
 import util.*;
 
@@ -69,18 +70,30 @@ public class GameStartScene extends Scene {
 			}
 		}
 
+//		for (int i = 0; i < balls.size(); i++) {
+//			for (int j = 0; j < balls.size(); j++) {
+//				if (balls.get(j).isCollision(balls.get(i))) {
+//					balls.get(i).setSpeed(0);
+//				}
+//			}
+//		}
+		
 		for (int i = 0; i < balls.size(); i++) {
-			for (int j = 0; j < balls.size(); j++) {
-				if (rects.get(j).isCollision(balls.get(i))) {
-					balls.get(i).setSpeed(0);
-				}
+			if (balls.get(i).collider().intersects(
+					rects.get(i).left(),
+					rects.get(i).top(),
+					rects.get(i).right(),
+					rects.get(i).bottom())){
+				balls.get(i).setSpeed(0);
+				// balls.get(i + 6).offset(0, -4);
 			}
+
 		}
+		
 
 		for (int i = 0; i < balls.size() - 7; i++) {
 			if (balls.get(i + 7).isCollision(balls.get(i))) {
 				balls.get(i + 7).setSpeed(0);
-				// balls.get(i + 6).offset(0, -4);
 			}
 
 		}
@@ -105,17 +118,21 @@ public class GameStartScene extends Scene {
 	@Override
 	public void paint(Graphics g) {
 		background.paint(g);
-
-		for (int i = 0; i < numbers.size(); i++) {
-			numbers.get(i).paint(g);
-		}
-
+		
+		//會錯
+//		for (int i = 0; i < numbers.size(); i++) {
+//			numbers.get(i).paint(g);
+//		}
+//		System.out.println("3");
+		
+		
+//
 		for (int i = 0; i < rects.size(); i++) {
 			rects.get(i).paint(g);
 		}
 
+		
 		for (int i = 0; i < balls.size(); i++) {
-//			Global.log(balls.get(i).toString());
 			balls.get(i).paint(g);
 		}
 		
@@ -154,11 +171,15 @@ public class GameStartScene extends Scene {
 	}
 
 	public void genRect() {
+		int sizeX = (int)(Global.UNIT_X*Global.CHARACTER_SIZE_ADJ);
+		int sizeY = (int)(Global.UNIT_Y*Global.CHARACTER_SIZE_ADJ);
 		for (int i = 0; i < 7; i++) {
 			if (i % 2 == 0) {
-				rects.add(new Rect(xs[i] + 5, 540));
+				rects.add(new Rect(Global.startPoint+i*sizeX,540,
+								   Global.startPoint+i*sizeX+sizeX,550));
 			} else {
-				rects.add(new Rect(xs[i] + 5, 500));
+				rects.add(new Rect(Global.startPoint+i*sizeX,500,
+								   Global.startPoint+i*sizeX+sizeX,510));
 			}
 		}
 	}

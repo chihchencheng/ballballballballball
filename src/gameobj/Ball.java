@@ -12,55 +12,51 @@ import util.Global;
 
 public class Ball extends GameObject {
 	private int speed;
-	private int a;
 
 	public Ball(String imgPath, int x, int y) {
-		super(imgPath, x, y, 
-			(int) (105 * Global.CHARACTER_SIZE_ADJ),
-			(int) (105 * Global.CHARACTER_SIZE_ADJ));
+		super(imgPath, x, y, (int) (Global.UNIT_X * Global.CHARACTER_SIZE_ADJ),
+				(int) (Global.UNIT_Y * Global.CHARACTER_SIZE_ADJ),
+				(int) (Global.UNIT_X * Global.CHARACTER_SIZE_ADJ),
+				(int) (Global.UNIT_Y * Global.CHARACTER_SIZE_ADJ+2),
+				true);
 		this.speed = 4;
-		this.a = 1;
 	}
-	
 
 	public boolean isCollision(Ball ball) {
-		if (this.getLeft() > ball.getRight())
+		if (this.rect.left() > ball.rect.right())
 			return false;
-		if (this.getRight() < ball.getLeft())
+		if (this.rect.right() < ball.rect.left())
 			return false;
-		if (this.getTop() > ball.getBottom())
+		if (this.rect.top() > ball.rect.bottom())
 			return false;
-		if (this.getBottom() < ball.getTop())
+		if (this.rect.bottom() < ball.rect.top())
 			return false;
 		return true;
 	}
-	
+
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
-	
+
 	public int getSpeed() {
 		return this.speed;
 	}
 
 	@Override
 	public boolean move() {
-		if (this.y >= 525) {
-			this.y = 525;
-		} else if (this.y < 525) {
-			this.y += speed;
-//			d+=a;
-		} 
+		if (this.rect.top() >= 540) {
+			this.setSpeed(0);
+		} else if (this.rect.bottom() < 540) {
+			this.offset(0, speed);
+		}
+
 		return true;
 	}
 
-
 	@Override
 	protected void paintComponent(Graphics g) {
-	
-		
-	}
 
+	}
 
 	@Override
 	public void update() {
