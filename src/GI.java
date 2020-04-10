@@ -13,12 +13,12 @@ import util.*;
 import util.CommandSolver.KeyListener;
 import util.CommandSolver.MouseCommandListener;
 
-public class GameJPanel extends JPanel implements KeyListener, MouseCommandListener {
+public class GI extends JPanel implements KeyListener, MouseCommandListener ,GameKernel.GameInterface {
 	private SceneController sceneController;
 	private Scene scene;
 	private Delay delay;
 
-	public GameJPanel() {
+	public GI() {
 		sceneController = new SceneController();
 		sceneController.changeScene(new GameStartScene(sceneController));
 
@@ -35,7 +35,7 @@ public class GameJPanel extends JPanel implements KeyListener, MouseCommandListe
 	}
 
 	@Override
-	public void paintComponent(Graphics g) {
+	public void paint(Graphics g) {
 		sceneController.paint(g);
 	}
 

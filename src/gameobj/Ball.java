@@ -12,13 +12,16 @@ import util.Global;
 
 public class Ball extends GameObject {
 	private int speed;
+	private String name;
 
-	public Ball(String imgPath, int x, int y) {
-		super(imgPath, x, y, (int) (Global.UNIT_X * Global.CHARACTER_SIZE_ADJ),
+	public Ball(String imgPath,String name, int x, int y) {
+		super(imgPath, x, y, 
+				(int) (Global.UNIT_X * Global.CHARACTER_SIZE_ADJ),
 				(int) (Global.UNIT_Y * Global.CHARACTER_SIZE_ADJ),
 				(int) (Global.UNIT_X * Global.CHARACTER_SIZE_ADJ),
 				(int) (Global.UNIT_Y * Global.CHARACTER_SIZE_ADJ+2),
 				true);
+		this.name = name;
 		this.speed = 4;
 	}
 
@@ -41,12 +44,20 @@ public class Ball extends GameObject {
 	public int getSpeed() {
 		return this.speed;
 	}
+	
+	public Ball ball() {
+		return this;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
 
 	@Override
 	public boolean move() {
-		if (this.rect.top() >= 540) {
+		if (this.rect.top() >= Global.YendPoint) {
 			this.setSpeed(0);
-		} else if (this.rect.bottom() < 540) {
+		} else if (this.rect.bottom() < Global.YendPoint) {
 			this.offset(0, speed);
 		}
 

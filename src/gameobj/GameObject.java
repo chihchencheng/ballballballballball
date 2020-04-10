@@ -90,6 +90,10 @@ public abstract class GameObject {
 		return this.collider;
 	}
 	
+	public Rect rect() {
+		return this.rect;
+	}
+	
 //	public boolean isCollision(GameObject obj) {
 //		if (this.getLeft() > obj.getRight())
 //			return false;
