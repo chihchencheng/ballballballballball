@@ -75,7 +75,7 @@ public class ImageResourceController {
 	private KeyPair findKeyPair(String path) {
 		for (int i = 0; i < imgPairs.size(); i++) {
 			KeyPair pair = imgPairs.get(i);
-			if (pair.equals(path)) {
+			if (pair.path.equals(path)) {
 				return pair;
 			}
 		}

@@ -21,9 +21,9 @@ public class Main {
 			{KeyEvent.VK_LEFT},
 			{KeyEvent.VK_RIGHT},
 		};
-		GameKernel gk = new GameKernel.Builder(gi, 
-				Global.NANO_PER_UPDATE/1000000,
-				Global.LIMIT_DELTA_TIME/1000000)
+		GameKernel gk = new GameKernel.Builder(gi,
+				Global.LIMIT_DELTA_TIME,
+				Global.NANO_PER_UPDATE)
 				.initListener(commands).
 				enableMouseTrack(gi).keyTypedMode().trackChar().gen();
 		

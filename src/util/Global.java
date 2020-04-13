@@ -20,11 +20,11 @@ public class Global {
 	public static final double CHARACTER_SIZE_ADJ = 0.75;
 	
 	// logic update time
-	public static final int UPDATE_TIMES_PER_SEC = 60;
+	public static final int UPDATE_TIMES_PER_SEC = 120;
 //	public static final int MILLISEC_PER_UPDATE = 1000 / UPDATE_TIMES_PER_SEC;
-	public static final int NANO_PER_UPDATE = 1000000000  / UPDATE_TIMES_PER_SEC;
+	public static final long NANO_PER_UPDATE = 1000000000 / UPDATE_TIMES_PER_SEC;
 
-	public static final int FRAME_LIMIT = 60;
+	public static final int FRAME_LIMIT = 120;
 	public static final long LIMIT_DELTA_TIME = 1000000000 / FRAME_LIMIT;
 	
 	// 

@@ -32,12 +32,10 @@ public abstract class GameObject {
 			int colliderW, int colliderH, boolean isBindCollider) {
 		
 		this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
-		this.rect = Rect.genWithXY(x, y, width, height);
         if(isBindCollider){
-        	this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
             this.rect = this.collider = Rect.genWithXY(x, y, colliderW, colliderH);
-            
         }else{
+    		this.rect = Rect.genWithXY(x, y, width, height);
             this.collider =  Rect.genWithXY(x, y, colliderW, colliderH);
         }
 
