@@ -8,7 +8,7 @@ public class ImgPath {
 	public static final String VOLLEYBALL = ROOT + "Volleyball.png";
 	public static final String SHUTTLECOCK = ROOT + "shuttlecock.png";
 	public static final String MAINSCENE = ROOT + "MainScene.jpg";
-	public static final String GAMESTART = ROOT + "GameStart.png";
+	public static final String GAMESTART = ROOT + "background/bk_main.png";
 	
 	
 	public static final String[] numbers(){

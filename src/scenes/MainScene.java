@@ -20,9 +20,10 @@ public class MainScene extends Scene {
     private MyMouseCommandListener mmcl;
 
     private class MyMouseCommandListener implements MouseCommandListener {
-
         @Override
         public void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
+           
+            
         }
 
     }
@@ -33,6 +34,8 @@ public class MainScene extends Scene {
     }
 
     public void sceneBegin() {
+        
+        
     }
 
     public void sceneUpdate() {
@@ -42,6 +45,8 @@ public class MainScene extends Scene {
     }
 
     public void paint(Graphics g) {
+        
+        
     }
 
     // 
