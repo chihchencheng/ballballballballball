@@ -191,7 +191,7 @@ public class GameStartScene extends Scene {
 	private void genBalls(List<List<Ball>> listOfBall, int[] xs) {
 		int count =0;
 		if (ballAmount < Global.LIMIT && delay.isTrig()) {
-//			for (int i = 0; i < Global.COLUMN; i++) {
+			for (int i = 0; i < Global.COLUMN; i++) {
 			if (listOfBall.get(count).size() < Global.ROW) {
 
 				listOfBall.get(count).add(listOfBall.get(count).size(),
@@ -200,7 +200,7 @@ public class GameStartScene extends Scene {
 				ballAmount++;
 			}
 		}
-//		}
+		}
 	}
 	
 	private boolean checkIfLess(List<List<Ball>> listOfBall) {
