@@ -35,7 +35,6 @@ public class SecondScene extends Scene {
 		if(delay.isTrig()) {
 			
 		}
-		
 
 	}
 
