@@ -28,10 +28,9 @@ public class Global {
 	public static final long LIMIT_DELTA_TIME = 1000000000 / FRAME_LIMIT;
 	
 	// 
-    public static final int DOWN = 0;
-    public static final int LEFT = 1;
-    public static final int RIGHT = 2;
-    public static final int UP = 3;
+    public static final int COLUMN = 7;
+    public static final int ROW = 6;
+    
     
     //ball table max
     public static final int LIMIT = 42;

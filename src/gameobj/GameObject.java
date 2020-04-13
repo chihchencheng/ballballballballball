@@ -44,8 +44,14 @@ public abstract class GameObject {
 	}// end of constructor
 
 	public GameObject(String imgPath) {
-		this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
+    	this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
 	}
+	
+	public GameObject(int x, int y, int width, int height) {
+		this.rect = Rect.genWithXY(x, y, width, height);
+		this.collider = this.rect;
+	}
+	
 
 
 	public int getX() {
@@ -93,19 +99,7 @@ public abstract class GameObject {
 	public Rect rect() {
 		return this.rect;
 	}
-	
-//	public boolean isCollision(GameObject obj) {
-//		if (this.getLeft() > obj.getRight())
-//			return false;
-//		if (this.getRight() < obj.getLeft())
-//			return false;
-//		if (this.getTop() > obj.getBottom())
-//			return false;
-//		if (this.getBottom() < obj.getTop())
-//			return false;
-//		return true;
-//	}
-	
+		
 	public BufferedImage getImg() {
 		return this.img;
 	}
@@ -118,23 +112,12 @@ public abstract class GameObject {
 		paintComponent(g);
 		g.drawImage(img, this.rect.left(), this.rect.top(),this.rect.width(),this.rect.height(), null);
 		if (Global.IS_DEBUG) {
-//			g.drawImage(img, this.x, this.y, this.width, this.height, null);
-//			g.setColor(Color.RED);
-//			g.drawRect(this.x, this.y, this.width, this.height);
-//			g.setColor(Color.black);
-
-
 			g.setColor(Color.RED);
 			g.drawRect(this.rect.left(), this.rect.top(), this.rect.width(), this.rect.height());
 			g.setColor(Color.BLUE);
 			g.drawRect(this.collider.left(), this.collider.top(), this.collider.width(), this.collider.height());
 			g.setColor(Color.BLACK);
 		} 
-//		else {
-////			g.drawImage(img, this.x, this.y, this.width, this.height, null);
-//			g.drawImage(img, this.rect.left(), this.rect.top(), null);
-//		}
-
 	}
 
 	protected abstract void paintComponent(Graphics g);
