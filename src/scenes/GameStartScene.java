@@ -170,7 +170,7 @@ public class GameStartScene extends Scene {
 	@Override
 	public void paint(Graphics g) {
 		background.paint(g);
-
+                
 		for (int i = 0; i < bricks.size(); i++) {// 最底下的碰撞長方形
 			bricks.get(i).paint(g);
 		}
