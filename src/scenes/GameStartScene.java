@@ -19,11 +19,13 @@ public class GameStartScene extends Scene {
 
 		@Override
 		public void mouseTrig(MouseEvent e, MouseState state, long trigTime) {
+			System.out.println(state);
 			if (e.getX() >= Global.XstartPoint && e.getX() <= Global.XendPoint) {
 				if (state.toString().equals("CLICKED")) {
 					for (int i = 0; i < listOfBalls.size(); i++) {
 						for (int j = 0; j < listOfBalls.get(i).size(); j++) {
 							if (listOfBalls.get(i).get(j).equals(getBallInArea(e))) {
+								System.out.println("Y");
 								listOfBalls.get(i).remove(j);
 								ballAmount--;
 							}
@@ -31,7 +33,7 @@ public class GameStartScene extends Scene {
 					}
 				}
 			}
-
+//
 //				if (state.toString().equals("PRESSED")) {
 //					Ball b1 = getBallInArea(e);
 //					linkBalls.add(b1);
@@ -49,7 +51,7 @@ public class GameStartScene extends Scene {
 //						}
 //					} while (state.toString().equals("DRAGGED"));
 //				}
-//		}
+//
 //			if(state.toString().equals("RELEASED") && linkBalls.size()>=3) {
 //				linkBalls.removeAll(linkBalls);
 //			}
@@ -92,7 +94,7 @@ public class GameStartScene extends Scene {
 
 	@Override
 	public void sceneBegin() {
-		delay = new Delay(10);
+		delay = new Delay(0);
 		timeDelay = new Delay(60);// 倒數秒數延遲時間
 		bricks = new ArrayList<Brick>();// 最底下的碰撞框
 		numbers = new ArrayList<Number>();
@@ -104,30 +106,24 @@ public class GameStartScene extends Scene {
 			listOfBalls.add(columnOfBalls);
 		}
 		genNumbers();
+//		genBalls(listOfBalls, xs);
+		genRect(xs);
 		delay.start();
 		timeDelay.start();
 	}// end of begin
 
 	@Override
 	public void sceneUpdate() {
-		genBalls(listOfBalls, xs);
-		genRect(xs);
-
-//		if (listOfBalls.size() < Global.COLUMN) {
+		
 		for (int i = 0; i < listOfBalls.size(); i++) {
-//				if (listOfBalls.get(i).size() < Global.ROW) {
 			for (int j = 0; j < listOfBalls.get(i).size(); j++) {
-				listOfBalls.get(i).get(j).move();
-//				if (!listOfBalls.get(i).get(j).move()) {
-////					listOfBalls.get(i).remove(j);
-//					j--;
-//					ballAmount--;
-//				}
-//			}
-//				}
+				if(!listOfBalls.get(i).get(j).move()) {
+					listOfBalls.get(i).remove(j);
+					ballAmount--;
+				}
+			}
 		}
-		}
-
+		checkIfLess(listOfBalls);
 		// 判斷球是否碰撞至最底下磚塊
 		for (int i = 0; i < listOfBalls.size(); i++) {
 			for (int j = 0; j < listOfBalls.get(i).size(); j++) {
@@ -155,7 +151,6 @@ public class GameStartScene extends Scene {
 				units = time % 10;
 				tens = time / 10;
 				this.time -= 1;
-				Global.log(String.valueOf(this.time));
 			}
 		}
 
@@ -189,21 +184,27 @@ public class GameStartScene extends Scene {
 	}
 
 	private void genBalls(List<List<Ball>> listOfBall, int[] xs) {
-		int count =0;
+		int count = 0;
 		if (ballAmount < Global.LIMIT && delay.isTrig()) {
 			for (int i = 0; i < Global.COLUMN; i++) {
-			if (listOfBall.get(count).size() < Global.ROW) {
+				if (listOfBall.get(count).size() < Global.ROW) {
+					listOfBall.get(count).add(listOfBall.get(count).size(),
+							                  getANewBall(xs, count));
+					count++;
+					ballAmount++;
+				}
+			}
+		}
 
-				listOfBall.get(count).add(listOfBall.get(count).size(),
-						getANewBall(xs, count));
-				count++;
+	}
+
+	private boolean checkIfLess(List<List<Ball>> listOfBalls) {
+		for (int i = 0; i < Global.COLUMN; i++) {
+			while (listOfBalls.get(i).size() < Global.ROW) {
+				listOfBalls.get(i).add(getANewBall(xs, i));
 				ballAmount++;
 			}
 		}
-		}
-	}
-	
-	private boolean checkIfLess(List<List<Ball>> listOfBall) {
 		return false;
 	}
 
