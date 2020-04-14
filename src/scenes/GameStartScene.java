@@ -168,13 +168,14 @@ public class GameStartScene extends Scene {
 			delay = null;
 		}
 
-		@Override
-		public void paint(Graphics g) {
-			background.paint(g);
-
-			for (int i = 0; i < bricks.size(); i++) {// 最底下的碰撞長方形
-				bricks.get(i).paint(g);
-			}
+	@Override
+	public void paint(Graphics g) {
+		background.paint(g);
+                
+		for (int i = 0; i < bricks.size(); i++) {// 最底下的碰撞長方形
+			bricks.get(i).paint(g);
+		}
+//listOfBalls
 
 			for (int i = 0; i < listOfBalls.size(); i++) {// 畫球COLUMN
 				for (int j = 0; j < listOfBalls.get(i).size(); j++) {

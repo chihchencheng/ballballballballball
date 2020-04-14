@@ -49,7 +49,7 @@ public class ImageResourceController {
 	private BufferedImage addImage(String path) {
 		try {
 			if (Global.IS_DEBUG) {
-				Global.log("load img from:" + path);
+//				Global.log("load img from:" + path);
 			}
 			BufferedImage img = ImageIO.read(getClass().getResource(path));
 			imgPairs.add(new KeyPair(path, img));
