@@ -1,0 +1,12 @@
+list.txt
+Shu.png
+smallShu.png
+smallTsai.png
+smallWang.png
+smallZhang.png
+smallZhou.png
+Tsai.png
+Wang.png
+Zhang.png
+Zhou.png
+ÀÉ®×¦WºÙ.bat
