@@ -36,17 +36,17 @@ public class ImgPath {
 
     //-----digNumber file
     private static final String DIGNUM = COM + "digNumber/";
-    public static final String ZERO_D = DIGNUM + "dig_number0.png";
-    public static final String ONE_D = DIGNUM + "dig_number1.png";
-    public static final String TWO_D = DIGNUM + "dig_number2.png";
-    public static final String THREE_D = DIGNUM + "dig_number3.png";
-    public static final String FOUR_D = DIGNUM + "dig_number4.png";
-    public static final String FIVE_D = DIGNUM + "dig_number5.png";
-    public static final String SIX_D = DIGNUM + "dig_number6.png";
-    public static final String SEVEN_D = DIGNUM + "dig_number7.png";
-    public static final String EIGHT_D = DIGNUM + "dig_number8.png";
-    public static final String EIGHT_D_GRAY = DIGNUM + "dig_number8_gray.png";
-    public static final String NINE_D = DIGNUM + "dig_number9.png";
+    public static final String ZERO_D = DIGNUM + "0.png";
+    public static final String ONE_D = DIGNUM + "1.png";
+    public static final String TWO_D = DIGNUM + "2.png";
+    public static final String THREE_D = DIGNUM + "3.png";
+    public static final String FOUR_D = DIGNUM + "4.png";
+    public static final String FIVE_D = DIGNUM + "5.png";
+    public static final String SIX_D = DIGNUM + "6.png";
+    public static final String SEVEN_D = DIGNUM + "7.png";
+    public static final String EIGHT_D = DIGNUM + "8.png";
+    public static final String EIGHT_D_GRAY = DIGNUM + "8_gray.png";
+    public static final String NINE_D = DIGNUM + "9.png";
     public static final String SLASH_D = DIGNUM + "dig_number_slash.png";
 
     //------button file
@@ -85,11 +85,13 @@ public class ImgPath {
 
     //GameScene file
     private static final String GC = ROOT + "GameScene/";
-    public static final String GAME_LEFT_PANEL = GC + "leftPanel.png";
-    public static final String GAME_RIGHT_PANEL = GC + "rightPanel.png";
-    public static final String SKILL_BUTTON = GC + "playButton.png";
-    public static final String PAUSE_BUTTON = GC + "pause.png";
-    public static final String REHEARSE_BUTTON = GC + "rehearse.png";
+    public static final String LEFT_PANEL = GC + "leftPanel.png";
+    public static final String PAUSE = GC + "pause.png";
+    public static final String PLAY_BUTTON = GC + "playButton.png";
+    public static final String REHEARSE = GC + "rehearse.png";
+    public static final String RIGHT_PANEL = GC + "rightPanel.png";
+    public static final String SKILL_BANNER = GC + "skillBanner.png";
+    public static final String TIME_PANEL = GC + "timePanel.png";
 
     //Selection file
     private static final String SELE = ROOT + "SelectionScene/";
@@ -117,11 +119,20 @@ public class ImgPath {
     public static final String SHOPS_CHEERBALL = SHOP + "ShopS_cheerBall.png";
     public static final String SHOPS_VOLLEYBALL = SHOP + "ShopS_VolleyBall.png";
 
-    //
+    //countDown part
     public static final String[] numbers() {
         String[] numbers = new String[10];
         for (int i = 0; i < 10; i++) {
-            numbers[i] = ROOT + i + ".png";
+            numbers[i] = NUMBER + i + ".png";
+        }
+        return numbers;
+    }
+
+    //Score part
+    public static final String[] digNumbers() {
+        String[] numbers = new String[10];
+        for (int i = 0; i < 10; i++) {
+            numbers[i] = DIGNUM + i + ".png";
         }
         return numbers;
     }

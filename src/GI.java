@@ -20,7 +20,7 @@ public class GI extends JPanel implements KeyListener, MouseCommandListener ,Gam
 
 	public GI() {
 		sceneController = new SceneController();
-		sceneController.changeScene(new GameStartScene(sceneController));
+		sceneController.changeScene(new GameStartScene(sceneController,1));
 
 	}// end of constructor
 
