@@ -28,8 +28,8 @@ public class Main {
 				enableMouseTrack(gi).keyTypedMode().trackChar().gen();
 		
 		f.setTitle("Game test");
-		f.setSize((int)(Global.FRAME_X*Global.CHARACTER_SIZE_ADJ),
-				(int)(Global.FRAME_Y*Global.CHARACTER_SIZE_ADJ));
+		f.setSize((int)(Global.FRAME_X*Global.ADJ),
+				(int)(Global.FRAME_Y*Global.ADJ));
 		f.add(gk);
 		f.setResizable(false);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
