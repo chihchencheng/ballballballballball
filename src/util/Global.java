@@ -34,8 +34,8 @@ public class Global {
     
     //ball table max
     public static final int LIMIT = 42;
-    public static final int XstartPoint = 630;// for locate 1st ball x
-    public static final int XendPoint = 1175;
+    public static final int XstartPoint = 600;// for locate 1st ball x
+    public static final int XendPoint = XstartPoint * COLUMN ;
     public static final int YstartPoint = 0;
     public static final int YendPoint = 540;
 
