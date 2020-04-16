@@ -35,6 +35,10 @@ public class GameStartScene extends Scene {
 //                }
 //            }
 //
+            if (imgs.get(6).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
+                sceneController.changeScene(new MainScene(sceneController));
+            }
+
             if (e.getX() >= Global.XstartPoint && e.getX() <= Global.XendPoint) {
                 if (state.toString().equals("PRESSED")) {
                     for (int i = 0; i < listOfBalls.size(); i++) {
@@ -82,7 +86,7 @@ public class GameStartScene extends Scene {
     private ArrayList<Ball> linkBalls;
     private List<List<Ball>> listOfBalls;
 
-    private GameMainScene background;
+    private Img bk;
     private ArrayList<Img> imgs;
 
     private int ballAmount;
@@ -97,43 +101,11 @@ public class GameStartScene extends Scene {
 
     public GameStartScene(SceneController sceneController, int roleNum) {
         super(sceneController);
-        background = new GameMainScene();//載入背景圖片
+        bk = new Img(ImgPath.BK_MAIN, 0, 0,
+                (int) (Global.SCREEN_X * Global.ADJ), (int) (Global.SCREEN_Y * Global.ADJ), true);//載入背景圖片
         this.roleNum = roleNum + 6;
 
         imgs = new ArrayList<>();
-        //元件
-        imgs.add(new Img(ImgPath.TIME_PANEL, (int) (Global.SCREEN_X * 0.022388 * Global.CHARACTER_SIZE_ADJ), (int) (Global.SCREEN_Y * 0.027 * Global.CHARACTER_SIZE_ADJ), (int) (729 * Global.CHARACTER_SIZE_ADJ), (int) (138 * Global.CHARACTER_SIZE_ADJ), true));
-        imgs.add(new Img(ImgPath.LEFT_PANEL, (int) (Global.SCREEN_X * 0.017 * Global.CHARACTER_SIZE_ADJ), (int) (Global.SCREEN_Y * 0.212 * Global.CHARACTER_SIZE_ADJ), (int) (739 * Global.CHARACTER_SIZE_ADJ), (int) (631 * Global.CHARACTER_SIZE_ADJ), true));
-        imgs.add(new Img(ImgPath.RIGHT_PANEL, (int) (Global.SCREEN_X * 0.5 * Global.CHARACTER_SIZE_ADJ), (int) (Global.SCREEN_Y * 0.022 * Global.CHARACTER_SIZE_ADJ), (int) (778 * Global.CHARACTER_SIZE_ADJ), (int) (782 * Global.CHARACTER_SIZE_ADJ), true));
-        imgs.add(new Img(ImgPath.SKILL_BANNER, (int) (Global.SCREEN_X * 0.672 * Global.CHARACTER_SIZE_ADJ), (int) (Global.SCREEN_Y * 0.865 * Global.CHARACTER_SIZE_ADJ), (int) (476 * Global.CHARACTER_SIZE_ADJ), (int) (70 * Global.CHARACTER_SIZE_ADJ), true));
-        imgs.add(new Img(ImgPath.PLAY_BUTTON, (int) (Global.SCREEN_X * 0.903 * Global.CHARACTER_SIZE_ADJ), (int) (Global.SCREEN_Y * 0.8675 * Global.CHARACTER_SIZE_ADJ), (int) (99 * Global.CHARACTER_SIZE_ADJ), (int) (66 * Global.CHARACTER_SIZE_ADJ), true));
-        imgs.add(new Img(ImgPath.PAUSE, (int) (Global.SCREEN_X * 0.515 * Global.CHARACTER_SIZE_ADJ), (int) (Global.SCREEN_Y * 0.873 * Global.CHARACTER_SIZE_ADJ), (int) (88 * Global.CHARACTER_SIZE_ADJ), (int) (67 * Global.CHARACTER_SIZE_ADJ), true));
-        imgs.add(new Img(ImgPath.REHEARSE, (int) (Global.SCREEN_X * 0.58 * Global.CHARACTER_SIZE_ADJ), (int) (Global.SCREEN_Y * 0.873 * Global.CHARACTER_SIZE_ADJ), (int) (83 * Global.CHARACTER_SIZE_ADJ), (int) (68 * Global.CHARACTER_SIZE_ADJ), true));
-        //small rolej
-        imgs.add(new Img(ImgPath.SMALL_TSAI, (int) (Global.SCREEN_X * -0.012 * Global.CHARACTER_SIZE_ADJ), (int) (Global.SCREEN_Y * 0.29 * Global.CHARACTER_SIZE_ADJ), (int) (287 * Global.CHARACTER_SIZE_ADJ), (int) (545 * Global.CHARACTER_SIZE_ADJ), true));
-        imgs.add(new Img(ImgPath.SMALL_ZHANG, (int) (Global.SCREEN_X * -0.03 * Global.CHARACTER_SIZE_ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.CHARACTER_SIZE_ADJ), (int) (202 * Global.CHARACTER_SIZE_ADJ), (int) (571 * Global.CHARACTER_SIZE_ADJ), true));
-        imgs.add(new Img(ImgPath.SMALL_SHU, (int) (Global.SCREEN_X * -0.03 * Global.CHARACTER_SIZE_ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.CHARACTER_SIZE_ADJ), (int) (296 * Global.CHARACTER_SIZE_ADJ), (int) (493 * Global.CHARACTER_SIZE_ADJ), true));
-        imgs.add(new Img(ImgPath.SMALL_ZHOU, (int) (Global.SCREEN_X * -0.03 * Global.CHARACTER_SIZE_ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.CHARACTER_SIZE_ADJ), (int) (261 * Global.CHARACTER_SIZE_ADJ), (int) (534 * Global.CHARACTER_SIZE_ADJ), true));
-        imgs.add(new Img(ImgPath.SMALL_WANG, (int) (Global.SCREEN_X * -0.03 * Global.CHARACTER_SIZE_ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.CHARACTER_SIZE_ADJ), (int) (273 * Global.CHARACTER_SIZE_ADJ), (int) (516 * Global.CHARACTER_SIZE_ADJ), true));
-
-        //gray dig8
-        //------------score
-        float digSize1 = 0.6f;
-        for (int i = 0; i < 10; i++) {
-            imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.19 * Global.CHARACTER_SIZE_ADJ + i * 28),
-                    (int) (Global.SCREEN_Y * 0.42 * Global.CHARACTER_SIZE_ADJ), (int) (46 * digSize1), (int) (70 * digSize1), true));
-        }
-        //------------coin
-        float digSize2 = 0.45f;
-        for (int i = 0; i < 10; i++) {
-            imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.255 * Global.CHARACTER_SIZE_ADJ + i * 20),
-                    (int) (Global.SCREEN_Y * 0.575 * Global.CHARACTER_SIZE_ADJ), (int) (46 * digSize2), (int) (70 * digSize2), true));
-        }
-        //------------exp
-        for (int i = 0; i < 10; i++) {
-            imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.255 * Global.CHARACTER_SIZE_ADJ + i * 20),
-                    (int) (Global.SCREEN_Y * 0.677 * Global.CHARACTER_SIZE_ADJ), (int) (46 * digSize2), (int) (70 * digSize2), true));
-        }
 
         //角色
         sceneBegin();
@@ -148,12 +120,47 @@ public class GameStartScene extends Scene {
     @Override
     public void sceneBegin() {
         delay = new Delay(0);
-        timeDelay = new Delay(60);// 倒數秒數延遲時間
+        timeDelay = new Delay(Global.UPDATE_TIMES_PER_SEC);// 倒數秒數延遲時間
         bricks = new ArrayList<Brick>();// 最底下的碰撞框
         numbers = new ArrayList<Number>();
         digNumbers = new ArrayList<Number>();
         linkBalls = new ArrayList<Ball>();
         listOfBalls = new ArrayList<List<Ball>>();
+
+        //元件
+        imgs.add(new Img(ImgPath.TIME_PANEL, (int) (Global.SCREEN_X * 0.022388 * Global.ADJ), (int) (Global.SCREEN_Y * 0.027 * Global.ADJ), true));
+        imgs.add(new Img(ImgPath.LEFT_PANEL, (int) (Global.SCREEN_X * 0.017 * Global.ADJ), (int) (Global.SCREEN_Y * 0.212 * Global.ADJ), true));
+        imgs.add(new Img(ImgPath.RIGHT_PANEL, (int) (Global.SCREEN_X * 0.5 * Global.ADJ), (int) (Global.SCREEN_Y * 0.022 * Global.ADJ), true));
+        imgs.add(new Img(ImgPath.SKILL_BANNER, (int) (Global.SCREEN_X * 0.672 * Global.ADJ), (int) (Global.SCREEN_Y * 0.865 * Global.ADJ), true));
+        imgs.add(new Img(ImgPath.PLAY_BUTTON, (int) (Global.SCREEN_X * 0.903 * Global.ADJ), (int) (Global.SCREEN_Y * 0.8675 * Global.ADJ), true));
+        imgs.add(new Img(ImgPath.PAUSE, (int) (Global.SCREEN_X * 0.515 * Global.ADJ), (int) (Global.SCREEN_Y * 0.873 * Global.ADJ), true));
+        imgs.add(new Img(ImgPath.REHEARSE, (int) (Global.SCREEN_X * 0.58 * Global.ADJ), (int) (Global.SCREEN_Y * 0.873 * Global.ADJ), true));
+        //small rolej
+        imgs.add(new Img(ImgPath.SMALL_TSAI, (int) (Global.SCREEN_X * -0.012 * Global.ADJ), (int) (Global.SCREEN_Y * 0.29 * Global.ADJ), true));
+        imgs.add(new Img(ImgPath.SMALL_ZHANG, (int) (Global.SCREEN_X * -0.03 * Global.ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
+        imgs.add(new Img(ImgPath.SMALL_SHU, (int) (Global.SCREEN_X * -0.03 * Global.ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
+        imgs.add(new Img(ImgPath.SMALL_ZHOU, (int) (Global.SCREEN_X * -0.03 * Global.ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
+        imgs.add(new Img(ImgPath.SMALL_WANG, (int) (Global.SCREEN_X * -0.03 * Global.ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
+
+        //gray dig8
+        //------------score
+        float digSize1 = 0.6f;
+        for (int i = 0; i < 10; i++) {
+            imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.19 * Global.ADJ + i * 28),
+                    (int) (Global.SCREEN_Y * 0.43 * Global.ADJ), (int) (46 * digSize1), (int) (70 * digSize1), true));
+        }
+        //------------coin
+        float digSize2 = 0.45f;
+        for (int i = 0; i < 10; i++) {
+            imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
+                    (int) (Global.SCREEN_Y * 0.577 * Global.ADJ), (int) (46 * digSize2), (int) (70 * digSize2), true));
+        }
+        //------------exp
+        for (int i = 0; i < 10; i++) {
+            imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
+                    (int) (Global.SCREEN_Y * 0.679 * Global.ADJ), (int) (46 * digSize2), (int) (70 * digSize2), true));
+        }
+
         xs = genXPoint();
         for (int i = 0; i < Global.COLUMN; i++) {
             List<Ball> columnOfBalls = new ArrayList<>();
@@ -165,6 +172,7 @@ public class GameStartScene extends Scene {
         genRect(xs);
         delay.start();
         timeDelay.start();
+
     }// end of begin
 
     @Override
@@ -219,7 +227,7 @@ public class GameStartScene extends Scene {
 
     @Override
     public void paint(Graphics g) {
-        background.paint(g);
+        bk.paint(g);
         //元件部分        
         for (int i = 0; i < 7; i++) {
             imgs.get(i).paint(g);
@@ -241,8 +249,8 @@ public class GameStartScene extends Scene {
 
         // 倒數計時60秒
         float sizeCD = 0.8f; //數字圖片縮放比例
-        g.drawImage(numbers.get(units).getImg(), 112, 38, (int) (42 * sizeCD), (int) (72 * sizeCD), null);// 個位數
-        g.drawImage(numbers.get(tens).getImg(), 78, 38, (int) (42 * sizeCD), (int) (72 * sizeCD), null);// 十位數
+        g.drawImage(numbers.get(units).getImg(), 112, 38,  null);// 個位數
+        g.drawImage(numbers.get(tens).getImg(), 78, 38,  null);// 十位數
 
         //sore panel
         for (int i = 0; i < 30; i++) {
@@ -303,7 +311,7 @@ public class GameStartScene extends Scene {
     private int[] genXPoint() {// 球畫製的地方，在開始就要生成
         xs = new int[7];
         for (int i = 0; i < 7; i++) {
-            xs[i] = i * (int) (Global.UNIT_X * Global.CHARACTER_SIZE_ADJ) + Global.XstartPoint;
+            xs[i] = i * (int) (Global.UNIT_X * Global.ADJ) + Global.XstartPoint;
         }
         return xs;
     }

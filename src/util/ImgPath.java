@@ -6,7 +6,8 @@ public class ImgPath {
 
     //Background file
     private static final String BK = ROOT + "background/";
-//    public static final String GAMESTART = BK + "bk_main.png";
+    public static final String BK_MAIN = BK + "bk_main.png";
+    public static final String BK_TITLE = BK + "bk_title.png";
 
     //Component file
     private static final String COM = ROOT + "component/";
@@ -51,14 +52,14 @@ public class ImgPath {
 
     //------button file
     private static final String BUTTON = COM + "button/";
-    public static final String B_GAME = BUTTON + "B_game.png";
-    public static final String B_GAME2 = BUTTON + "B_game2.png";
     public static final String B_HOME = BUTTON + "B_home.png";
     public static final String B_HOME2 = BUTTON + "B_home2.png";
-    public static final String B_INFO = BUTTON + "B_info.png";
-    public static final String B_INFO2 = BUTTON + "B_info2.png";
+    public static final String B_GAME = BUTTON + "B_game.png";
+    public static final String B_GAME2 = BUTTON + "B_game2.png";
     public static final String B_SHOP = BUTTON + "B_shop.png";
     public static final String B_SHOP2 = BUTTON + "B_shop2.png";
+    public static final String B_INFO = BUTTON + "B_info.png";
+    public static final String B_INFO2 = BUTTON + "B_info2.png";
     public static final String BB_GAMESTART = BUTTON + "BB_gameStart.png";
     public static final String BB_GAMESTART2 = BUTTON + "BB_gameStart2.png";
     public static final String BB_INFO = BUTTON + "BB_info.png";
@@ -95,14 +96,16 @@ public class ImgPath {
 
     //Selection file
     private static final String SELE = ROOT + "SelectionScene/";
-    public static final String CHOSE_BADMINTON = SELE + "chose_badminton.png";
-    public static final String CHOSE_BASEBALL = SELE + "chose_baseball.png";
-    public static final String CHOSE_BASKETBALL = SELE + "chose_basketball.png";
-    public static final String CHOSE_CHEERBALL = SELE + "chose_cheerBall.png";
-    public static final String CHOSE_VOLLEYBALL = SELE + "chose_volleyBall.png";
+
     public static final String ESSIENTIAL = SELE + "essiential.png";
     public static final String GAMESTART = SELE + "gameStart.png";
     public static final String LOCKED = SELE + "locked.png";
+
+    public static final String CHOSE_CHEERBALL = SELE + "chose_cheerBall.png";
+    public static final String CHOSE_BASKETBALL = SELE + "chose_basketball.png";
+    public static final String CHOSE_BADMINTON = SELE + "chose_badminton.png";
+    public static final String CHOSE_BASEBALL = SELE + "chose_baseball.png";
+    public static final String CHOSE_VOLLEYBALL = SELE + "chose_volleyBall.png";
 
     //Shop file
     private static final String SHOP = ROOT + "Shop/";

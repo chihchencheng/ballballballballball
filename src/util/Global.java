@@ -2,7 +2,7 @@ package util;
 
 public class Global {
 	// Debug Mode
-	public static final boolean IS_DEBUG = false;
+	public static final boolean IS_DEBUG = true;
 
 	public static void log(String str) {
 		if (IS_DEBUG) {
@@ -17,7 +17,7 @@ public class Global {
 
 	public static final int UNIT_X = 105;
 	public static final int UNIT_Y = 105;
-	public static final double CHARACTER_SIZE_ADJ = 0.75;
+	public static final double ADJ = 0.75;
 	
 	// logic update time
 	public static final int UPDATE_TIMES_PER_SEC = 120;
@@ -34,7 +34,7 @@ public class Global {
     
     //ball table max
     public static final int LIMIT = 42;
-    public static final int XstartPoint = 630;// for locate 1st ball x
+    public static final int XstartPoint = 620;// for locate 1st ball x
     public static final int XendPoint = 1175;
     public static final int YstartPoint = 0;
     public static final int YendPoint = 540;

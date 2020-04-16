@@ -16,9 +16,9 @@ public class Ball extends GameObject {
 	private String name;
 
 	public Ball(String imgPath, String name, int x, int y) {
-		super(imgPath, x, y, (int) (Global.UNIT_X * Global.CHARACTER_SIZE_ADJ),
-				(int) (Global.UNIT_Y * Global.CHARACTER_SIZE_ADJ), (int) (Global.UNIT_X * Global.CHARACTER_SIZE_ADJ),
-				(int) (Global.UNIT_Y * Global.CHARACTER_SIZE_ADJ ), true);
+		super(imgPath, x, y, (int) (Global.UNIT_X * Global.ADJ),
+				(int) (Global.UNIT_Y * Global.ADJ), (int) (Global.UNIT_X * Global.ADJ),
+				(int) (Global.UNIT_Y * Global.ADJ ), true);
 		this.name = name;
 		this.speed = 4;
 	}

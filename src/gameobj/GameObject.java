@@ -9,11 +9,12 @@ import javax.imageio.ImageIO;
 
 import controllers.ImageResourceController;
 import graph.Rect;
+import java.awt.Image;
 import util.Global;
 
 public abstract class GameObject {
 
-    protected BufferedImage img;
+    protected Image img;
     private Rect collider;
     protected Rect rect;
 
@@ -38,6 +39,18 @@ public abstract class GameObject {
             this.collider = Rect.genWithXY(x, y, colliderW, colliderH);
         }
     }// end of constructor
+    
+        public GameObject(String imgPath, int x, int y,boolean isBindCollider) {
+        this.img = ImageResourceController.getInstance().tryGetImage(imgPath);        
+        this.rect = Rect.genWithXY(x, y, img.getWidth(null), img.getHeight(null));
+        if (isBindCollider) {
+            this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
+            this.collider = this.rect;
+        } else {
+            this.collider = Rect.genWithXY(x, y, img.getWidth(null), img.getHeight(null));
+        }
+    }// end of constructor
+    
 
     public GameObject(String imgPath) {
         this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
@@ -94,13 +107,19 @@ public abstract class GameObject {
         return this.rect;
     }
 
-    public BufferedImage getImg() {
+    public Image getImg() {
         return this.img;
     }
 
     public abstract void update();
 
     public abstract boolean move();
+
+    //判斷標準：碰撞框
+    public boolean isInside(int x, int y) {
+        return x >= this.collider.left() && x <= this.collider().right() && 
+                y >= this.collider().top() && y <= this.collider().bottom();
+    }
 
     public void paint(Graphics g) {
         paintComponent(g);

@@ -30,6 +30,10 @@ public class Img extends GameObject {
         super(x, y, width, height);
     }
 
+    public Img(String imgPath, int x, int y, boolean isBindCollider) {
+        super(imgPath, x, y, isBindCollider);
+    }
+
     @Override
     public void update() {
     }
@@ -41,7 +45,7 @@ public class Img extends GameObject {
 
     @Override
     public void paintComponent(Graphics g) {
-        
+
     }
 
 }

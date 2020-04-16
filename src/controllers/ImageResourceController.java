@@ -1,5 +1,7 @@
 package controllers;
 
+import java.awt.Image;
+import static java.awt.Image.SCALE_DEFAULT;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,9 +15,9 @@ public class ImageResourceController {
     private static class KeyPair {// inner class
 
         private String path;
-        private BufferedImage img;
+        private Image img;
 
-        public KeyPair(String path, BufferedImage img) {
+        public KeyPair(String path, Image img) {
             this.path = path;
             this.img = img;
         }
@@ -39,7 +41,7 @@ public class ImageResourceController {
         return irc;
     }
 
-    public BufferedImage tryGetImage(String path) {
+    public Image tryGetImage(String path) {
         KeyPair pair = findKeyPair(path);
         if (pair == null) {
             return addImage(path);
@@ -47,14 +49,18 @@ public class ImageResourceController {
         return pair.img;
     }
 
-    private BufferedImage addImage(String path) {
+    private Image addImage(String path) {
         try {
             if (Global.IS_DEBUG) {
-//				Global.log("load img from:" + path);
+                Global.log("load img from:" + path);
             }
             BufferedImage img = ImageIO.read(getClass().getResource(path));
-            imgPairs.add(new KeyPair(path, img));
-            return img;
+            Image imgScale=img.getScaledInstance(
+                    (int)(img.getWidth()*Global.ADJ),(int)(img.getHeight()*Global.ADJ),SCALE_DEFAULT);
+            
+            
+            imgPairs.add(new KeyPair(path, imgScale));
+            return imgScale;
         } catch (IOException e) {
             e.printStackTrace();
         }
