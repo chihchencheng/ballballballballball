@@ -18,6 +18,11 @@ public class Delay {
 	public void pause() {
 		this.isPause = true;
 	}
+	
+	public boolean isPause() {
+		return isPause;
+		
+	}
 
 	public void stop() {
 		pause();
