@@ -3,7 +3,8 @@ package util;
 public class ImgPath {
 
     private static final String ROOT = "/resources/";
-
+    public static final String NULL=ROOT+"null.png";
+    
     //Background file
     private static final String BK = ROOT + "background/";
     public static final String BK_MAIN = BK + "bk_main.png";
@@ -12,6 +13,7 @@ public class ImgPath {
     //Component file
     private static final String COM = ROOT + "component/";
     public static final String TITLE = COM + "title.png";
+    public static final String HOW_TO_PLAY = COM + "howToPlay.png";
 
     //-----ball file
     private static final String BALL = COM + "ball/";
@@ -111,16 +113,24 @@ public class ImgPath {
     private static final String SHOP = ROOT + "Shop/";
     public static final String ONSALE = SHOP + "OnSale.png";
     public static final String PRICE = SHOP + "price.png";
+
+    public static final String SHOP__CHEERBALL = SHOP + "Shop__cheerBall.png";
+    public static final String SHOP__BASKETBALL = SHOP + "Shop__basketBall.png";
     public static final String SHOP__BADMINTON = SHOP + "Shop__Badminton.png";
     public static final String SHOP__BASEBALL = SHOP + "Shop__BaseBall.png";
-    public static final String SHOP__BASKETBALL = SHOP + "Shop__basketBall.png";
-    public static final String SHOP__CHEERBALL = SHOP + "Shop__cheerBall.png";
     public static final String SHOP__VOLLEYBALL = SHOP + "Shop__VolleyBall.png";
+
+    public static final String SHOPS_CHEERBALL = SHOP + "ShopS_cheerBall.png";
+    public static final String SHOPS_BASKETBALL = SHOP + "ShopS_basketBall.png";
     public static final String SHOPS_BADMINTON = SHOP + "ShopS_Badminton.png";
     public static final String SHOPS_BASEBALL = SHOP + "ShopS_BaseBall.png";
-    public static final String SHOPS_BASKETBALL = SHOP + "ShopS_basketBall.png";
-    public static final String SHOPS_CHEERBALL = SHOP + "ShopS_cheerBall.png";
     public static final String SHOPS_VOLLEYBALL = SHOP + "ShopS_VolleyBall.png";
+
+    public static final String SHOPS_CHEERBALL2 = SHOP + "ShopS_cheerBall2.png";
+    public static final String SHOPS_BASKETBALL2 = SHOP + "ShopS_basketBall2.png";
+    public static final String SHOPS_BADMINTON2 = SHOP + "ShopS_Badminton2.png";
+    public static final String SHOPS_BASEBALL2 = SHOP + "ShopS_BaseBall2.png";
+    public static final String SHOPS_VOLLEYBALL2 = SHOP + "ShopS_VolleyBall2.png";
 
     //countDown part
     public static final String[] numbers() {

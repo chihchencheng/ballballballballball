@@ -7,8 +7,12 @@ Shop__basketBall.png
 Shop__cheerBall.png
 Shop__VolleyBall.png
 ShopS_Badminton.png
+ShopS_Badminton2.png
 ShopS_BaseBall.png
+ShopS_BaseBall2.png
 ShopS_basketBall.png
+ShopS_basketBall2.png
 ShopS_cheerBall.png
 ShopS_VolleyBall.png
+ShopS_VolleyBall2.png
 ÀÉ®×¦WºÙ.bat
