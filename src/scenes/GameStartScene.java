@@ -2,18 +2,16 @@ package scenes;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import controllers.*;
 import gameobj.*;
 import gameobj.Number;
 import gameobj.Brick;
-import java.awt.image.BufferedImage;
 import util.CommandSolver.*;
 import util.*;
 
@@ -105,6 +103,116 @@ public class GameStartScene extends Scene {
     private ArrayList<Img> imgs;
     private BufferedImage background;
     private int ballAmount;
+		@Override
+		public void mouseTrig(MouseEvent e, MouseState state, long trigTime) {
+//			if (imgs.get(6).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
+//                sceneController.changeScene(new MainScene(sceneController));
+//            }
+			
+			if(imgs.get(4).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
+				timeDelay.start();
+			}
+			
+			if(imgs.get(5).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
+				timeDelay.pause();
+			}
+			
+			if(imgs.get(6).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
+				for(int i=0;i<listOfBalls.size();i++) {
+					listOfBalls.get(i).clear();
+				}
+				ballAmount = 0;
+			}
+			
+			if (e.getX() >= Global.XstartPoint && e.getX() <= Global.XendPoint) {
+				if(timeDelay.isPause()) {
+					
+				}
+				if (state.toString().equals("PRESSED")) {
+					for (int i = 0; i < listOfBalls.size(); i++) {
+						for (int j = 0; j < listOfBalls.get(i).size(); j++) {
+							if (listOfBalls.get(i).get(j).equals(getBallInArea(e))) {
+								linkBalls.add(getBallInArea(e));
+								Global.log("Pressed");
+							}
+						}
+					}
+				}
+				
+//				Global.log(state.toString());
+				if (state.toString().equals("DRAGGED")) {
+					for (int i = 0; i < listOfBalls.size(); i++) {
+						for (int j = 0; j < listOfBalls.get(i).size(); j++) {
+							if (linkBalls.size() != 0 && !isExisted(linkBalls, getBallInArea(e))
+									&& listOfBalls.get(i).get(j).equals(getBallInArea(e))
+									&& isTheSameBall(linkBalls.get(0), getBallInArea(e))
+									&&(Math.abs(linkBalls.get(linkBalls.size()-1).rect().centerX()-
+											getBallInArea(e).rect().centerX()))<=Global.UNIT_X -1
+									&&(Math.abs(linkBalls.get(linkBalls.size()-1).rect().centerY()-
+											getBallInArea(e).rect().centerY()))<=Global.UNIT_Y -1) {
+								linkBalls.add(getBallInArea(e));
+								Global.log("Dragged");
+							}else if(isExisted(linkBalls, getBallInArea(e)) &&
+									!((linkBalls.get(linkBalls.size()-1).equals(getBallInArea(e))))
+									&&(Math.abs(linkBalls.get(linkBalls.size()-1).rect().centerY()-
+											getBallInArea(e).rect().centerY()))<=Global.UNIT_Y -10) {
+								 {
+									for(int k =0;k<linkBalls.size();k++) {
+										if(linkBalls.get(k).equals(getBallInArea(e))) {
+											for(int l = k +1;l<linkBalls.size();l++) {
+												linkBalls.remove(l);
+											}
+										}
+									}
+								}
+								
+							}
+						}
+					}
+				}// 
+				if (state.toString().equals("RELEASED") || state.toString().equals("EXITED") ||
+						(e.getX() <= Global.XstartPoint && e.getX() >= Global.XendPoint)) {
+					if (linkBalls.size() >= 3) {
+						for (int i = 0; i < linkBalls.size(); i++) {
+//							System.out.println(linkBalls.get(i));
+							isTheSameObject(listOfBalls, linkBalls.get(i));
+						}
+						getScore();
+						getSkillLevel();
+						linkBalls.clear();
+
+					}
+					if (linkBalls.size() < 3) {
+						linkBalls.clear();
+					}
+					if(linkBalls.size() >= 3 && 
+							((e.getX() <= Global.XstartPoint && e.getX() >= Global.XendPoint) || 
+							 state.toString().equals("EXITED")) &&
+							isTheSameBall(linkBalls.get(linkBalls.size()-1),getBallInArea(e))
+							){
+							for (int i = 0; i < linkBalls.size(); i++) {
+//								System.out.println(linkBalls.get(i));
+								isTheSameObject(listOfBalls, linkBalls.get(i));
+							}
+							getScore();
+							getSkillLevel();
+							linkBalls.clear();
+							
+					}
+				}
+			}
+		}// end of mouseTrig
+	}// end of inner class
+
+	private MyMouseCommandListener mmcl;
+	private ArrayList<Brick> bricks;
+	private ArrayList<Number> numbers;
+	private ArrayList<Number> digNumbers;
+	private ArrayList<Ball> linkBalls;
+	private List<List<Ball>> listOfBalls;
+	private ArrayList<Img> imgs;
+	private BufferedImage background;
+	private int ballAmount;
     private Img bk;
     private int roleNum;//小人物圖片
 
@@ -158,7 +266,7 @@ public class GameStartScene extends Scene {
         imgs.add(new Img(ImgPath.PLAY_BUTTON, (int) (Global.SCREEN_X * 0.903 * Global.ADJ), (int) (Global.SCREEN_Y * 0.8675 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.PAUSE, (int) (Global.SCREEN_X * 0.515 * Global.ADJ), (int) (Global.SCREEN_Y * 0.873 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.REHEARSE, (int) (Global.SCREEN_X * 0.58 * Global.ADJ), (int) (Global.SCREEN_Y * 0.873 * Global.ADJ), true));
-        //small rolej
+        //small role
         imgs.add(new Img(ImgPath.SMALL_TSAI, (int) (Global.SCREEN_X * -0.012 * Global.ADJ), (int) (Global.SCREEN_Y * 0.29 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.SMALL_ZHANG, (int) (Global.SCREEN_X * 0.021 * Global.ADJ), (int) (Global.SCREEN_Y * 0.32 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.SMALL_SHU, (int) (Global.SCREEN_X * -0.03 * Global.ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
@@ -191,7 +299,6 @@ public class GameStartScene extends Scene {
         }
         genNumbers(ImgPath.numbers());
         genNumbers(ImgPath.digNumbers());
-//		genBalls(listOfBalls, xs);
         genRect(xs);
         delay.start();
         timeDelay.start();
@@ -226,35 +333,36 @@ public class GameStartScene extends Scene {
                 }
             }
         }
-
-        skillTrig(2);
+        
+		skillTrig(5);
 
         // 倒數計時器，當球滿了，且最後一顆已經落下停止時
 //		if (ballAmount == Global.LIMIT) {
 //				&& 
 //			listOfBalls.get(Global.COLUMN).get(Global.ROW).
 //			isCollision(listOfBalls.get(Global.COLUMN).get(Global.ROW-1))) {
-        if (this.time >= 0 && timeDelay.isTrig()) {
-            units = time % 10;
-            tens = time / 10;
-            this.time -= 1;
-        }
-    }
+		if (this.time >= 0 && timeDelay.isTrig()) {
+			units = time % 10;
+			tens = time / 10;
+			this.time -= 1;
+		}
+		
+	}
 
-    @Override
-    public void sceneEnd() {
-        delay.stop();
-        delay = null;
-    }
+	@Override
+	public void sceneEnd() {
+		delay.stop();
+		delay = null;
+	}
 
-    @Override
-    public void paint(Graphics g) {
-        bk.paint(g);
+	@Override
+	public void paint(Graphics g) {
+		bk.paint(g);
         //元件部分        
         for (int i = 0; i < 7; i++) {
             imgs.get(i).paint(g);
-        }
-
+		}
+		
         //小人物部分
         imgs.get(this.roleNum).paint(g);
 
@@ -274,8 +382,9 @@ public class GameStartScene extends Scene {
                 g.drawLine(linkBalls.get(i).rect().centerX(), linkBalls.get(i).rect().centerY(),
                         linkBalls.get(i + 1).rect().centerX(), linkBalls.get(i + 1).rect().centerY());
 
-                g.drawLine(linkBalls.get(i).rect().centerX() + 1, linkBalls.get(i).rect().centerY() + 1,
-                        linkBalls.get(i + 1).rect().centerX() + 1, linkBalls.get(i + 1).rect().centerY() + 1);
+				
+				g.drawLine(linkBalls.get(i).rect().centerX() + 1, linkBalls.get(i).rect().centerY() + 1,
+						linkBalls.get(i + 1).rect().centerX() + 1, linkBalls.get(i + 1).rect().centerY() + 1);
 
                 g.drawLine(linkBalls.get(i).rect().centerX() + 2, linkBalls.get(i).rect().centerY() + 2,
                         linkBalls.get(i + 1).rect().centerX() + 2, linkBalls.get(i + 1).rect().centerY() + 2);
@@ -346,101 +455,164 @@ public class GameStartScene extends Scene {
         }
     }
 
-    private boolean checkIfLess(List<List<Ball>> listOfBalls) {
-        for (int i = 0; i < Global.COLUMN; i++) {
-            while (listOfBalls.get(i).size() < Global.ROW) {
-                listOfBalls.get(i).add(getANewBall(xs, i));
-                ballAmount++;
-            }
-        }
-        return false;
-    }
+	
+	private boolean checkIfLess(List<List<Ball>> listOfBalls) {
+		for (int i = 0; i < Global.COLUMN; i++) {
+			while (listOfBalls.get(i).size() < Global.ROW) {
+				listOfBalls.get(i).add(getANewBall(xs, i));
+				ballAmount++;
+			}
+		}
+		return false;
+	}
 
-    private void skillTrig(int key) {
+	private void skillTrig(int key) {
 
-        switch (key) {
-            case 1:// Zhang-baseketball
-                if (skillLevel == 12) {// basketball skill trig
-                    for (int i = 2; i < 4; i++) {
-                        listOfBalls.get(2).remove(i);
-                        listOfBalls.get(4).remove(i);
-                    }
-                    for (int i = 1; i < 4; i++) {
-                        listOfBalls.get(3).remove(i);
-                    }
-                    skillLevel = 0;
-                }
-                break;
-            case 2:// Wang-volleyball
-                if (skillLevel >= 17) {// basketball skill trig
-                    for (int i = 0; i < 15; i++) {
-                        int c = (int) (Math.random() * listOfBalls.size());
-                        int r = (int) (Math.random() * listOfBalls.get(0).size());
-                        listOfBalls.get(c).remove(r);
-                    }
-                }
-                skillLevel = 0;
-                break;
-            case 3:// Tsai-cheerball
-                break;
-            case 4:// Shu-shuttlecock
-                if (skillLevel >= 14) {// basketball skill trig
-                    int skillStartTime = this.time;
-                    do {
-                        System.out.println(this.time);
-                        this.totalScore += this.score * 1.4;
-                    } while (this.time - skillStartTime < 7);
-                }
-                skillLevel = 0;
-                break;
-            case 5:// Zhou-baseball
-                break;
-        }
-    }
+		switch (key) {
+		case 1:// Zhang-baseketball
+			if (skillLevel == 12) {// basketball skill trig
+				for (int i = 2; i < 4; i++) {
+					listOfBalls.get(2).remove(i);
+					listOfBalls.get(4).remove(i);
+				}
+				for (int i = 1; i < 4; i++) {
+					listOfBalls.get(3).remove(i);
+				}
+				Global.log("Skill Trig");
+				skillLevel = 0;
+				Global.log("Skill Level reset to 0");
+			}
+			break;
+		case 2:// Wang-volleyball
+			if (skillLevel >= 17) {// basketball skill trig
+				for (int i = 0; i < 10; i++) {
+					int c = (int) (Math.random() * listOfBalls.size());
+					int r = (int) (Math.random() * listOfBalls.get(0).size());
+					listOfBalls.get(c).remove(r);
+				}
+				Global.log("Skill Trig");
+				skillLevel = 0;
+				Global.log("Skill Level reset to 0");
+			}
+			break;
+		case 3:// Tsai-cheerball
+			if(skillLevel >= 16) {
+				this.time += 5;
+				System.out.println("Time:"+this.time);
+				Global.log("Skill Trig");
+				skillLevel = 0;
+				Global.log("Skill Level reset to 0");
+			}
+			break;
+		case 4:// Shu-shuttlecock
+			if (skillLevel >= 14) {// basketball skill trig
+				int skillStartTime = this.time;
+				do {
+					System.out.println(this.time);
+					this.totalScore += this.score * 1.4;
+				} while (this.time - skillStartTime < 7);
+			}
+			skillLevel = 0;
+			break;
+		case 5:// Zhou-baseball
+			if (skillLevel >= 15) {
+				for (int i = 0; i < listOfBalls.size(); i++) {
+					listOfBalls.get(i).remove(4);
+				}
+				for(int i=0;i<listOfBalls.get(3).size();i++) {
+					if(i == 4) {
+						continue;
+					}
+					listOfBalls.get(3).remove(i);
+				}
+				
+				Global.log("Skill Trig");
+				skillLevel = 0;
+				Global.log("Skill Level reset to 0");
+			}
+			break;
+		}
+	}
 
-    private void getScore() {
-        int perScore = 5;
-        switch (linkBalls.get(0).getName()) {
-            case "Volleyball":
-                this.totalScore += linkBalls.size() * perScore;
-                Global.log(Integer.toString(this.totalScore));
-                break;
-            case "Basketball":
-                this.totalScore += linkBalls.size() * perScore;
-                Global.log(Integer.toString(this.totalScore));
-                break;
-            case "Baseball":
-                this.totalScore += linkBalls.size() * perScore;
-                Global.log(Integer.toString(this.totalScore));
-                break;
-            case "Cheerball":
-                this.totalScore += linkBalls.size() * perScore;
-                Global.log(Integer.toString(this.totalScore));
-                break;
-            case "Shuttlecock":
-                this.totalScore += linkBalls.size() * perScore;
-                Global.log(Integer.toString(this.totalScore));
-                break;
-        }
-    }
+	private void getScore() {
+		switch (linkBalls.get(0).getName()) {
+		case "Volleyball":
+			this.totalScore += linkBalls.size() * 2;
+			Global.log("TotalScore: "+this.totalScore);
+			break;
+		case "Basketball":
+			this.totalScore += linkBalls.size() * 2;
+			Global.log("TotalScore: "+this.totalScore);
+			break;
+		case "Baseball":
+			this.totalScore += linkBalls.size() * 2;
+			Global.log("TotalScore: "+this.totalScore);
+			break;
+		case "Cheerball":
+			this.totalScore += linkBalls.size() * 2;
+			Global.log("TotalScore: "+this.totalScore);
+			break;
+		case "Shuttlecock":
+			this.totalScore += linkBalls.size() * 2;
+			Global.log("TotalScore: "+this.totalScore);
+			break;
+		}
+	}
 
-    private void getSkillLevel() {
+	private void getSkillLevel() {
+		this.skillLevel++;
+		Global.log("SkillLevel + 1, SkillLevel:"+ this.skillLevel);
+	}
 
-    }
+	private Ball getBallInArea(MouseEvent e) {
+		for (int i = 0; i < this.listOfBalls.size(); i++) {
+			for (int j = 0; j < this.listOfBalls.get(i).size(); j++) {
+				if (e.getX() >= this.listOfBalls.get(i).get(j).rect().left()
+						&& e.getX() <= this.listOfBalls.get(i).get(j).rect().right()
+						&& e.getY() >= this.listOfBalls.get(i).get(j).rect().top()
+						&& e.getY() <= this.listOfBalls.get(i).get(j).rect().bottom()) {
+					return this.listOfBalls.get(i).get(j);
+				}
+			}
+		}
+		return null;
+	}
 
-    private Ball getBallInArea(MouseEvent e) {
-        for (int i = 0; i < this.listOfBalls.size(); i++) {
-            for (int j = 0; j < this.listOfBalls.get(i).size(); j++) {
-                if (e.getX() >= this.listOfBalls.get(i).get(j).rect().left()
-                        && e.getX() <= this.listOfBalls.get(i).get(j).rect().right()
-                        && e.getY() >= this.listOfBalls.get(i).get(j).rect().top()
-                        && e.getY() <= this.listOfBalls.get(i).get(j).rect().bottom()) {
-                    return this.listOfBalls.get(i).get(j);
-                }
-            }
-        }
-        return null;
-    }
+	private void isTheSameObject(List<List<Ball>> listOfBalls, Ball ball) {
+		for (int i = 0; i < listOfBalls.size(); i++) {
+			for (int j = 0; j < listOfBalls.get(i).size(); j++) {
+				if (ball.equals(listOfBalls.get(i).get(j))) {
+					listOfBalls.get(i).remove(j);
+					ballAmount--;
+				}
+			}
+		}
+	}
+
+	private boolean isExisted(ArrayList<Ball> linkBalls, Ball ball) {
+		for (int i = 0; i < linkBalls.size(); i++) {
+			if (ball == linkBalls.get(i)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isTheSameBall(Ball b1, Ball b2) {
+		return b1.getName().equals(b2.getName());
+	}
+
+
+	// set up for each scene to get scene Listener
+	@Override
+	public CommandSolver.KeyListener getKeyListener() {
+		return null;
+	}
+
+	@Override
+	public CommandSolver.MouseCommandListener getMouseListener() {
+		return this.mmcl;
+	}
 
     private void isTheSameObject(List<List<Ball>> listOfBalls, Ball ball) {
         for (int i = 0; i < listOfBalls.size(); i++) {

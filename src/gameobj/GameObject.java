@@ -117,7 +117,7 @@ public abstract class GameObject {
 
     //判斷標準：碰撞框
     public boolean isInside(int x, int y) {
-        return x >= this.collider.left() && x <= this.collider().right() && 
+        return x >= this.collider().left() && x <= this.collider().right() && 
                 y >= this.collider().top() && y <= this.collider().bottom();
     }
 
