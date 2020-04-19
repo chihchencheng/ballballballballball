@@ -42,6 +42,12 @@ public class Global {
     //
     public static final int SPEED = 4;
     
+    //levelUpSet
+    
+    public static final int[] BASKETBALL_LEVEL_SET={100,200,200,700,600,600,700,700,800,1200};
+    public static final int[] BADMINTON_LEVEL_SET={100,300,300,800,600,700,700,900,1000,1700};
+    public static final int[] BASKBALL_LEVEL_SET={300,300,300,900,600,700,700,900,1000,2000};
+    public static final int[] VOLLEYBALL_LEVEL_SET={400,500,600,1500,1000,1200,1700,1900,2500,4000};
 	
 	public static int random(int min, int max) {
 		return (int) (Math.random() * (max - min + 1) + min);

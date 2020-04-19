@@ -7,6 +7,7 @@ package scenes;
 
 import controllers.SceneController;
 import gameobj.Img;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -128,6 +129,8 @@ public class MainScene extends Scene {
         } else {
             imgs.get(0).paint(g);
         }
+        g.setFont(new Font("微軟正黑體",Font.PLAIN,100));
+        g.drawString("test", 100, 100);
     }
 
     @Override
