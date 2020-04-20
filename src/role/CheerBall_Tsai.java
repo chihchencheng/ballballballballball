@@ -18,13 +18,14 @@ public class CheerBall_Tsai extends role {
     public CheerBall_Tsai(int level, int exp) {
         super(level, exp, "CheerBall_Tsai", CHEERBALL_LEVEL_SET);
     }
-
+    
+    
     @Override
     public boolean skill(int cd) {
         if(cd==this.cd[level-1]){
+            
             return true;
-        }
-        
+        }        
         return false;
     }
 

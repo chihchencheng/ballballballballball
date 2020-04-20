@@ -15,9 +15,6 @@ public abstract class role {
 
     protected int[] levelUpSet;
     protected int exp;
-    protected String symbol;
-    protected int[] cd;
-
     public role(int level, int exp, String symbol, int[] levelUpSet) {
         //傳入部分
         this.level = level;
@@ -25,6 +22,9 @@ public abstract class role {
         this.symbol = symbol;
         this.levelUpSet = levelUpSet;
     }
+    protected String symbol;
+    protected int[] cd;
+
 
     public boolean addExp(int exp) {
         this.exp += exp;

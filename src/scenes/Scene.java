@@ -16,7 +16,9 @@ public abstract class Scene {
 
 	public abstract void sceneUpdate();
 
-	public abstract void sceneEnd();
+	public void sceneEnd(){
+            
+        }
 
 	public abstract void paint(Graphics g);
 

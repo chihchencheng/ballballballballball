@@ -7,6 +7,7 @@ package scenes;
 
 import controllers.SceneController;
 import gameobj.Img;
+import gameobj.imgArr;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -16,6 +17,7 @@ import util.CommandSolver.MouseCommandListener;
 import util.CommandSolver.MouseState;
 import util.Global;
 import util.ImgPath;
+import static util.ImgPath.*;
 
 /**
  *
@@ -24,9 +26,8 @@ import util.ImgPath;
 public class MainScene extends Scene {
 
     private MyMouseCommandListener mmcl;
-    private ArrayList<Img> imgs;
-    private ArrayList<Img> imgsRole;
-    private ArrayList<Img> buttonImgs2;
+    private imgArr imgs;
+    private imgArr imgsRole;
     private int roleNum;
 
     private class MyMouseCommandListener implements MouseCommandListener {
@@ -47,25 +48,25 @@ public class MainScene extends Scene {
             }
 
             //按鈕功能
-            if (state == MouseState.CLICKED && imgs.get(6).isInside(e.getX(), e.getY())) {
+            if (state == MouseState.CLICKED && imgs.get(BB_GAMESTART).isInside(e.getX(), e.getY())) {
                 sceneController.changeScene(new SelectionScene(sceneController));
             }   //----gameStart button
 
-            tipsTrig = imgs.get(2).isInside(e.getX(), e.getY()); //----tips button
-            if (state == MouseState.CLICKED && imgs.get(5).isInside(e.getX(), e.getY())) {
+            tipsTrig = imgs.get(BB_TIPS).isInside(e.getX(), e.getY()); //----tips button
+            if (state == MouseState.CLICKED && imgs.get(BB_SHOP).isInside(e.getX(), e.getY())) {
                 sceneController.changeScene(new ShopScene(sceneController));
             }   //----Shop button
 
             //按鈕換圖            
-            for (int i = 0; i < buttonImgs2.size() - 1; i++) {
-                if (buttonImgs2.get(i).isInside(e.getX(), e.getY())) {
+            for (int i = 0; i < imgs.size() - 1; i++) {
+                if (imgs.get(i).isInside(e.getX(), e.getY())) {
                     menuIndex = i;
                 }
             }
-            if (!buttonImgs2.get(0).isInside(e.getX(), e.getY()) && !buttonImgs2.get(1).isInside(e.getX(), e.getY())
-                    && !buttonImgs2.get(2).isInside(e.getX(), e.getY()) && !buttonImgs2.get(3).isInside(e.getX(), e.getY())
-                    && !buttonImgs2.get(4).isInside(e.getX(), e.getY())) {
-                menuIndex = buttonImgs2.size() - 1;
+            if (!imgs.get(BB_TIPS).isInside(e.getX(), e.getY()) && !imgs.get(BB_INFO).isInside(e.getX(), e.getY())
+                    && !imgs.get(BB_RECORD).isInside(e.getX(), e.getY()) && !imgs.get(BB_SHOP).isInside(e.getX(), e.getY())
+                    && !imgs.get(BB_GAMESTART).isInside(e.getX(), e.getY())) {
+                menuIndex = imgs.size() - 1;
             }
         }
 
@@ -78,10 +79,9 @@ public class MainScene extends Scene {
     }
 
     public void sceneBegin() {
-        imgs = new ArrayList<>();
+        imgs =new imgArr();
         imgs.add(new Img(ImgPath.HOW_TO_PLAY, (int) (Global.SCREEN_X * 0.13 * Global.ADJ), (int) (Global.SCREEN_Y * 0.17 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.BK_TITLE, 0, 0, true)); //背景 i=0
-//        imgs.add(new Img(ImgPath.BK_TITLE, 0, 0, true));        
         imgs.add(new Img(ImgPath.BB_TIPS, (int) (Global.SCREEN_X * 0.24 * Global.ADJ), (int) (Global.SCREEN_Y * 0.72 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.BB_INFO, (int) (Global.SCREEN_X * 0.46 * Global.ADJ), (int) (Global.SCREEN_Y * 0.67 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.BB_RECORD, (int) (Global.SCREEN_X * 0.6 * Global.ADJ), (int) (Global.SCREEN_Y * 0.61 * Global.ADJ), true));
@@ -89,17 +89,16 @@ public class MainScene extends Scene {
         imgs.add(new Img(ImgPath.BB_GAMESTART, (int) (Global.SCREEN_X * 0.051 * Global.ADJ), (int) (Global.SCREEN_Y * 0.53 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.TITLE, (int) (Global.SCREEN_X * 0.038 * Global.ADJ), (int) (Global.SCREEN_Y * 0.085 * Global.ADJ), true));
 
-        //按鈕換圖
-        buttonImgs2 = new ArrayList<>();
-        buttonImgs2.add(new Img(ImgPath.BB_TIPS2, (int) (Global.SCREEN_X * 0.24 * Global.ADJ), (int) (Global.SCREEN_Y * 0.72 * Global.ADJ), true));
-        buttonImgs2.add(new Img(ImgPath.BB_INFO2, (int) (Global.SCREEN_X * 0.46 * Global.ADJ), (int) (Global.SCREEN_Y * 0.67 * Global.ADJ), true));
-        buttonImgs2.add(new Img(ImgPath.BB_RECORD2, (int) (Global.SCREEN_X * 0.6 * Global.ADJ), (int) (Global.SCREEN_Y * 0.61 * Global.ADJ), true));
-        buttonImgs2.add(new Img(ImgPath.BB_SHOP2, (int) (Global.SCREEN_X * 0.335 * Global.ADJ), (int) (Global.SCREEN_Y * 0.6 * Global.ADJ), true));
-        buttonImgs2.add(new Img(ImgPath.BB_GAMESTART2, (int) (Global.SCREEN_X * 0.051 * Global.ADJ), (int) (Global.SCREEN_Y * 0.53 * Global.ADJ), true));
-        buttonImgs2.add(new Img(ImgPath.NULL, (int) (Global.SCREEN_X * 0.051 * Global.ADJ), (int) (Global.SCREEN_Y * 0.53 * Global.ADJ), true));
+//        //按鈕換圖
+//        imgs.add(new Img(ImgPath.BB_TIPS2, (int) (Global.SCREEN_X * 0.24 * Global.ADJ), (int) (Global.SCREEN_Y * 0.72 * Global.ADJ), true));
+//        imgs.add(new Img(ImgPath.BB_INFO2, (int) (Global.SCREEN_X * 0.46 * Global.ADJ), (int) (Global.SCREEN_Y * 0.67 * Global.ADJ), true));
+//        imgs.add(new Img(ImgPath.BB_RECORD2, (int) (Global.SCREEN_X * 0.6 * Global.ADJ), (int) (Global.SCREEN_Y * 0.61 * Global.ADJ), true));
+//        imgs.add(new Img(ImgPath.BB_SHOP2, (int) (Global.SCREEN_X * 0.335 * Global.ADJ), (int) (Global.SCREEN_Y * 0.6 * Global.ADJ), true));
+//        imgs.add(new Img(ImgPath.BB_GAMESTART2, (int) (Global.SCREEN_X * 0.051 * Global.ADJ), (int) (Global.SCREEN_Y * 0.53 * Global.ADJ), true));
+//        imgs.add(new Img(ImgPath.NULL, (int) (Global.SCREEN_X * 0.051 * Global.ADJ), (int) (Global.SCREEN_Y * 0.53 * Global.ADJ), true));
         
         //角色立繪
-        imgsRole = new ArrayList<>();
+        imgsRole = new imgArr();
         imgsRole.add(new Img(ImgPath.TSAI, (int) (Global.SCREEN_X * 0.53 * Global.ADJ), (int) (Global.SCREEN_Y * 0.1 * Global.ADJ), true));
         imgsRole.add(new Img(ImgPath.ZHANG, (int) (Global.SCREEN_X * 0.6 * Global.ADJ), (int) (Global.SCREEN_Y * 0.1 * Global.ADJ), true));
         imgsRole.add(new Img(ImgPath.SHU, (int) (Global.SCREEN_X * 0.59 * Global.ADJ), (int) (Global.SCREEN_Y * 0.1 * Global.ADJ), true));
@@ -119,8 +118,8 @@ public class MainScene extends Scene {
             imgs.get(i).paint(g);
         }
         
-        //按鈕換圖
-        buttonImgs2.get(mmcl.menuIndex).paint(g);
+//        //按鈕換圖
+//        imgs.get(mmcl.menuIndex).paint(g);
 
         if (!mmcl.tipsTrig) {
             imgs.get(imgs.size() - 1).paint(g);
