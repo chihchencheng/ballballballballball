@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author User
  */
-public class imgArr extends ArrayList<Img> {
+public class ImgArr extends ArrayList<Img> {
 
     public Img get(String imgPath) {
         for (int i = 0; i < this.size(); i++) {

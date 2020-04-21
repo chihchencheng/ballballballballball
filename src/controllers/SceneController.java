@@ -6,35 +6,38 @@ import scenes.Scene;
 import util.CommandSolver.*;
 
 public class SceneController {
-	private Scene currentScene;
-	private KeyListener kl;
-	private MouseCommandListener ml;
 
-	public void update() {
-		currentScene.sceneUpdate();
-	}
+    private Scene currentScene;
+    private KeyListener kl;
+    private MouseCommandListener ml;
 
-	public void changeScene(Scene nextScene) {
-		if (currentScene != null) {
-			currentScene.sceneEnd();
-		}
-		currentScene = nextScene;
-		currentScene.sceneBegin(); // 
-		this.kl = currentScene.getKeyListener();
-		this.ml = currentScene.getMouseListener();
-	}
+    public void update() {
+        currentScene.sceneUpdate();
+    }
 
-	public void paint(Graphics g) {
-		currentScene.paint(g);
-	}
+    public void changeScene(Scene nextScene) {
+        if (currentScene != null) {   
+            currentScene.releaseImg();
+            currentScene.sceneEnd();
+            
+        }
+        currentScene = nextScene;
+        currentScene.sceneBegin(); // 
+        this.kl = currentScene.getKeyListener();
+        this.ml = currentScene.getMouseListener();
+    }
 
-	// -------------------------------------------------------for CommandSolver
-	public KeyListener getKL() {
-		return this.kl;
-	}
+    public void paint(Graphics g) {
+        currentScene.paint(g);
+    }
 
-	public MouseCommandListener getML() {
-		return this.ml;
-	}
+    // -------------------------------------------------------for CommandSolver
+    public KeyListener getKL() {
+        return this.kl;
+    }
+
+    public MouseCommandListener getML() {
+        return this.ml;
+    }
 	// -------------------------------------------------------for CommandSolver
 }// end of class

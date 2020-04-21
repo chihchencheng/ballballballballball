@@ -2,7 +2,6 @@ package gameobj;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -15,7 +14,7 @@ import util.Global;
 
 public abstract class GameObject {
 
-    protected Image nowImg;
+    protected KeyPair nowImg;
     protected Rect collider;
     protected Rect rect;
     protected String imgPath;
@@ -35,12 +34,11 @@ public abstract class GameObject {
 
     public GameObject(String imgPath, int x, int y, int width, int height, boolean isBindCollider) {
         this.imgPath = imgPath;
-        this.nowImg = ImageResourceController.getInstance().tryGetImage(imgPath);
+        this.nowImg = new KeyPair(imgPath);
         imgs = new ArrayList<>();
         imgs.add(new KeyPair(imgPath));
         this.rect = Rect.genWithXY(x, y, width, height);
         if (isBindCollider) {
-            this.nowImg = ImageResourceController.getInstance().tryGetImage(imgPath);
             this.collider = this.rect;
         } else {
             this.collider = Rect.genWithXY(x, y, width, height);
@@ -50,7 +48,7 @@ public abstract class GameObject {
     public GameObject(String imgPath, int x, int y, int width, int height,
             int colliderW, int colliderH, boolean isBindCollider) {
         this.imgPath = imgPath;
-        this.nowImg = ImageResourceController.getInstance().tryGetImage(imgPath);
+        this.nowImg = new KeyPair(imgPath);
         imgs = new ArrayList<>();
         imgs.add(new KeyPair(imgPath));
 
@@ -64,22 +62,20 @@ public abstract class GameObject {
 
     public GameObject(String imgPath, int x, int y, boolean isBindCollider) {
         this.imgPath = imgPath;
-        this.nowImg = ImageResourceController.getInstance().tryGetImage(imgPath);
+        this.nowImg = new KeyPair(imgPath);
         imgs = new ArrayList<>();
         imgs.add(new KeyPair(imgPath));
-        this.rect = Rect.genWithXY(x, y, nowImg.getWidth(null), nowImg.getHeight(null));
+        this.rect = Rect.genWithXY(x, y, nowImg.img.getWidth(null), nowImg.img.getHeight(null));
         if (isBindCollider) {
-            this.nowImg = ImageResourceController.getInstance().tryGetImage(imgPath);
             this.collider = this.rect;
         } else {
-            this.collider = Rect.genWithXY(x, y, nowImg.getWidth(null), nowImg.getHeight(null));
+            this.collider = Rect.genWithXY(x, y, nowImg.img.getWidth(null), nowImg.img.getHeight(null));
         }
     }// end of constructor
 
     public GameObject(String imgPath) {
-
         this.imgPath = imgPath;
-        this.nowImg = ImageResourceController.getInstance().tryGetImage(imgPath);
+        this.nowImg = new KeyPair(imgPath);
         imgs = new ArrayList<>();
         imgs.add(new KeyPair(imgPath));
     }
@@ -95,20 +91,46 @@ public abstract class GameObject {
         }
     }
 
+    public void importPic(String imgPath) {
+        imgs.add(new KeyPair(imgPath));
+        System.out.println(nowImg.imgPath+"追加圖片："+imgs.get(imgs.size()-1).imgPath);
+    }
+
     public void switchNowImage(int i) {
         if (i < 0 || i >= imgs.size()) {
             System.out.println("switchNowImage " + i + " 超出索引範圍");
+        } else {
+            nowImg = imgs.get(i);
         }
-        nowImg = imgs.get(i).img;
     }
 
     public void switchNowImage(String imgPath) {
         for (int i = 0; i < imgs.size(); i++) {
             if (imgPath.equals(imgs.get(i).imgPath)) {
-                this.nowImg = imgs.get(i).img;
+                this.nowImg = imgs.get(i);
                 break;
             }
         }
+    }
+
+    public void nextImg() {
+        if ((getNowIndex() + 1) >= (imgs.size())) {
+            nowImg = imgs.get(0);
+        } else {
+            nowImg = imgs.get(getNowIndex() + 1);
+        }
+        System.out.println("nextImg="+nowImg.imgPath);
+    }
+
+    public String getImgPath(int index) {
+        if (index < 0 || index >= imgs.size()) {
+            return null;
+        }
+        return imgs.get(index).imgPath;
+    }
+
+    public String getNowImgPath() {
+        return nowImg.imgPath;
     }
 
     public int getX() {
@@ -158,7 +180,20 @@ public abstract class GameObject {
     }
 
     public Image getImg() {
-        return this.nowImg;
+        return this.nowImg.img;
+    }
+
+    public int getNowIndex() {
+        for (int i = 0; i < getImgCount(); i++) {
+            if (nowImg.imgPath.equals(imgs.get(i).imgPath)) {
+                return i;
+            }
+        }
+        return imgs.size();
+    }
+
+    public int getImgCount() {
+        return imgs.size();
     }
 
     public abstract void update();
@@ -173,7 +208,7 @@ public abstract class GameObject {
 
     public void paint(Graphics g) {
         paintComponent(g);
-        g.drawImage(nowImg, this.rect.left(), this.rect.top(), this.rect.width(), this.rect.height(), null);
+        g.drawImage(nowImg.img, this.rect.left(), this.rect.top(), this.rect.width(), this.rect.height(), null);
         if (Global.IS_DEBUG) {
             g.setColor(Color.RED);
             g.drawRect(this.rect.left(), this.rect.top(), this.rect.width(), this.rect.height());

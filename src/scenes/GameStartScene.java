@@ -129,7 +129,7 @@ public class GameStartScene extends Scene {
 	private BufferedImage background;
 	private int ballAmount;
     private Img bk;
-    private int roleNum;//小人物圖片
+    private String roleNum;//小人物圖片
 
     private int[] xs;
     private int time;
@@ -141,11 +141,11 @@ public class GameStartScene extends Scene {
     private Delay delay;
     private Delay timeDelay;
 
-    public GameStartScene(SceneController sceneController, int roleNum) {
+    public GameStartScene(SceneController sceneController, String roleNum) {
         super(sceneController);
         bk = new Img(ImgPath.BK_MAIN, 0, 0,
                 (int) (Global.SCREEN_X * Global.ADJ), (int) (Global.SCREEN_Y * Global.ADJ), true);//載入背景圖片
-        this.roleNum = roleNum + 7;
+        this.roleNum = roleNum;
 
         imgs = new ArrayList<>();
 
@@ -278,8 +278,8 @@ public class GameStartScene extends Scene {
             imgs.get(i).paint(g);
 		}
 		
-        //小人物部分
-        imgs.get(this.roleNum).paint(g);
+//        //小人物部分
+//        imgs.get(this.roleNum).paint(g);
 
         for (int i = 0; i < bricks.size(); i++) {// 最底下的碰撞長方形
             bricks.get(i).paint(g);
