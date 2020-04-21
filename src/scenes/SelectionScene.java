@@ -41,8 +41,9 @@ public class SelectionScene extends Scene {
     public class MyMouseCommandListener implements CommandSolver.MouseCommandListener {
 
         private String roleSelectionPath = ImgPath.CHOSE_CHEERBALL;
+
         private boolean gameStartSelected = false;
-        private String buttonSelectPath;
+        private String buttonSelectPath=NULL;
         private boolean inButton = false;
 
         @Override
@@ -60,9 +61,17 @@ public class SelectionScene extends Scene {
                     inButton = true;
                 }
             }
-            if (!imgs.get(button[0]).isInside(e.getX(), e.getY())&&!imgs.get(button[1]).isInside(e.getX(),e.getY())&&
-                    !imgs.get(button[2]).isInside(e.getX(), e.getY())&&!imgs.get(button[3]).isInside(e.getX(), e.getY())) {
+            if (!imgs.get(button[0]).isInside(e.getX(), e.getY()) && !imgs.get(button[1]).isInside(e.getX(), e.getY())
+                    && !imgs.get(button[2]).isInside(e.getX(), e.getY()) && !imgs.get(button[3]).isInside(e.getX(), e.getY())) {
                 inButton = false;
+                buttonSelectPath =NULL;
+            }
+
+            //-----人物點選
+            for (int i = 0; i < rolePaths.length; i++) {
+                if (imgs.get(rolePaths[i]).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
+                    roleSelectionPath = rolePaths[i];
+                }
             }
 
             //-----按鈕功能
@@ -120,6 +129,10 @@ public class SelectionScene extends Scene {
 
         //select sign
         imgs.add(new Img(ImgPath.SELECT, (int) (Global.SCREEN_X * 0.1995 * Global.ADJ), (int) (Global.SCREEN_Y * 0.137 * Global.ADJ), true));
+        
+        //null
+        imgs.add(new Img(ImgPath.NULL, (int) (Global.SCREEN_X * 0 * Global.ADJ), (int) (Global.SCREEN_Y * 0 * Global.ADJ), true));
+        
 
     }
 
@@ -159,6 +172,13 @@ public class SelectionScene extends Scene {
         for (int i = 0; i < button.length; i++) {
             imgs.get(button[i]).paint(g);
         }
+        for(int i=0;i<button.length;i++){
+            if(!mmcl.buttonSelectPath.equals(button[i])){
+                imgs.get(button[i]).switchNowImage(0);
+            }        
+        }
+        imgs.get(mmcl.buttonSelectPath).switchNowImage(1);
+
     }
 
     @Override
