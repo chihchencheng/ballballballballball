@@ -20,8 +20,10 @@ import util.CommandSolver.*;
 import util.*;
 
 public class GameStartScene extends Scene {
-	// set up this scene mouseListener
-	public class MyMouseCommandListener implements MouseCommandListener {
+
+    // set up this scene mouseListener
+
+    public class MyMouseCommandListener implements MouseCommandListener {
 
 		@Override
 		public void mouseTrig(MouseEvent e, MouseState state, long trigTime) {
@@ -131,21 +133,21 @@ public class GameStartScene extends Scene {
 					}
 
 				}
-				
 			}
+				
 		}// end of mouseTrig
 	}// end of inner class
 
 	private MyMouseCommandListener mmcl;
-	private ArrayList<Brick> bricks;
-	private ArrayList<Number> numbers;
-	private ArrayList<Number> digNumbers;
-	private ArrayList<Ball> linkBalls;
-	private List<List<Ball>> listOfBalls;
-	private ArrayList<Img> imgs;
-	private int ballAmount;
-	private Img bk;
-	private int roleNum;// 小人物圖片
+    private ArrayList<Brick> bricks;
+    private ArrayList<Number> numbers;
+    private ArrayList<Number> digNumbers;
+    private ArrayList<Ball> linkBalls;
+    private List<List<Ball>> listOfBalls;
+    private ArrayList<Img> imgs;
+    private Img bk;
+    private int ballAmount;
+    private int roleNum;
 
 	private int[] xs;
 	private int time;
@@ -161,12 +163,11 @@ public class GameStartScene extends Scene {
 	private AudioObject clean;
 	private AudioObject houwo;
 	
-
-	public GameStartScene(SceneController sceneController, int roleNum) {
-		super(sceneController);
-		bk = new Img(ImgPath.BK_MAIN, 0, 0, (int) (Global.SCREEN_X * Global.ADJ), (int) (Global.SCREEN_Y * Global.ADJ),
-				true);// 載入背景圖片
-		this.roleNum = roleNum + 7;
+    public GameStartScene(SceneController sceneController, int roleNum) {
+        super(sceneController);
+        bk = new Img(ImgPath.BK_MAIN, 0, 0,
+                (int) (Global.SCREEN_X * Global.ADJ), (int) (Global.SCREEN_Y * Global.ADJ), true);//載入背景圖片
+        this.roleNum = roleNum + 7;
 
 		imgs = new ArrayList<>();
 
@@ -185,8 +186,8 @@ public class GameStartScene extends Scene {
 		this.mmcl = new MyMouseCommandListener();
 	}
 
-	@Override
-	public void sceneBegin() {
+    @Override
+    public void sceneBegin() {
 
 		delay = new Delay(Global.UPDATE_TIMES_PER_SEC);
 		timeDelay = new Delay(Global.UPDATE_TIMES_PER_SEC);// 倒數秒數延遲時間
@@ -196,64 +197,53 @@ public class GameStartScene extends Scene {
 		linkBalls = new ArrayList<Ball>();
 		listOfBalls = new ArrayList<List<Ball>>();
 		houwo = new AudioObject("HouWo",AudioPath.HOWO);
-		
 
-		// 元件
-		imgs.add(new Img(ImgPath.TIME_PANEL, (int) (Global.SCREEN_X * 0.022388 * Global.ADJ),
-				(int) (Global.SCREEN_Y * 0.027 * Global.ADJ), true));
-		imgs.add(new Img(ImgPath.LEFT_PANEL, (int) (Global.SCREEN_X * 0.017 * Global.ADJ),
-				(int) (Global.SCREEN_Y * 0.212 * Global.ADJ), true));
-		imgs.add(new Img(ImgPath.RIGHT_PANEL, (int) (Global.SCREEN_X * 0.5 * Global.ADJ),
-				(int) (Global.SCREEN_Y * 0.022 * Global.ADJ), true));
-		imgs.add(new Img(ImgPath.SKILL_BANNER, (int) (Global.SCREEN_X * 0.672 * Global.ADJ),
-				(int) (Global.SCREEN_Y * 0.865 * Global.ADJ), true));
-		imgs.add(new Img(ImgPath.PLAY_BUTTON, (int) (Global.SCREEN_X * 0.903 * Global.ADJ),
-				(int) (Global.SCREEN_Y * 0.8675 * Global.ADJ), true));
-		imgs.add(new Img(ImgPath.PAUSE, (int) (Global.SCREEN_X * 0.515 * Global.ADJ),
-				(int) (Global.SCREEN_Y * 0.873 * Global.ADJ), true));
-		imgs.add(new Img(ImgPath.REHEARSE, (int) (Global.SCREEN_X * 0.58 * Global.ADJ),
-				(int) (Global.SCREEN_Y * 0.873 * Global.ADJ), true));
-		// small role
-		imgs.add(new Img(ImgPath.SMALL_TSAI, (int) (Global.SCREEN_X * -0.012 * Global.ADJ),
-				(int) (Global.SCREEN_Y * 0.29 * Global.ADJ), true));
-		imgs.add(new Img(ImgPath.SMALL_ZHANG, (int) (Global.SCREEN_X * -0.03 * Global.ADJ),
-				(int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
-		imgs.add(new Img(ImgPath.SMALL_SHU, (int) (Global.SCREEN_X * -0.03 * Global.ADJ),
-				(int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
-		imgs.add(new Img(ImgPath.SMALL_ZHOU, (int) (Global.SCREEN_X * -0.03 * Global.ADJ),
-				(int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
-		imgs.add(new Img(ImgPath.SMALL_WANG, (int) (Global.SCREEN_X * -0.03 * Global.ADJ),
-				(int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
+		 //元件
+		 imgs.add(new Img(ImgPath.TIME_PANEL, (int) (Global.SCREEN_X * 0.022388 * Global.ADJ), (int) (Global.SCREEN_Y * 0.027 * Global.ADJ), true));
+		 imgs.add(new Img(ImgPath.LEFT_PANEL, (int) (Global.SCREEN_X * 0.017 * Global.ADJ), (int) (Global.SCREEN_Y * 0.212 * Global.ADJ), true));
+		 imgs.add(new Img(ImgPath.RIGHT_PANEL, (int) (Global.SCREEN_X * 0.5 * Global.ADJ), (int) (Global.SCREEN_Y * 0.022 * Global.ADJ), true));
+		 imgs.add(new Img(ImgPath.SKILL_BANNER, (int) (Global.SCREEN_X * 0.672 * Global.ADJ), (int) (Global.SCREEN_Y * 0.865 * Global.ADJ), true));
+		 imgs.add(new Img(ImgPath.PLAY_BUTTON, (int) (Global.SCREEN_X * 0.903 * Global.ADJ), (int) (Global.SCREEN_Y * 0.8675 * Global.ADJ), true));
+		 imgs.add(new Img(ImgPath.PAUSE, (int) (Global.SCREEN_X * 0.515 * Global.ADJ), (int) (Global.SCREEN_Y * 0.873 * Global.ADJ), true));
+		 imgs.add(new Img(ImgPath.REHEARSE, (int) (Global.SCREEN_X * 0.58 * Global.ADJ), (int) (Global.SCREEN_Y * 0.873 * Global.ADJ), true));
+		 //small role
+		 imgs.add(new Img(ImgPath.SMALL_TSAI, (int) (Global.SCREEN_X * -0.012 * Global.ADJ), (int) (Global.SCREEN_Y * 0.29 * Global.ADJ), true));
+		 imgs.add(new Img(ImgPath.SMALL_ZHANG, (int) (Global.SCREEN_X * 0.021 * Global.ADJ), (int) (Global.SCREEN_Y * 0.32 * Global.ADJ), true));
+		 imgs.add(new Img(ImgPath.SMALL_SHU, (int) (Global.SCREEN_X * -0.03 * Global.ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
+		 imgs.add(new Img(ImgPath.SMALL_ZHOU, (int) (Global.SCREEN_X * -0.01 * Global.ADJ), (int) (Global.SCREEN_Y * 0.312 * Global.ADJ), true));
+		 imgs.add(new Img(ImgPath.SMALL_WANG, (int) (Global.SCREEN_X * 0.016 * Global.ADJ), (int) (Global.SCREEN_Y * 0.316 * Global.ADJ), true));
 
-		// gray dig8
-		// ------------score
-		float digSize1 = 0.6f;
-		for (int i = 0; i < 10; i++) {
-			imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.19 * Global.ADJ + i * 28),
-					(int) (Global.SCREEN_Y * 0.43 * Global.ADJ), (int) (46 * digSize1), (int) (70 * digSize1), true));
-		}
-		// ------------coin
-		float digSize2 = 0.45f;
-		for (int i = 0; i < 10; i++) {
-			imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
-					(int) (Global.SCREEN_Y * 0.577 * Global.ADJ), (int) (46 * digSize2), (int) (70 * digSize2), true));
-		}
-		// ------------exp
-		for (int i = 0; i < 10; i++) {
-			imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
-					(int) (Global.SCREEN_Y * 0.679 * Global.ADJ), (int) (46 * digSize2), (int) (70 * digSize2), true));
-		}
+		//gray dig8
+        //------------score
+        float digSize1 = 0.6f;
+        for (int i = 0; i < 10; i++) {
+            imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.19 * Global.ADJ + i * 28),
+                    (int) (Global.SCREEN_Y * 0.43 * Global.ADJ), (int) (46 * digSize1), (int) (70 * digSize1), true));
+        }
+        //------------coin
+        float digSize2 = 0.45f;
+        for (int i = 0; i < 10; i++) {
+            imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
+                    (int) (Global.SCREEN_Y * 0.577 * Global.ADJ), (int) (46 * digSize2), (int) (70 * digSize2), true));
+        }
+        //------------exp
+        for (int i = 0; i < 10; i++) {
+            imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
+                    (int) (Global.SCREEN_Y * 0.679 * Global.ADJ), (int) (46 * digSize2), (int) (70 * digSize2), true));
+        }
 
-		xs = genXPoint();
-		for (int i = 0; i < Global.COLUMN; i++) {
-			List<Ball> columnOfBalls = new ArrayList<>();
-			listOfBalls.add(columnOfBalls);
-		}
-		genNumbers(ImgPath.numbers());
-		genNumbers(ImgPath.digNumbers());
-		genRect(xs);
-		delay.start();
-		timeDelay.start();
+        xs = genXPoint();
+        for (int i = 0; i < Global.COLUMN; i++) {
+            List<Ball> columnOfBalls = new ArrayList<>();
+            listOfBalls.add(columnOfBalls);
+        }
+        genNumbers(ImgPath.numbers());
+        genNumbers(ImgPath.digNumbers());
+        genRect(xs);
+        delay.start();
+        timeDelay.start();
+
+
 	}// end of begin
 
 	@Override
@@ -301,6 +291,7 @@ public class GameStartScene extends Scene {
 				}
 			}
 
+
 //		}
 	
 //	else {
@@ -327,9 +318,9 @@ public class GameStartScene extends Scene {
 		// 小人物部分
 		imgs.get(this.roleNum).paint(g);
 
-		for (int i = 0; i < bricks.size(); i++) {// 最底下的碰撞長方形
-			bricks.get(i).paint(g);
-		}
+        for (int i = 0; i < bricks.size(); i++) {// 最底下的碰撞長方形
+            bricks.get(i).paint(g);
+        }
 
 		for (int i = 0; i < listOfBalls.size(); i++) {// 畫球COLUMN
 			for (int j = 0; j < listOfBalls.get(i).size(); j++) {
@@ -337,9 +328,6 @@ public class GameStartScene extends Scene {
 			}
 		}
 		
-
-		
-
 
 		// 倒數計時60秒
 		float sizeCD = 0.8f; // 數字圖片縮放比例
@@ -350,7 +338,7 @@ public class GameStartScene extends Scene {
 		for (int i = 0; i < 30; i++) {
 			imgs.get(12 + i).paint(g);
 		}
-		
+
 		if (linkBalls.size() >= 2) {
 			
 			Graphics2D g2 = (Graphics2D) g;
@@ -365,30 +353,32 @@ public class GameStartScene extends Scene {
 		}
 	}
 
-	private Ball getANewBall(int[] xs, int index) {
-		Ball ball = null;
 
-		int r = Global.random(0, 4);
-		switch (r) {
-		case 0:
-			ball = new Volleyball(xs[index], 0);
-			break;
-		case 1:
-			ball = new Basketball(xs[index], 0);
-			break;
-		case 2:
-			ball = new Baseball(xs[index], 0);
-			break;
-		case 3:
-			ball = new Cheerball(xs[index], 0);
-			break;
-		case 4:
-			ball = new Shuttlecock(xs[index], 0);
-			break;
-		}
 
-		return ball;
-	}
+    private Ball getANewBall(int[] xs, int index) {
+        Ball ball = null;
+
+        int r = Global.random(0, 4);
+        switch (r) {
+            case 0:
+                ball = new Volleyball(xs[index], 0);
+                break;
+            case 1:
+                ball = new Basketball(xs[index], 0);
+                break;
+            case 2:
+                ball = new Baseball(xs[index], 0);
+                break;
+            case 3:
+                ball = new Cheerball(xs[index], 0);
+                break;
+            case 4:
+                ball = new Shuttlecock(xs[index], 0);
+                break;
+        }
+
+        return ball;
+    }
 
 	private int[] genXPoint() {// 球畫製的地方，在開始就要生成
 		xs = new int[7];
@@ -398,15 +388,15 @@ public class GameStartScene extends Scene {
 		return xs;
 	}
 
-	public void genRect(int[] xs) {// 最底下的碰撞框
-		for (int i = 0; i < Global.COLUMN; i++) {
-			if (i % 2 == 0) {
-				bricks.add(new Brick(xs[i] + 2, 540, 50, 10));
-			} else {
-				bricks.add(new Brick(xs[i] + 2, 500, 50, 10));
-			}
-		}
-	}
+    public void genRect(int[] xs) {// 最底下的碰撞框
+        for (int i = 0; i < Global.COLUMN; i++) {
+            if (i % 2 == 0) {
+                bricks.add(new Brick(xs[i] + 2, 540, 50, 10));
+            } else {
+                bricks.add(new Brick(xs[i] + 2, 500, 50, 10));
+            }
+        }
+    }
 
 	public void genNumbers(String[] path) {
 		String[] numImg = path;
