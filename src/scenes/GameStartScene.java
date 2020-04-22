@@ -1,17 +1,21 @@
 package scenes;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import audio.AudioObject;
 import controllers.*;
 import gameobj.*;
 import gameobj.Number;
-import gameobj.Brick;
 import util.CommandSolver.*;
 import util.*;
 
@@ -24,27 +28,23 @@ public class GameStartScene extends Scene {
 //			if (imgs.get(6).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
 //                sceneController.changeScene(new MainScene(sceneController));
 //            }
-			
-			if(imgs.get(4).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
-				timeDelay.start();
-			}
-			
-			if(imgs.get(5).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
+
+
+			if (imgs.get(5).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
 				timeDelay.pause();
 			}
-			
-			if(imgs.get(6).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
-				for(int i=0;i<listOfBalls.size();i++) {
+
+			if (imgs.get(6).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
+				for (int i = 0; i < listOfBalls.size(); i++) {
 					listOfBalls.get(i).clear();
 				}
 				ballAmount = 0;
 			}
 			
+
 			if (e.getX() >= Global.XstartPoint && e.getX() <= Global.XendPoint) {
-				if(timeDelay.isPause()) {
-					
-				}
-				if (state.toString().equals("PRESSED")) {
+				
+				if (state.toString().equals("PRESSED") && linkBalls.size() == 0) {
 					for (int i = 0; i < listOfBalls.size(); i++) {
 						for (int j = 0; j < listOfBalls.get(i).size(); j++) {
 							if (listOfBalls.get(i).get(j).equals(getBallInArea(e))) {
@@ -53,6 +53,7 @@ public class GameStartScene extends Scene {
 							}
 						}
 					}
+
 				}
 				
 //				Global.log(state.toString());
@@ -62,60 +63,75 @@ public class GameStartScene extends Scene {
 							if (linkBalls.size() != 0 && !isExisted(linkBalls, getBallInArea(e))
 									&& listOfBalls.get(i).get(j).equals(getBallInArea(e))
 									&& isTheSameBall(linkBalls.get(0), getBallInArea(e))
-									&&(Math.abs(linkBalls.get(linkBalls.size()-1).rect().centerX()-
-											getBallInArea(e).rect().centerX()))<=Global.UNIT_X -1
-									&&(Math.abs(linkBalls.get(linkBalls.size()-1).rect().centerY()-
-											getBallInArea(e).rect().centerY()))<=Global.UNIT_Y -1) {
+									&& (Math.abs(linkBalls.get(linkBalls.size() - 1).rect().centerX()
+											- getBallInArea(e).rect().centerX())) <= Global.UNIT_X - 1
+									&& (Math.abs(linkBalls.get(linkBalls.size() - 1).rect().centerY()
+											- getBallInArea(e).rect().centerY())) <= Global.UNIT_Y - 1) {
 								linkBalls.add(getBallInArea(e));
-								Global.log("Dragged");
-							}else if(isExisted(linkBalls, getBallInArea(e)) &&
-									!((linkBalls.get(linkBalls.size()-1).equals(getBallInArea(e))))
-									&&(Math.abs(linkBalls.get(linkBalls.size()-1).rect().centerY()-
-											getBallInArea(e).rect().centerY()))<=Global.UNIT_Y -10) {
-								 {
-									for(int k =0;k<linkBalls.size();k++) {
-										if(linkBalls.get(k).equals(getBallInArea(e))) {
-											for(int l = k +1;l<linkBalls.size();l++) {
-												linkBalls.remove(l);
-											}
+//								getBallInArea(e).setPress(true);
+//								Global.log("Dragged");
+							} else if (isExisted(linkBalls, getBallInArea(e))
+									&& !((linkBalls.get(linkBalls.size() - 1).equals(getBallInArea(e))))
+									&& (Math.abs(linkBalls.get(linkBalls.size() - 1).rect().centerY()
+											- getBallInArea(e).rect().centerY())) <= Global.UNIT_Y - 20)  {
+								for (int k = 0; k < linkBalls.size(); k++) {
+									if (linkBalls.get(k).equals(getBallInArea(e))) {
+										for (int l = k + 1; l < linkBalls.size(); l++) {
+											linkBalls.remove(l);
 										}
 									}
 								}
-								
 							}
 						}
 					}
-				}// 
+				} //
+				
 				if (state.toString().equals("RELEASED") || state.toString().equals("EXITED") ||
-						(e.getX() <= Global.XstartPoint && e.getX() >= Global.XendPoint)) {
+						!(e.getX() >= Global.XstartPoint && e.getX() <= Global.XendPoint
+						&& (e.getY() >= Global.YstartPoint && e.getY() <= Global.YendPoint))) {
 					if (linkBalls.size() >= 3) {
 						for (int i = 0; i < linkBalls.size(); i++) {
-//							System.out.println(linkBalls.get(i));
 							isTheSameObject(listOfBalls, linkBalls.get(i));
 						}
 						getScore();
 						getSkillLevel();
+						
+						clean.getAudio().play();
 						linkBalls.clear();
 
 					}
+					if (linkBalls.size() >= 3 
+							&& ((e.getX() >= Global.XstartPoint && e.getX() <= Global.XendPoint
+									&& (e.getY() >= Global.YstartPoint && e.getY() <= Global.YendPoint)
+									&& !isTheSameBall(linkBalls.get(linkBalls.size() - 1), getBallInArea(e))
+									))) {
+						for (int i = 0; i < linkBalls.size(); i++) {
+//								System.out.println(linkBalls.get(i));
+							isTheSameObject(listOfBalls, linkBalls.get(i));
+						}
+						getScore();
+						getSkillLevel();
+						clean.getAudio().play();
+						linkBalls.clear();
+					}
+					if(linkBalls.size() >= 3) {
+						for (int i = 0; i < linkBalls.size(); i++) {
+//							System.out.println(linkBalls.get(i));
+						isTheSameObject(listOfBalls, linkBalls.get(i));
+					}
+					getScore();
+					getSkillLevel();
+					clean.getAudio().play();
+					linkBalls.clear();
+					}
+					
+
 					if (linkBalls.size() < 3) {
 						linkBalls.clear();
 					}
-					if(linkBalls.size() >= 3 && 
-							((e.getX() <= Global.XstartPoint && e.getX() >= Global.XendPoint) || 
-							 state.toString().equals("EXITED")) &&
-							isTheSameBall(linkBalls.get(linkBalls.size()-1),getBallInArea(e))
-							){
-							for (int i = 0; i < linkBalls.size(); i++) {
-//								System.out.println(linkBalls.get(i));
-								isTheSameObject(listOfBalls, linkBalls.get(i));
-							}
-							getScore();
-							getSkillLevel();
-							linkBalls.clear();
-							
-					}
+
 				}
+				
 			}
 		}// end of mouseTrig
 	}// end of inner class
@@ -127,10 +143,9 @@ public class GameStartScene extends Scene {
 	private ArrayList<Ball> linkBalls;
 	private List<List<Ball>> listOfBalls;
 	private ArrayList<Img> imgs;
-	private BufferedImage background;
 	private int ballAmount;
-    private Img bk;
-    private int roleNum;//小人物圖片
+	private Img bk;
+	private int roleNum;// 小人物圖片
 
 	private int[] xs;
 	private int time;
@@ -139,130 +154,159 @@ public class GameStartScene extends Scene {
 	private int skillLevel;
 	private int score;
 	private int totalScore;
+	private int countDown;
 	private Delay delay;
 	private Delay timeDelay;
+	
+	private AudioObject clean;
+	private AudioObject houwo;
+	
 
 	public GameStartScene(SceneController sceneController, int roleNum) {
-        super(sceneController);
-        bk = new Img(ImgPath.BK_MAIN, 0, 0,
-                (int) (Global.SCREEN_X * Global.ADJ), (int) (Global.SCREEN_Y * Global.ADJ), true);//載入背景圖片
-        this.roleNum = roleNum + 7;
+		super(sceneController);
+		bk = new Img(ImgPath.BK_MAIN, 0, 0, (int) (Global.SCREEN_X * Global.ADJ), (int) (Global.SCREEN_Y * Global.ADJ),
+				true);// 載入背景圖片
+		this.roleNum = roleNum + 7;
 
-        imgs = new ArrayList<>();
+		imgs = new ArrayList<>();
 
-        //角色
+		// 角色
 		sceneBegin();
 		
+		this.clean = new AudioObject("Clean", AudioPath.CLEAN2);
+		this.countDown = 0;
 		this.skillLevel = 0;
-        this.units = 0;// 倒數個位數
-        this.tens = 6;// 倒數十位數
-        this.time = 60;// 倒數總秒數
+		this.units = 0;// 倒數個位數
+		this.tens = 6;// 倒數十位數
+		this.time = 60;// 倒數總秒數
 		this.ballAmount = 0;// 檯面上總球數
 		this.score = 0;
 		this.totalScore = 0;
-        this.mmcl = new MyMouseCommandListener();
-    }
+		this.mmcl = new MyMouseCommandListener();
+	}
 
 	@Override
 	public void sceneBegin() {
 
-		delay = new Delay(0);
-        timeDelay = new Delay(Global.UPDATE_TIMES_PER_SEC);// 倒數秒數延遲時間
-        bricks = new ArrayList<Brick>();// 最底下的碰撞框
-        numbers = new ArrayList<Number>();
-        digNumbers = new ArrayList<Number>();
-        linkBalls = new ArrayList<Ball>();
-        listOfBalls = new ArrayList<List<Ball>>();
+		delay = new Delay(Global.UPDATE_TIMES_PER_SEC);
+		timeDelay = new Delay(Global.UPDATE_TIMES_PER_SEC);// 倒數秒數延遲時間
+		bricks = new ArrayList<Brick>();// 最底下的碰撞框
+		numbers = new ArrayList<Number>();
+		digNumbers = new ArrayList<Number>();
+		linkBalls = new ArrayList<Ball>();
+		listOfBalls = new ArrayList<List<Ball>>();
+		houwo = new AudioObject("HouWo",AudioPath.HOWO);
+		
 
-		//元件
-        imgs.add(new Img(ImgPath.TIME_PANEL, (int) (Global.SCREEN_X * 0.022388 * Global.ADJ), (int) (Global.SCREEN_Y * 0.027 * Global.ADJ), true));
-        imgs.add(new Img(ImgPath.LEFT_PANEL, (int) (Global.SCREEN_X * 0.017 * Global.ADJ), (int) (Global.SCREEN_Y * 0.212 * Global.ADJ), true));
-        imgs.add(new Img(ImgPath.RIGHT_PANEL, (int) (Global.SCREEN_X * 0.5 * Global.ADJ), (int) (Global.SCREEN_Y * 0.022 * Global.ADJ), true));
-        imgs.add(new Img(ImgPath.SKILL_BANNER, (int) (Global.SCREEN_X * 0.672 * Global.ADJ), (int) (Global.SCREEN_Y * 0.865 * Global.ADJ), true));
-        imgs.add(new Img(ImgPath.PLAY_BUTTON, (int) (Global.SCREEN_X * 0.903 * Global.ADJ), (int) (Global.SCREEN_Y * 0.8675 * Global.ADJ), true));
-        imgs.add(new Img(ImgPath.PAUSE, (int) (Global.SCREEN_X * 0.515 * Global.ADJ), (int) (Global.SCREEN_Y * 0.873 * Global.ADJ), true));
-        imgs.add(new Img(ImgPath.REHEARSE, (int) (Global.SCREEN_X * 0.58 * Global.ADJ), (int) (Global.SCREEN_Y * 0.873 * Global.ADJ), true));
-        //small role
-        imgs.add(new Img(ImgPath.SMALL_TSAI, (int) (Global.SCREEN_X * -0.012 * Global.ADJ), (int) (Global.SCREEN_Y * 0.29 * Global.ADJ), true));
-        imgs.add(new Img(ImgPath.SMALL_ZHANG, (int) (Global.SCREEN_X * -0.03 * Global.ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
-        imgs.add(new Img(ImgPath.SMALL_SHU, (int) (Global.SCREEN_X * -0.03 * Global.ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
-        imgs.add(new Img(ImgPath.SMALL_ZHOU, (int) (Global.SCREEN_X * -0.03 * Global.ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
-        imgs.add(new Img(ImgPath.SMALL_WANG, (int) (Global.SCREEN_X * -0.03 * Global.ADJ), (int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
+		// 元件
+		imgs.add(new Img(ImgPath.TIME_PANEL, (int) (Global.SCREEN_X * 0.022388 * Global.ADJ),
+				(int) (Global.SCREEN_Y * 0.027 * Global.ADJ), true));
+		imgs.add(new Img(ImgPath.LEFT_PANEL, (int) (Global.SCREEN_X * 0.017 * Global.ADJ),
+				(int) (Global.SCREEN_Y * 0.212 * Global.ADJ), true));
+		imgs.add(new Img(ImgPath.RIGHT_PANEL, (int) (Global.SCREEN_X * 0.5 * Global.ADJ),
+				(int) (Global.SCREEN_Y * 0.022 * Global.ADJ), true));
+		imgs.add(new Img(ImgPath.SKILL_BANNER, (int) (Global.SCREEN_X * 0.672 * Global.ADJ),
+				(int) (Global.SCREEN_Y * 0.865 * Global.ADJ), true));
+		imgs.add(new Img(ImgPath.PLAY_BUTTON, (int) (Global.SCREEN_X * 0.903 * Global.ADJ),
+				(int) (Global.SCREEN_Y * 0.8675 * Global.ADJ), true));
+		imgs.add(new Img(ImgPath.PAUSE, (int) (Global.SCREEN_X * 0.515 * Global.ADJ),
+				(int) (Global.SCREEN_Y * 0.873 * Global.ADJ), true));
+		imgs.add(new Img(ImgPath.REHEARSE, (int) (Global.SCREEN_X * 0.58 * Global.ADJ),
+				(int) (Global.SCREEN_Y * 0.873 * Global.ADJ), true));
+		// small role
+		imgs.add(new Img(ImgPath.SMALL_TSAI, (int) (Global.SCREEN_X * -0.012 * Global.ADJ),
+				(int) (Global.SCREEN_Y * 0.29 * Global.ADJ), true));
+		imgs.add(new Img(ImgPath.SMALL_ZHANG, (int) (Global.SCREEN_X * -0.03 * Global.ADJ),
+				(int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
+		imgs.add(new Img(ImgPath.SMALL_SHU, (int) (Global.SCREEN_X * -0.03 * Global.ADJ),
+				(int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
+		imgs.add(new Img(ImgPath.SMALL_ZHOU, (int) (Global.SCREEN_X * -0.03 * Global.ADJ),
+				(int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
+		imgs.add(new Img(ImgPath.SMALL_WANG, (int) (Global.SCREEN_X * -0.03 * Global.ADJ),
+				(int) (Global.SCREEN_Y * 0.35 * Global.ADJ), true));
 
-        //gray dig8
-        //------------score
-        float digSize1 = 0.6f;
-        for (int i = 0; i < 10; i++) {
-            imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.19 * Global.ADJ + i * 28),
-                    (int) (Global.SCREEN_Y * 0.43 * Global.ADJ), (int) (46 * digSize1), (int) (70 * digSize1), true));
-        }
-        //------------coin
-        float digSize2 = 0.45f;
-        for (int i = 0; i < 10; i++) {
-            imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
-                    (int) (Global.SCREEN_Y * 0.577 * Global.ADJ), (int) (46 * digSize2), (int) (70 * digSize2), true));
-        }
-        //------------exp
-        for (int i = 0; i < 10; i++) {
-            imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
-                    (int) (Global.SCREEN_Y * 0.679 * Global.ADJ), (int) (46 * digSize2), (int) (70 * digSize2), true));
-        }
-
+		// gray dig8
+		// ------------score
+		float digSize1 = 0.6f;
+		for (int i = 0; i < 10; i++) {
+			imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.19 * Global.ADJ + i * 28),
+					(int) (Global.SCREEN_Y * 0.43 * Global.ADJ), (int) (46 * digSize1), (int) (70 * digSize1), true));
+		}
+		// ------------coin
+		float digSize2 = 0.45f;
+		for (int i = 0; i < 10; i++) {
+			imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
+					(int) (Global.SCREEN_Y * 0.577 * Global.ADJ), (int) (46 * digSize2), (int) (70 * digSize2), true));
+		}
+		// ------------exp
+		for (int i = 0; i < 10; i++) {
+			imgs.add(new Img(ImgPath.EIGHT_D_GRAY, (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
+					(int) (Global.SCREEN_Y * 0.679 * Global.ADJ), (int) (46 * digSize2), (int) (70 * digSize2), true));
+		}
 
 		xs = genXPoint();
-        for (int i = 0; i < Global.COLUMN; i++) {
-            List<Ball> columnOfBalls = new ArrayList<>();
-            listOfBalls.add(columnOfBalls);
-        }
-        genNumbers(ImgPath.numbers());
-        genNumbers(ImgPath.digNumbers());
-        genRect(xs);
-        delay.start();
-        timeDelay.start();
+		for (int i = 0; i < Global.COLUMN; i++) {
+			List<Ball> columnOfBalls = new ArrayList<>();
+			listOfBalls.add(columnOfBalls);
+		}
+		genNumbers(ImgPath.numbers());
+		genNumbers(ImgPath.digNumbers());
+		genRect(xs);
+		delay.start();
+		timeDelay.start();
 	}// end of begin
 
 	@Override
 	public void sceneUpdate() {
-		for (int i = 0; i < listOfBalls.size(); i++) {
-            for (int j = 0; j < listOfBalls.get(i).size(); j++) {
-                if (!listOfBalls.get(i).get(j).move()) {
-                    listOfBalls.get(i).remove(j);
-                    ballAmount--;
-                }
-            }
-        }
-        checkIfLess(listOfBalls);
+		checkIfLess(listOfBalls);
+		
+//		if(countDown != 0) {
+			for (int i = 0; i < listOfBalls.size(); i++) {
+				for (int j = 0; j < listOfBalls.get(i).size(); j++) {
+					if (!listOfBalls.get(i).get(j).move()) {
+						listOfBalls.get(i).remove(j);
+						ballAmount--;
+					}
+				}
+			}
+			
 
-		 // 判斷球是否碰撞至最底下磚塊
-		 for (int i = 0; i < listOfBalls.size(); i++) {
-            for (int j = 0; j < listOfBalls.get(i).size(); j++) {
-                if (bricks.get(i).isCollision(listOfBalls.get(i).get(j))) {
-                    listOfBalls.get(i).get(j).offset(0, -4);
-                }
-            }
-        }
+			// 判斷球是否碰撞至最底下磚塊
+			for (int i = 0; i < listOfBalls.size(); i++) {
+				for (int j = 0; j < listOfBalls.get(i).size(); j++) {
+					if (bricks.get(i).isCollision(listOfBalls.get(i).get(j))) {
+						listOfBalls.get(i).get(j).offset(0, -4);
+					}
+				}
+			}
 
-        // 判斷球是否互相碰撞
-        for (int i = 0; i < listOfBalls.size(); i++) {
-            for (int j = 1; j < listOfBalls.get(i).size(); j++) {
-                if (listOfBalls.get(i).get(j).isCollision(listOfBalls.get(i).get(j - 1))) {
-                    listOfBalls.get(i).get(j).offset(0, -4);
-                }
-            }
-        }
-        
-		skillTrig(5);
+			// 判斷球是否互相碰撞
+			for (int i = 0; i < listOfBalls.size(); i++) {
+				for (int j = 1; j < listOfBalls.get(i).size(); j++) {
+					if (listOfBalls.get(i).get(j).isCollision(listOfBalls.get(i).get(j - 1))) {
+						listOfBalls.get(i).get(j).offset(0, -4);
+					}
+				}
+			}
 
-		// 倒數計時器，當球滿了，且最後一顆已經落下停止時
-//		if (ballAmount == Global.LIMIT) {
-//				&& 
-//			listOfBalls.get(Global.COLUMN).get(Global.ROW).
-//			isCollision(listOfBalls.get(Global.COLUMN).get(Global.ROW-1))) {
-		if (this.time >= 0 && timeDelay.isTrig()) {
-			units = time % 10;
-			tens = time / 10;
-			this.time -= 1;
-		}
+			// 倒數計時器，當球滿了，且最後一顆已經落下停止時
+			if (ballAmount == Global.LIMIT) {
+//					&& 
+//				listOfBalls.get(Global.COLUMN).get(Global.ROW).
+//				isCollision(listOfBalls.get(Global.COLUMN).get(Global.ROW-1))) {
+				if (this.time >= 0 && timeDelay.isTrig()) {
+					units = time % 10;
+					tens = time / 10;
+					this.time -= 1;
+				}
+			}
+
+//		}
+	
+//	else {
+//			countDown--;
+//		}
+		
 		
 	}
 
@@ -275,13 +319,13 @@ public class GameStartScene extends Scene {
 	@Override
 	public void paint(Graphics g) {
 		bk.paint(g);
-        //元件部分        
-        for (int i = 0; i < 7; i++) {
-            imgs.get(i).paint(g);
+		// 元件部分
+		for (int i = 0; i < 7; i++) {
+			imgs.get(i).paint(g);
 		}
-		
-        //小人物部分
-        imgs.get(this.roleNum).paint(g);
+
+		// 小人物部分
+		imgs.get(this.roleNum).paint(g);
 
 		for (int i = 0; i < bricks.size(); i++) {// 最底下的碰撞長方形
 			bricks.get(i).paint(g);
@@ -292,34 +336,33 @@ public class GameStartScene extends Scene {
 				listOfBalls.get(i).get(j).paint(g);
 			}
 		}
+		
 
-		if (linkBalls.size() >= 2) {
-			g.setColor(Color.blue);
-			for (int i = 0; i < linkBalls.size() - 1; i++) {
-				g.drawLine(linkBalls.get(i).rect().centerX(), linkBalls.get(i).rect().centerY(),
-						linkBalls.get(i + 1).rect().centerX(), linkBalls.get(i + 1).rect().centerY());
+		
 
-				
-				g.drawLine(linkBalls.get(i).rect().centerX() + 1, linkBalls.get(i).rect().centerY() + 1,
-						linkBalls.get(i + 1).rect().centerX() + 1, linkBalls.get(i + 1).rect().centerY() + 1);
 
-				g.drawLine(linkBalls.get(i).rect().centerX() + 2, linkBalls.get(i).rect().centerY() + 2,
-						linkBalls.get(i + 1).rect().centerX() + 2, linkBalls.get(i + 1).rect().centerY() + 2);
+		// 倒數計時60秒
+		float sizeCD = 0.8f; // 數字圖片縮放比例
+		g.drawImage(numbers.get(units).getImg(), 112, 38, null);// 個位數
+		g.drawImage(numbers.get(tens).getImg(), 78, 38, null);// 十位數
 
-			}
-			g.setColor(Color.black);
+		// sore panel
+		for (int i = 0; i < 30; i++) {
+			imgs.get(12 + i).paint(g);
 		}
-
-        // 倒數計時60秒
-        float sizeCD = 0.8f; //數字圖片縮放比例
-        g.drawImage(numbers.get(units).getImg(), 112, 38,  null);// 個位數
-        g.drawImage(numbers.get(tens).getImg(), 78, 38,  null);// 十位數
-
-        //sore panel
-        for (int i = 0; i < 30; i++) {
-            imgs.get(12 + i).paint(g);
-        }
-
+		
+		if (linkBalls.size() >= 2) {
+			
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setColor(Color.MAGENTA);
+			g2.setStroke(new BasicStroke(10));
+			
+			for (int i = 0; i < linkBalls.size() - 1; i++) {
+				g2.drawLine(linkBalls.get(i).rect().centerX(), linkBalls.get(i).rect().centerY() ,
+						linkBalls.get(i + 1).rect().centerX() , linkBalls.get(i + 1).rect().centerY());
+			}
+			g2.setColor(Color.black);
+		}
 	}
 
 	private Ball getANewBall(int[] xs, int index) {
@@ -348,12 +391,12 @@ public class GameStartScene extends Scene {
 	}
 
 	private int[] genXPoint() {// 球畫製的地方，在開始就要生成
-        xs = new int[7];
-        for (int i = 0; i < 7; i++) {
-            xs[i] = i * (int) (Global.UNIT_X * Global.ADJ) + Global.XstartPoint;
-        }
-        return xs;
-    }
+		xs = new int[7];
+		for (int i = 0; i < 7; i++) {
+			xs[i] = i * (int) (Global.UNIT_X * Global.ADJ) + Global.XstartPoint;
+		}
+		return xs;
+	}
 
 	public void genRect(int[] xs) {// 最底下的碰撞框
 		for (int i = 0; i < Global.COLUMN; i++) {
@@ -366,13 +409,12 @@ public class GameStartScene extends Scene {
 	}
 
 	public void genNumbers(String[] path) {
-        String[] numImg = path;
-        for (int i = 0; i < 10; i++) {
-            this.numbers.add(new Number(numImg[i]));
-        }
-    }
+		String[] numImg = path;
+		for (int i = 0; i < 10; i++) {
+			this.numbers.add(new Number(numImg[i]));
+		}
+	}
 
-	
 	private boolean checkIfLess(List<List<Ball>> listOfBalls) {
 		for (int i = 0; i < Global.COLUMN; i++) {
 			while (listOfBalls.get(i).size() < Global.ROW) {
@@ -383,8 +425,8 @@ public class GameStartScene extends Scene {
 		return false;
 	}
 
-	private void skillTrig(int key) {
-
+	private boolean skillTrig(int key) {
+		
 		switch (key) {
 		case 1:// Zhang-baseketball
 			if (skillLevel == 12) {// basketball skill trig
@@ -399,9 +441,9 @@ public class GameStartScene extends Scene {
 				skillLevel = 0;
 				Global.log("Skill Level reset to 0");
 			}
-			break;
+			return true;
 		case 2:// Wang-volleyball
-			if (skillLevel >= 17) {// basketball skill trig
+			if (skillLevel >= 17) {
 				for (int i = 0; i < 10; i++) {
 					int c = (int) (Math.random() * listOfBalls.size());
 					int r = (int) (Math.random() * listOfBalls.get(0).size());
@@ -411,16 +453,16 @@ public class GameStartScene extends Scene {
 				skillLevel = 0;
 				Global.log("Skill Level reset to 0");
 			}
-			break;
+			return true;
 		case 3:// Tsai-cheerball
-			if(skillLevel >= 16) {
+			if (skillLevel >= 16) {
 				this.time += 5;
-				System.out.println("Time:"+this.time);
+				System.out.println("Time:" + this.time);
 				Global.log("Skill Trig");
 				skillLevel = 0;
 				Global.log("Skill Level reset to 0");
 			}
-			break;
+			return true;
 		case 4:// Shu-shuttlecock
 			if (skillLevel >= 14) {// basketball skill trig
 				int skillStartTime = this.time;
@@ -430,55 +472,61 @@ public class GameStartScene extends Scene {
 				} while (this.time - skillStartTime < 7);
 			}
 			skillLevel = 0;
-			break;
+			return true;
 		case 5:// Zhou-baseball
-			if (skillLevel >= 15) {
+//			Global.log("case 5");
+			if (skillLevel >= 3) {
 				for (int i = 0; i < listOfBalls.size(); i++) {
 					listOfBalls.get(i).remove(4);
+//					Global.log("skill level");
 				}
-				for(int i=0;i<listOfBalls.get(3).size();i++) {
-					if(i == 4) {
+				for (int i = 0; i < listOfBalls.get(3).size(); i++) {
+					if (i == 4) {
+//						Global.log("listOfBalls");
 						continue;
 					}
+					
 					listOfBalls.get(3).remove(i);
 				}
-				
+				this.countDown = 240;
 				Global.log("Skill Trig");
 				skillLevel = 0;
 				Global.log("Skill Level reset to 0");
+				return true;
 			}
-			break;
 		}
+		return false;
 	}
+
 
 	private void getScore() {
 		switch (linkBalls.get(0).getName()) {
 		case "Volleyball":
 			this.totalScore += linkBalls.size() * 2;
-			Global.log("TotalScore: "+this.totalScore);
+			Global.log("TotalScore: " + this.totalScore);
 			break;
 		case "Basketball":
 			this.totalScore += linkBalls.size() * 2;
-			Global.log("TotalScore: "+this.totalScore);
+			Global.log("TotalScore: " + this.totalScore);
 			break;
 		case "Baseball":
 			this.totalScore += linkBalls.size() * 2;
-			Global.log("TotalScore: "+this.totalScore);
+			Global.log("TotalScore: " + this.totalScore);
 			break;
 		case "Cheerball":
 			this.totalScore += linkBalls.size() * 2;
-			Global.log("TotalScore: "+this.totalScore);
+			Global.log("TotalScore: " + this.totalScore);
 			break;
 		case "Shuttlecock":
 			this.totalScore += linkBalls.size() * 2;
-			Global.log("TotalScore: "+this.totalScore);
+			Global.log("TotalScore: " + this.totalScore);
 			break;
 		}
 	}
 
 	private void getSkillLevel() {
 		this.skillLevel++;
-		Global.log("SkillLevel + 1, SkillLevel:"+ this.skillLevel);
+		Global.log("SkillLevel + 1, SkillLevel:" + this.skillLevel);
 	}
 
 	private Ball getBallInArea(MouseEvent e) {
@@ -519,7 +567,6 @@ public class GameStartScene extends Scene {
 		return b1.getName().equals(b2.getName());
 	}
 
-
 	// set up for each scene to get scene Listener
 	@Override
 	public CommandSolver.KeyListener getKeyListener() {
@@ -530,6 +577,5 @@ public class GameStartScene extends Scene {
 	public CommandSolver.MouseCommandListener getMouseListener() {
 		return this.mmcl;
 	}
-
 
 }// end of class

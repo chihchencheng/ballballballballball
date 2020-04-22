@@ -60,6 +60,11 @@ public class GameKernel extends Canvas {
             builder.enableKeyboardTrack(kl);
             return this;
         }
+        
+        public Builder mouseForcedRelease() {
+            builder.mouseForceRelease();
+            return this;
+        }
 
         public Builder keyTypedMode() {
             builder.keyTypedMode();
@@ -126,7 +131,7 @@ public class GameKernel extends Canvas {
         while (true) {
             long currentTime = System.nanoTime();// 系統當前時間
             long totalTime = currentTime - startTime;// 從開始到現在經過的時間
-            long targetTotalUpdated = totalTime / (Global.NANO_PER_UPDATE);// 開始到現在應該更新的次數
+            long targetTotalUpdated = totalTime / (nanosecPerUpdate);// 開始到現在應該更新的次數
             // input
             // input end
             while (passedUpdated < targetTotalUpdated) {// 如果當前經過的次數小於實際應該要更新的次數
@@ -145,7 +150,7 @@ public class GameKernel extends Canvas {
                 timer = currentTime;
             }
 
-            if (Global.LIMIT_DELTA_TIME <= currentTime - lastRepaintTime) {
+            if (limitDeltaTimePerNano <= currentTime - lastRepaintTime) {
                 lastRepaintTime = currentTime;
                 paint();
                 paintTimes++;

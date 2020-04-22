@@ -122,8 +122,9 @@ public abstract class GameObject {
     }
 
     public void paint(Graphics g) {
-        paintComponent(g);
+        
         g.drawImage(img, this.rect.left(), this.rect.top(), this.rect.width(), this.rect.height(), null);
+        paintComponent(g);
         if (Global.IS_DEBUG) {
             g.setColor(Color.RED);
             g.drawRect(this.rect.left(), this.rect.top(), this.rect.width(), this.rect.height());
