@@ -2,7 +2,6 @@ package gameobj;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -10,19 +9,36 @@ import javax.imageio.ImageIO;
 import controllers.ImageResourceController;
 import graph.Rect;
 import java.awt.Image;
+import java.util.ArrayList;
 import util.Global;
 
 public abstract class GameObject {
 
-    protected Image img;
-    private Rect collider;
+    protected KeyPair nowImg;
+    protected Rect collider;
     protected Rect rect;
+    protected String imgPath;
+    protected ArrayList<KeyPair> imgs;
+
+    private class KeyPair {
+
+        private Image img;
+        private String imgPath;
+
+        public KeyPair(String imgPath) {
+            this.imgPath = imgPath;
+            this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
+        }
+
+    }
 
     public GameObject(String imgPath, int x, int y, int width, int height, boolean isBindCollider) {
-        this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
+        this.imgPath = imgPath;
+        this.nowImg = new KeyPair(imgPath);
+        imgs = new ArrayList<>();
+        imgs.add(new KeyPair(imgPath));
         this.rect = Rect.genWithXY(x, y, width, height);
         if (isBindCollider) {
-            this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
             this.collider = this.rect;
         } else {
             this.collider = Rect.genWithXY(x, y, width, height);
@@ -31,7 +47,11 @@ public abstract class GameObject {
 
     public GameObject(String imgPath, int x, int y, int width, int height,
             int colliderW, int colliderH, boolean isBindCollider) {
-        this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
+        this.imgPath = imgPath;
+        this.nowImg = new KeyPair(imgPath);
+        imgs = new ArrayList<>();
+        imgs.add(new KeyPair(imgPath));
+
         if (isBindCollider) {
             this.rect = this.collider = Rect.genWithXY(x, y, colliderW, colliderH);
         } else {
@@ -39,21 +59,25 @@ public abstract class GameObject {
             this.collider = Rect.genWithXY(x, y, colliderW, colliderH);
         }
     }// end of constructor
-    
-        public GameObject(String imgPath, int x, int y,boolean isBindCollider) {
-        this.img = ImageResourceController.getInstance().tryGetImage(imgPath);        
-        this.rect = Rect.genWithXY(x, y, img.getWidth(null), img.getHeight(null));
+
+    public GameObject(String imgPath, int x, int y, boolean isBindCollider) {
+        this.imgPath = imgPath;
+        this.nowImg = new KeyPair(imgPath);
+        imgs = new ArrayList<>();
+        imgs.add(new KeyPair(imgPath));
+        this.rect = Rect.genWithXY(x, y, nowImg.img.getWidth(null), nowImg.img.getHeight(null));
         if (isBindCollider) {
-            this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
             this.collider = this.rect;
         } else {
-            this.collider = Rect.genWithXY(x, y, img.getWidth(null), img.getHeight(null));
+            this.collider = Rect.genWithXY(x, y, nowImg.img.getWidth(null), nowImg.img.getHeight(null));
         }
     }// end of constructor
-    
 
     public GameObject(String imgPath) {
-        this.img = ImageResourceController.getInstance().tryGetImage(imgPath);
+        this.imgPath = imgPath;
+        this.nowImg = new KeyPair(imgPath);
+        imgs = new ArrayList<>();
+        imgs.add(new KeyPair(imgPath));
     }
 
     public GameObject(int x, int y, int width, int height) {
@@ -156,7 +180,20 @@ public abstract class GameObject {
     }
 
     public Image getImg() {
-        return this.img;
+        return this.nowImg.img;
+    }
+
+    public int getNowIndex() {
+        for (int i = 0; i < getImgCount(); i++) {
+            if (nowImg.imgPath.equals(imgs.get(i).imgPath)) {
+                return i;
+            }
+        }
+        return imgs.size();
+    }
+
+    public int getImgCount() {
+        return imgs.size();
     }
 
     public abstract void update();
@@ -165,14 +202,13 @@ public abstract class GameObject {
 
     //判斷標準：碰撞框
     public boolean isInside(int x, int y) {
-        return x >= this.collider().left() && x <= this.collider().right() && 
-                y >= this.collider().top() && y <= this.collider().bottom();
+        return x >= this.collider().left() && x <= this.collider().right()
+                && y >= this.collider().top() && y <= this.collider().bottom();
     }
 
     public void paint(Graphics g) {
-        
-        g.drawImage(img, this.rect.left(), this.rect.top(), this.rect.width(), this.rect.height(), null);
         paintComponent(g);
+        g.drawImage(nowImg.img, this.rect.left(), this.rect.top(), this.rect.width(), this.rect.height(), null);
         if (Global.IS_DEBUG) {
             g.setColor(Color.RED);
             g.drawRect(this.rect.left(), this.rect.top(), this.rect.width(), this.rect.height());

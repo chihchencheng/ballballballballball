@@ -25,8 +25,7 @@ public class Main {
 				Global.LIMIT_DELTA_TIME,
 				Global.NANO_PER_UPDATE)
 				.initListener(commands).
-				enableMouseTrack(gi).
-				keyTypedMode().trackChar().gen();
+				enableMouseTrack(gi).keyTypedMode().trackChar().gen();
 		
 		f.setTitle("Game test");
 		f.setSize((int)(Global.FRAME_X*Global.ADJ),

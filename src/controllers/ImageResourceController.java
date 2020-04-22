@@ -51,14 +51,10 @@ public class ImageResourceController {
 
     private Image addImage(String path) {
         try {
-            if (Global.IS_DEBUG) {
                 Global.log("load img from:" + path);
-            }
             BufferedImage img = ImageIO.read(getClass().getResource(path));
-            Image imgScale=img.getScaledInstance(
-                    (int)(img.getWidth()*Global.ADJ),(int)(img.getHeight()*Global.ADJ),SCALE_DEFAULT);
-            
-            
+            Image imgScale = img.getScaledInstance(
+                    (int) (img.getWidth() * Global.ADJ), (int) (img.getHeight() * Global.ADJ), SCALE_DEFAULT);
             imgPairs.add(new KeyPair(path, imgScale));
             return imgScale;
         } catch (IOException e) {
@@ -69,7 +65,8 @@ public class ImageResourceController {
 
     public void tryRemoveImg(String path) {
         for (int i = 0; i < imgPairs.size(); i++) {
-            if (imgPairs.get(i).path.equals(path)) {
+            if (imgPairs.get(i).path.equals(path)) {                
+                Global.log("remove img :" + path);
                 imgPairs.remove(i);
                 i--;
             }
@@ -79,6 +76,8 @@ public class ImageResourceController {
     public String getPath(int index) {
         return imgPairs.get(index).path;
     }
+    
+
 
     private KeyPair findKeyPair(String path) {
         for (int i = 0; i < imgPairs.size(); i++) {

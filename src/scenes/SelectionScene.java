@@ -14,6 +14,7 @@ import util.CommandSolver;
 import util.CommandSolver.MouseState;
 import util.Global;
 import util.ImgPath;
+import static util.ImgPath.*;
 
 /**
  *
@@ -21,6 +22,17 @@ import util.ImgPath;
  */
 public class SelectionScene extends Scene {
 
+    String[] rolePaths = {CHOSE_CHEERBALL, CHOSE_BASKETBALL, CHOSE_BADMINTON, CHOSE_BASEBALL, CHOSE_VOLLEYBALL};
+    String[] button = {B_HOME, B_GAME, B_SHOP, B_INFO};
+    int[][] selectSignSites = {
+        {(int) (Global.SCREEN_X * 0.1995 * Global.ADJ), (int) (Global.SCREEN_Y * 0.137 * Global.ADJ)},
+        {(int) (Global.SCREEN_X * 0.3078 * Global.ADJ), (int) (Global.SCREEN_Y * 0.19965 * Global.ADJ)},
+        {(int) (Global.SCREEN_X * 0.4188 * Global.ADJ), (int) (Global.SCREEN_Y * 0.137 * Global.ADJ)},
+        {(int) (Global.SCREEN_X * 0.5288 * Global.ADJ), (int) (Global.SCREEN_Y * 0.2029 * Global.ADJ)},
+        {(int) (Global.SCREEN_X * 0.6405 * Global.ADJ), (int) (Global.SCREEN_Y * 0.137 * Global.ADJ)}
+    };
+
+    private MyMouseCommandListener mmcl;
 
     public SelectionScene(SceneController sceneController) {
         super(sceneController);
@@ -36,27 +48,19 @@ public class SelectionScene extends Scene {
 
         @Override
         public void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
-            if (state == MouseState.CLICKED && imgs.get(2).isInside(e.getX(), e.getY())) {
-                sceneController.changeScene(new GameStartScene(sceneController, roleSelection));
+            //切換至 遊戲開始畫面
+            if (state == MouseState.CLICKED && imgs.get(GAMESTART).isInside(e.getX(), e.getY())) {
+                sceneController.changeScene(new GameStartScene(sceneController, roleSelectionPath));
             }
+            gameStartSelected = (imgs.get(GAMESTART).isInside(e.getX(), e.getY()));
 
-            //角色選擇
-            for (int i = 0; i < roleImgs.size(); i++) {
-                if (roleImgs.get(i).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
-                    roleSelection = i;
+            //選單圖示轉換
+            for (int i = 0; i < button.length; i++) {
+                if (imgs.get(button[i]).isInside(e.getX(), e.getY())) {
+                    buttonSelectPath = button[i];
+                    inButton = true;
                 }
             }
-
-            //左側選單
-            for (int i = 0; i < buttonImgs2.size() - 1; i++) {
-                if (buttonImgs2.get(i).isInside(e.getX(), e.getY())) {
-                    menuIndex = i;
-                }
-            }
-            //-----按鈕換圖
-            if (!buttonImgs2.get(0).isInside(e.getX(), e.getY()) && !buttonImgs2.get(1).isInside(e.getX(), e.getY())
-                    && !buttonImgs2.get(2).isInside(e.getX(), e.getY()) && !buttonImgs2.get(3).isInside(e.getX(), e.getY())) {
-                menuIndex = buttonImgs2.size() - 1;
             if (!imgs.get(button[0]).isInside(e.getX(), e.getY()) && !imgs.get(button[1]).isInside(e.getX(), e.getY())
                     && !imgs.get(button[2]).isInside(e.getX(), e.getY()) && !imgs.get(button[3]).isInside(e.getX(), e.getY())) {
                 inButton = false;
@@ -66,12 +70,12 @@ public class SelectionScene extends Scene {
             //-----人物點選
             for (int i = 0; i < rolePaths.length; i++) {
                 if (imgs.get(rolePaths[i]).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
-                    roleSelectionPath = rolePaths[i];
+                    this.roleSelectionPath = rolePaths[i];
                 }
             }
 
             //-----按鈕功能
-            if (buttonImgs2.get(0).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
+            if (imgs.get(B_HOME).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
                 sceneController.changeScene(new MainScene(sceneController));
             }   //首頁
 
@@ -86,21 +90,17 @@ public class SelectionScene extends Scene {
         }
     }// end of inner class
 
-    private MyMouseCommandListener mmcl;
-    private ArrayList<Img> imgs;
-    private ArrayList<Img> roleImgs;
-    private ArrayList<Img> buttonImgs;
-    private ArrayList<Img> buttonImgs2;
-
+//    private ArrayList<Img> roleImgs;
     @Override
     public void sceneBegin() {
-        
+
         this.mmcl = new MyMouseCommandListener();
-        
-        imgs = new ArrayList<>();
+
         imgs.add(new Img(ImgPath.BK_MAIN, (int) (Global.SCREEN_X * 0 * Global.ADJ), (int) (Global.SCREEN_Y * 0 * Global.ADJ), true));
-        imgs.add(new Img(ImgPath.ESSIENTIAL, (int) (Global.SCREEN_X * 0.16 * Global.ADJ), (int) (Global.SCREEN_Y * 0.08 * Global.ADJ), true));
+        imgs.add(new Img(ImgPath.SELECTION_PANEL, (int) (Global.SCREEN_X * 0.16 * Global.ADJ), (int) (Global.SCREEN_Y * 0.08 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.GAMESTART, (int) (Global.SCREEN_X * 0.315 * Global.ADJ), (int) (Global.SCREEN_Y * 0.785 * Global.ADJ), true));
+        imgs.get(GAMESTART).importPic(GAMESTART2);
+
         //locked Part,locked int =4
         imgs.add(new Img(ImgPath.LOCKED, (int) (Global.SCREEN_X * 0.308 * Global.ADJ), (int) (Global.SCREEN_Y * 0.52 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.LOCKED, (int) (Global.SCREEN_X * 0.419 * Global.ADJ), (int) (Global.SCREEN_Y * 0.46 * Global.ADJ), true));
@@ -146,23 +146,31 @@ public class SelectionScene extends Scene {
 
     }
 
-    public int getRoleNum() {
-        return mmcl.roleSelection; 
-    }
-
     @Override
     public void paint(Graphics g) {
-        //essential part
-        for (int i = 0; i < imgs.size() - 4; i++) {
-            imgs.get(i).paint(g);
+        imgs.get(BK_MAIN).paint(g);
+        imgs.get(SELECTION_PANEL).paint(g);
+        imgs.get(GAMESTART).paint(g);
+
+        //role part
+        for (int i = 0; i < rolePaths.length; i++) {
+            imgs.get(rolePaths[i]).paint(g);
+            if (!mmcl.roleSelectionPath.equals(rolePaths[i])) {
+                imgs.get(rolePaths[i]).switchNowImage(0);
+            }
+        }
+        imgs.get(mmcl.roleSelectionPath).switchNowImage(1);
+
+        //遊戲開始按鈕
+        if (mmcl.gameStartSelected) {
+            imgs.get(ImgPath.GAMESTART).switchNowImage(1);
+        } else {
+            imgs.get(ImgPath.GAMESTART).switchNowImage(0);
         }
 
-        //role button part
-        roleImgs.get(mmcl.roleSelection).paint(g);
-
-        //switch page part
-        for (int i = 0; i < buttonImgs.size(); i++) {
-            buttonImgs.get(i).paint(g);
+        //左側選單
+        for (int i = 0; i < button.length; i++) {
+            imgs.get(button[i]).paint(g);
         }
         for(int i=0;i<button.length;i++){
             if(!mmcl.buttonSelectPath.equals(button[i])){
