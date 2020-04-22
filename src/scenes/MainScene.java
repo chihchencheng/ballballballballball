@@ -50,8 +50,9 @@ public class MainScene extends Scene {
                 sceneController.changeScene(new SelectionScene(sceneController));
             }   //----gameStart button
 
-            tipsTrig = imgs.get(2).isInside(e.getX(), e.getY()); //----tips button
-            if (state == MouseState.CLICKED && imgs.get(5).isInside(e.getX(), e.getY())) {
+            tipsTrig = imgs.get(BB_TIPS).isInside(e.getX(), e.getY()); //----tips button
+
+            if (state == MouseState.CLICKED && imgs.get(BB_SHOP).isInside(e.getX(), e.getY())) {
                 sceneController.changeScene(new ShopScene(sceneController));
             }   //----Shop button
 

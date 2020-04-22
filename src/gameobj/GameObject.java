@@ -61,6 +61,54 @@ public abstract class GameObject {
         this.collider = this.rect;
     }
 
+    public void importVarPic(String[] imgPaths) {
+        for (int i = 0; i < imgPaths.length; i++) {
+            imgs.add(new KeyPair(imgPaths[i]));
+        }
+    }
+
+    public void importPic(String imgPath) {
+        imgs.add(new KeyPair(imgPath));
+        System.out.println(nowImg.imgPath+"追加圖片："+imgs.get(imgs.size()-1).imgPath);
+    }
+
+    public void switchNowImage(int i) {
+        if (i < 0 || i >= imgs.size()) {
+//            System.out.println("switchNowImage " + i + " 超出索引範圍");//test
+        } else {
+            nowImg = imgs.get(i);
+        }
+    }
+
+    public void switchNowImage(String imgPath) {
+        for (int i = 0; i < imgs.size(); i++) {
+            if (imgPath.equals(imgs.get(i).imgPath)) {
+                this.nowImg = imgs.get(i);
+                break;
+            }
+        }
+    }
+
+    public void nextImg() {
+        if ((getNowIndex() + 1) >= (imgs.size())) {
+            nowImg = imgs.get(0);
+        } else {
+            nowImg = imgs.get(getNowIndex() + 1);
+        }
+        System.out.println("nextImg="+nowImg.imgPath);
+    }
+
+    public String getImgPath(int index) {
+        if (index < 0 || index >= imgs.size()) {
+            return null;
+        }
+        return imgs.get(index).imgPath;
+    }
+
+    public String getNowImgPath() {
+        return nowImg.imgPath;
+    }
+
     public int getX() {
         return this.rect.centerX();
     }

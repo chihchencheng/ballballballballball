@@ -53,12 +53,10 @@ public class SelectionScene extends Scene {
                     menuIndex = i;
                 }
             }
-<<<<<<< HEAD
             //-----按鈕換圖
             if (!buttonImgs2.get(0).isInside(e.getX(), e.getY()) && !buttonImgs2.get(1).isInside(e.getX(), e.getY())
                     && !buttonImgs2.get(2).isInside(e.getX(), e.getY()) && !buttonImgs2.get(3).isInside(e.getX(), e.getY())) {
                 menuIndex = buttonImgs2.size() - 1;
-=======
             if (!imgs.get(button[0]).isInside(e.getX(), e.getY()) && !imgs.get(button[1]).isInside(e.getX(), e.getY())
                     && !imgs.get(button[2]).isInside(e.getX(), e.getY()) && !imgs.get(button[3]).isInside(e.getX(), e.getY())) {
                 inButton = false;
@@ -70,16 +68,20 @@ public class SelectionScene extends Scene {
                 if (imgs.get(rolePaths[i]).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
                     roleSelectionPath = rolePaths[i];
                 }
->>>>>>> selectScene修復完成
             }
 
             //-----按鈕功能
             if (buttonImgs2.get(0).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
                 sceneController.changeScene(new MainScene(sceneController));
-            }//首頁
-            if (buttonImgs2.get(2).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
+            }   //首頁
+
+            if (imgs.get(B_SHOP).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
                 sceneController.changeScene(new ShopScene(sceneController));
-            }//商店
+            }   //商店
+
+            if (imgs.get(B_INFO).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
+//                sceneController.changeScene(new ShopScene(sceneController));
+            }   //資訊
 
         }
     }// end of inner class
@@ -105,27 +107,6 @@ public class SelectionScene extends Scene {
         imgs.add(new Img(ImgPath.LOCKED, (int) (Global.SCREEN_X * 0.529 * Global.ADJ), (int) (Global.SCREEN_Y * 0.52 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.LOCKED, (int) (Global.SCREEN_X * 0.641 * Global.ADJ), (int) (Global.SCREEN_Y * 0.46 * Global.ADJ), true));
 
-<<<<<<< HEAD
-        roleImgs = new ArrayList<>();
-        roleImgs.add(new Img(ImgPath.CHOSE_CHEERBALL, (int) (Global.SCREEN_X * 0.1995 * Global.ADJ), (int) (Global.SCREEN_Y * 0.137 * Global.ADJ), true));
-        roleImgs.add(new Img(ImgPath.CHOSE_BASKETBALL, (int) (Global.SCREEN_X * 0.3078 * Global.ADJ), (int) (Global.SCREEN_Y * 0.19965 * Global.ADJ), true));
-        roleImgs.add(new Img(ImgPath.CHOSE_BADMINTON, (int) (Global.SCREEN_X * 0.4188 * Global.ADJ), (int) (Global.SCREEN_Y * 0.137 * Global.ADJ), true));
-        roleImgs.add(new Img(ImgPath.CHOSE_BASEBALL, (int) (Global.SCREEN_X * 0.5288 * Global.ADJ), (int) (Global.SCREEN_Y * 0.2029 * Global.ADJ), true));
-        roleImgs.add(new Img(ImgPath.CHOSE_VOLLEYBALL, (int) (Global.SCREEN_X * 0.6405 * Global.ADJ), (int) (Global.SCREEN_Y * 0.137 * Global.ADJ), true));
-
-        buttonImgs = new ArrayList<>();
-        buttonImgs.add(new Img(ImgPath.B_HOME, (int) (Global.SCREEN_X * 0.01 * Global.ADJ), (int) (Global.SCREEN_Y * 0.3 * Global.ADJ), true));
-        buttonImgs.add(new Img(ImgPath.B_GAME, (int) (Global.SCREEN_X * 0.01 * Global.ADJ), (int) (Global.SCREEN_Y * 0.4 * Global.ADJ), true));
-        buttonImgs.add(new Img(ImgPath.B_SHOP, (int) (Global.SCREEN_X * 0.01 * Global.ADJ), (int) (Global.SCREEN_Y * 0.5 * Global.ADJ), true));
-        buttonImgs.add(new Img(ImgPath.B_INFO, (int) (Global.SCREEN_X * 0.01 * Global.ADJ), (int) (Global.SCREEN_Y * 0.6 * Global.ADJ), true));
-
-        buttonImgs2 = new ArrayList<>();
-        buttonImgs2.add(new Img(ImgPath.B_HOME2, (int) (Global.SCREEN_X * 0.01 * Global.ADJ), (int) (Global.SCREEN_Y * 0.3 * Global.ADJ), true));
-        buttonImgs2.add(new Img(ImgPath.NULL, (int) (Global.SCREEN_X * 0.01 * Global.ADJ), (int) (Global.SCREEN_Y * 0.4 * Global.ADJ), true));
-        buttonImgs2.add(new Img(ImgPath.B_SHOP2, (int) (Global.SCREEN_X * 0.01 * Global.ADJ), (int) (Global.SCREEN_Y * 0.5 * Global.ADJ), true));
-        buttonImgs2.add(new Img(ImgPath.B_INFO2, (int) (Global.SCREEN_X * 0.01 * Global.ADJ), (int) (Global.SCREEN_Y * 0.6 * Global.ADJ), true));
-        buttonImgs2.add(new Img(ImgPath.NULL, (int) (Global.SCREEN_X * 0 * Global.ADJ), (int) (Global.SCREEN_Y * 0 * Global.ADJ), true));
-=======
         imgs.add(new Img(ImgPath.CHOSE_CHEERBALL, (int) (Global.SCREEN_X * 0.1995 * Global.ADJ), (int) (Global.SCREEN_Y * 0.137 * Global.ADJ), true));
         imgs.get(CHOSE_CHEERBALL).importPic(CHOSE_CHEERBALL2);
         imgs.add(new Img(ImgPath.CHOSE_BASKETBALL, (int) (Global.SCREEN_X * 0.3078 * Global.ADJ), (int) (Global.SCREEN_Y * 0.19965 * Global.ADJ), true));
@@ -153,7 +134,6 @@ public class SelectionScene extends Scene {
         imgs.add(new Img(ImgPath.NULL, (int) (Global.SCREEN_X * 0 * Global.ADJ), (int) (Global.SCREEN_Y * 0 * Global.ADJ), true));
         
 
->>>>>>> selectScene修復完成
     }
 
     @Override
@@ -184,14 +164,6 @@ public class SelectionScene extends Scene {
         for (int i = 0; i < buttonImgs.size(); i++) {
             buttonImgs.get(i).paint(g);
         }
-<<<<<<< HEAD
-        buttonImgs2.get(mmcl.menuIndex).paint(g);
-
-//        //locked
-//        for (int i = imgs.size() - 4 - 1; i < imgs.size(); i++) {
-//            imgs.get(i).paint(g);
-//        }
-=======
         for(int i=0;i<button.length;i++){
             if(!mmcl.buttonSelectPath.equals(button[i])){
                 imgs.get(button[i]).switchNowImage(0);
@@ -199,7 +171,6 @@ public class SelectionScene extends Scene {
         }
         imgs.get(mmcl.buttonSelectPath).switchNowImage(1);
 
->>>>>>> selectScene修復完成
     }
 
     @Override
