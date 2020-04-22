@@ -17,11 +17,11 @@ public class ImgPath {
 
     //-----ball file
     private static final String BALL = COM + "ball/";
-    public static final String BASKETBALL = BALL + "Basketball.png";
-    public static final String BASEBALL = BALL + "Baseball.png";
     public static final String CHEERBALL = BALL + "Cheerball.png";
-    public static final String VOLLEYBALL = BALL + "Volleyball.png";
+    public static final String BASKETBALL = BALL + "Basketball.png";
     public static final String SHUTTLECOCK = BALL + "shuttlecock.png";
+    public static final String BASEBALL = BALL + "Baseball.png";
+    public static final String VOLLEYBALL = BALL + "Volleyball.png";
 
     //-----number file 
     private static final String NUMBER = COM + "number/";
@@ -62,7 +62,7 @@ public class ImgPath {
     public static final String B_SHOP2 = BUTTON + "B_shop2.png";
     public static final String B_INFO = BUTTON + "B_info.png";
     public static final String B_INFO2 = BUTTON + "B_info2.png";
-    
+
     public static final String BB_GAMESTART = BUTTON + "BB_gameStart.png";
     public static final String BB_GAMESTART2 = BUTTON + "BB_gameStart2.png";
     public static final String BB_INFO = BUTTON + "BB_info.png";
@@ -119,7 +119,7 @@ public class ImgPath {
     public static final String CHOSE_BADMINTON2 = SELE + "chose_badminton2.png";
     public static final String CHOSE_BASEBALL2 = SELE + "chose_baseball2.png";
     public static final String CHOSE_VOLLEYBALL2 = SELE + "chose_volleyBall2.png";
-    
+
     //Shop file
     private static final String SHOP = ROOT + "Shop/";
     public static final String ONSALE = SHOP + "OnSale.png";

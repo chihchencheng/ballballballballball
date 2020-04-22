@@ -50,7 +50,7 @@ public class SelectionScene extends Scene {
         public void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
             //切換至 遊戲開始畫面
             if (state == MouseState.CLICKED && imgs.get(GAMESTART).isInside(e.getX(), e.getY())) {
-//                sceneController.changeScene(new GameStartScene(sceneController, roleSelectionPath));
+                sceneController.changeScene(new GameStartScene(sceneController, roleSelectionPath));
             }
             gameStartSelected = (imgs.get(GAMESTART).isInside(e.getX(), e.getY()));
 
@@ -70,7 +70,7 @@ public class SelectionScene extends Scene {
             //-----人物點選
             for (int i = 0; i < rolePaths.length; i++) {
                 if (imgs.get(rolePaths[i]).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
-                    roleSelectionPath = rolePaths[i];
+                    this.roleSelectionPath = rolePaths[i];
                 }
             }
 
