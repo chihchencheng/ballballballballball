@@ -56,7 +56,7 @@ public class MainScene extends Scene {
             tipsTrig = imgs.get(BB_TIPS).isInside(e.getX(), e.getY()); //----tips button
 
             if (state == MouseState.CLICKED && imgs.get(BB_SHOP).isInside(e.getX(), e.getY())) {
-//                sceneController.changeScene(new ShopScene(sceneController));
+                sceneController.changeScene(new ShopScene(sceneController));
             }   //----Shop button
 
             //按鈕換圖            
