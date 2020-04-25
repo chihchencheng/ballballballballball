@@ -20,8 +20,8 @@ public class Numbers {
 	
 	private void setPos() {
 		for(int i=0;i<9;i++) {
-			this.numbers.get(i).setX(10);
-			this.numbers.get(i).setY(10);
+			this.numbers.get(i).offSetX(10);
+			this.numbers.get(i).offSetY(10);
 		}
 	}
 	

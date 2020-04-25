@@ -16,21 +16,20 @@ public class Ball extends GameObject {
 	private int a;
 	private String name;
 	private boolean isPress;
-	private Image effectImg;
 
-	public Ball(String imgPath,String eIPath, String name, int x, int y) {
-		super(imgPath, x, y, (int) (Global.UNIT_X * Global.ADJ),
-				(int) (Global.UNIT_Y * Global.ADJ), (int) (Global.UNIT_X * Global.ADJ),
+	public Ball(String imgPath,String name, int x, int y) {
+		super(imgPath, x, y, 
+				(int) (Global.UNIT_X * Global.ADJ),
+				(int) (Global.UNIT_Y * Global.ADJ), 
+				(int) (Global.UNIT_X * Global.ADJ),
 				(int) (Global.UNIT_Y * Global.ADJ ), true);
-		this.effectImg = ImageResourceController.getInstance().tryGetImage(eIPath);
 		this.name = name;
 		this.speed = 4;
 		this.isPress = false;
 	}
 
-	public Ball(String imgPath,String eIPath, String name) {
+	public Ball(String imgPath, String name) {
 		super(imgPath);
-		this.effectImg = ImageResourceController.getInstance().tryGetImage(eIPath);
 		this.name = name;
 		this.speed = 4;
 		this.isPress = false;

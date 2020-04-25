@@ -82,15 +82,26 @@ public abstract class GameObject {
         this.collider.offset(dx, dy);
     }
 
-    public void setX(int x) {
+    public void offSetX(int x) {
         this.rect.offset(x - this.rect.centerX(), 0);
         this.collider.offset(x - this.collider.centerX(), 0);
     }
 
-    public void setY(int y) {
+    public void offSetY(int y) {
         this.rect.offset(0, y - this.rect.centerY());
         this.collider.offset(0, y - this.collider.centerY());
     }
+    
+    public void setX(int x) {
+        this.rect.offset(x,0);
+//        this.rect.setRight(x+rect.width());
+    }
+    
+    public void setY(int y) {
+    	this.rect.setTop(y);
+//        this.rect.setBottom(y+rect.height());
+    }
+
 
     public boolean isCollision(GameObject obj) {
         if (this.collider == null || obj.collider == null) {
@@ -118,7 +129,7 @@ public abstract class GameObject {
     //判斷標準：碰撞框
     public boolean isInside(int x, int y) {
         return x >= this.collider().left() && x <= this.collider().right() && 
-                y >= this.collider().top() && y <= this.collider().bottom();
+               y >= this.collider().top() && y <= this.collider().bottom();
     }
 
     public void paint(Graphics g) {

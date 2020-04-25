@@ -10,6 +10,9 @@ import gameobj.Img;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
+import audio.AudioObject;
+import util.AudioPath;
 import util.CommandSolver;
 import util.CommandSolver.MouseCommandListener;
 import util.CommandSolver.MouseState;
@@ -27,6 +30,7 @@ public class MainScene extends Scene {
     private ArrayList<Img> imgsRole;
     private ArrayList<Img> buttonImgs2;
     private int roleNum;
+    private AudioObject backMusic;
 
     private class MyMouseCommandListener implements MouseCommandListener {
 
@@ -73,10 +77,13 @@ public class MainScene extends Scene {
     public MainScene(SceneController sceneController) {
         super(sceneController);
         this.roleNum = 0;
+        this.backMusic = new AudioObject("Main",AudioPath.MAIN);
         this.mmcl = new MyMouseCommandListener();
     }
 
     public void sceneBegin() {
+    	
+    	this.backMusic.getAudio().loop();
         imgs = new ArrayList<>();
         imgs.add(new Img(ImgPath.HOW_TO_PLAY, (int) (Global.SCREEN_X * 0.13 * Global.ADJ), (int) (Global.SCREEN_Y * 0.17 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.BK_TITLE, 0, 0, true)); //背景 i=0
@@ -107,9 +114,11 @@ public class MainScene extends Scene {
     }
 
     public void sceneUpdate() {
+    	
     }
 
     public void sceneEnd() {
+    	this.backMusic.getAudio().stop();
     }
 
     public void paint(Graphics g) {
