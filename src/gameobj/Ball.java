@@ -8,31 +8,27 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import controllers.ImageResourceController;
 import util.Global;
 
 public class Ball extends GameObject {
 	private int speed;
 	private int a;
 	private String name;
+
 	private boolean isPress;
 
-	public Ball(String imgPath,String name, int x, int y) {
-		super(imgPath, x, y, 
-				(int) (Global.UNIT_X * Global.ADJ),
-				(int) (Global.UNIT_Y * Global.ADJ), 
-				(int) (Global.UNIT_X * Global.ADJ),
+	public Ball(String imgPath, String name, int x, int y) {
+		super(imgPath, x, y, (int) (Global.UNIT_X * Global.ADJ),
+				(int) (Global.UNIT_Y * Global.ADJ), (int) (Global.UNIT_X * Global.ADJ),
 				(int) (Global.UNIT_Y * Global.ADJ ), true);
 		this.name = name;
 		this.speed = 4;
-		this.isPress = false;
 	}
 
 	public Ball(String imgPath, String name) {
 		super(imgPath);
 		this.name = name;
 		this.speed = 4;
-		this.isPress = false;
 	}
 
 	public boolean isCollision(Ball ball) {
@@ -62,14 +58,6 @@ public class Ball extends GameObject {
 	public String getName() {
 		return this.name;
 	}
-	
-	public boolean isPress() {
-		return this.isPress;
-	}
-	
-	public void setPress(boolean isPress) {
-		this.isPress = isPress;
-	}
 
 	@Override
 	public boolean move() {
@@ -82,9 +70,10 @@ public class Ball extends GameObject {
 
 		return true;
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
+
 	}
 
 	@Override

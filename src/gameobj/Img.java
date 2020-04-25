@@ -33,6 +33,8 @@ public class Img extends GameObject {
     public Img(String imgPath, int x, int y, boolean isBindCollider) {
         super(imgPath, x, y, isBindCollider);
     }
+    
+    
 
     @Override
     public void update() {
@@ -47,5 +49,10 @@ public class Img extends GameObject {
     public void paintComponent(Graphics g) {
 
     }
+    @Override
+    public String toString(){
+        return imgPath;
+    }
+
 
 }

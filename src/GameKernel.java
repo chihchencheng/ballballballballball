@@ -19,8 +19,7 @@ import util.Global;
  * @author user1
  */
 public class GameKernel extends Canvas {
-
-    public static class Builder {
+	public static class Builder {
 
         private GameInterface gi;
         private GameKernel gk;

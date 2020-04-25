@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class CommandSolver extends Thread {
 
-    public enum MouseState {
+	public enum MouseState {
         CLICKED,
         PRESSED,
         RELEASED,
