@@ -2,7 +2,7 @@ package util;
 
 public class Global {
 	// Debug Mode
-	public static final boolean IS_DEBUG = false;
+	public static final boolean IS_DEBUG = true;
 
 	public static void log(String str) {
 		if (IS_DEBUG) {
@@ -18,6 +18,9 @@ public class Global {
 	public static final int UNIT_X = 105;
 	public static final int UNIT_Y = 105;
 	public static final double ADJ = 0.75;
+        
+        public static final double ADJ_X=ADJ*SCREEN_X;
+        public static final double ADJ_Y=ADJ*SCREEN_Y;
 	
 	// logic update time
 	public static final int UPDATE_TIMES_PER_SEC = 120;

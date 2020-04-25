@@ -49,5 +49,10 @@ public class Img extends GameObject {
     public void paintComponent(Graphics g) {
 
     }
+    @Override
+    public String toString(){
+        return imgPath;
+    }
+
 
 }
