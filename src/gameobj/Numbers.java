@@ -24,5 +24,9 @@ public class Numbers {
 			this.numbers.get(i).setY(10);
 		}
 	}
+	
+	
+	
+
 
 }// end of class

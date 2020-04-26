@@ -15,8 +15,6 @@ public class Ball extends GameObject {
 	private int a;
 	private String name;
 
-	private boolean isPress;
-
 	public Ball(String imgPath, String name, int x, int y) {
 		super(imgPath, x, y, (int) (Global.UNIT_X * Global.ADJ),
 				(int) (Global.UNIT_Y * Global.ADJ), (int) (Global.UNIT_X * Global.ADJ),
