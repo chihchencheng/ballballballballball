@@ -98,7 +98,7 @@ public abstract class GameObject {
 
     public void switchNowImage(int i) {
         if (i < 0 || i >= imgs.size()) {
-//            System.out.println("switchNowImage " + i + " 超出索引範圍");//test
+            System.out.println("switchNowImage " + i + " 超出索引範圍");//test
         } else {
             nowImg = imgs.get(i);
         }

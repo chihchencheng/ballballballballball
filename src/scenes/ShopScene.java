@@ -56,10 +56,13 @@ public class ShopScene extends Scene {
             //-----按鈕功能
             if (imgs.get(B_HOME).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
                 sceneController.changeScene(new MainScene(sceneController));
-            }//首頁
+            }   //首頁
             if (imgs.get(B_GAME).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
                 sceneController.changeScene(new SelectionScene(sceneController));
-            }//遊戲開始
+            }   //遊戲開始
+            if (imgs.get(B_INFO).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
+                sceneController.changeScene(new InfoScene(sceneController));
+            }   //資訊頁面
         }
     }
 
@@ -108,14 +111,10 @@ public class ShopScene extends Scene {
 
     @Override
     public void sceneUpdate() {
-//        if (delay.isTrig()) {
-//        }
     }
 
     @Override
     public void sceneEnd() {
-//        delay.stop();
-//        delay = null;
     }
 
     @Override

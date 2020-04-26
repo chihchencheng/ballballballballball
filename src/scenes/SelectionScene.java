@@ -84,7 +84,7 @@ public class SelectionScene extends Scene {
             }   //商店
 
             if (imgs.get(B_INFO).isInside(e.getX(), e.getY()) && state == MouseState.CLICKED) {
-//                sceneController.changeScene(new ShopScene(sceneController));
+                sceneController.changeScene(new InfoScene(sceneController));
             }   //資訊
 
         }

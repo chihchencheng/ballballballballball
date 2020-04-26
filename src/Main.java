@@ -1,3 +1,4 @@
+
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
@@ -11,32 +12,27 @@ import util.ImgPath;
 
 public class Main {
 
-	public static void main(String[] args) {
-		JFrame f = new JFrame();
+    public static void main(String[] args) {
+        JFrame f = new JFrame();
 //		GameJPanel jp = new GameJPanel();
-		GI gi = new GI();
-		int[][] commands = new int[][] {
-			{KeyEvent.VK_UP},
-			{KeyEvent.VK_DOWN},
-			{KeyEvent.VK_LEFT},
-			{KeyEvent.VK_RIGHT},
-		};
-		GameKernel gk = new GameKernel.Builder(gi,
-				Global.LIMIT_DELTA_TIME,
-				Global.NANO_PER_UPDATE)
-				.initListener(commands).
-				enableMouseTrack(gi).
-				keyTypedMode().trackChar().gen();
-		
-		f.setTitle("Game test");
-		f.setSize((int)(Global.FRAME_X*Global.ADJ),
-				(int)(Global.FRAME_Y*Global.ADJ));
-		f.add(gk);
-		f.setResizable(false);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setVisible(true);
-		
-		gk.run(Global.IS_DEBUG);
+        GI gi = new GI();
+        int[][] commands = new int[][]{
+            {KeyEvent.VK_UP}, {KeyEvent.VK_DOWN},{KeyEvent.VK_LEFT}, {KeyEvent.VK_RIGHT},};
+        GameKernel gk = new GameKernel.Builder(gi,
+                Global.LIMIT_DELTA_TIME,
+                Global.NANO_PER_UPDATE)
+                .initListener(commands).
+                enableMouseTrack(gi).keyTypedMode().trackChar().gen();
+
+        f.setTitle("Game test");
+        f.setSize((int) (Global.FRAME_X * Global.ADJ),
+                (int) (Global.FRAME_Y * Global.ADJ));
+        f.add(gk);
+        f.setResizable(false);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
+
+        gk.run(Global.IS_DEBUG);
 
 //		CommandSolver cs = new CommandSolver.Builder(jp, Global.NANO_PER_UPDATE,
 //			new int[][] {
@@ -46,9 +42,7 @@ public class Main {
 //			{KeyEvent.VK_RIGHT},
 //			}).enableMouseTrack(jp).keyTypedMode().trackChar().gen();
 //			cs.start();
-		
-
-		//Game loop
+        //Game loop
 //		long startTime = System.currentTimeMillis();
 //		long passedUpdated = 0;
 //		long lastRepaintTime = System.currentTimeMillis();
@@ -78,8 +72,6 @@ public class Main {
 //				paintTimes++;
 //			}
 //		}
-
-
-	}// end of main
+    }// end of main
 
 }// end of class

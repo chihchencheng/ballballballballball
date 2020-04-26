@@ -58,6 +58,9 @@ public class MainScene extends Scene {
             if (state == MouseState.CLICKED && imgs.get(BB_SHOP).isInside(e.getX(), e.getY())) {
                 sceneController.changeScene(new ShopScene(sceneController));
             }   //----Shop button
+            if (state == MouseState.CLICKED && imgs.get(BB_INFO).isInside(e.getX(), e.getY())) {
+                sceneController.changeScene(new InfoScene(sceneController));
+            }   //----Info button
 
             //按鈕換圖            
             for (int i = 0; i < bButtonPaths.length; i++) {
@@ -135,7 +138,7 @@ public class MainScene extends Scene {
 //        System.out.println("nowButton=" + imgs.get(mmcl.buttonIndex).getNowImgPath());//test
         imgs.get(mmcl.buttonIndex).switchNowImage(1);
         for (int i = 0; i < bButtonPaths.length; i++) {
-            if(!(imgs.searchIndex(bButtonPaths[i])==mmcl.buttonIndex)){
+            if (!(imgs.searchIndex(bButtonPaths[i]) == mmcl.buttonIndex)) {
                 imgs.get(bButtonPaths[i]).switchNowImage(0);
             }
         }
@@ -146,7 +149,7 @@ public class MainScene extends Scene {
             imgs.get(TITLE).paint(g);
             //人物繪製
             imgs.get(rolePaths[roleNum]).paint(g);
-        }else{
+        } else {
             //說明文字
             imgs.get(HOW_TO_PLAY).paint(g);
         }

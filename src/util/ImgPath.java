@@ -9,6 +9,8 @@ public class ImgPath {
     private static final String BK = ROOT + "background/";
     public static final String BK_MAIN = BK + "bk_main.png";
     public static final String BK_TITLE = BK + "bk_title.png";
+    public static final String BK_INFO = BK + "bk_info.png";
+    public static final String BK_LOGIN = BK + "bk_login.png";
 
     //Component file
     private static final String COM = ROOT + "component/";
@@ -98,7 +100,16 @@ public class ImgPath {
     public static final String RIGHT_PANEL = GC + "rightPanel.png";
     public static final String SKILL_BANNER = GC + "skillBanner.png";
     public static final String TIME_PANEL = GC + "timePanel.png";
-
+    //------------isPause
+    public static final String CONTINUE_BUTTON = GC + "continueButton.png";
+    public static final String CONTINUE_BUTTON2 = GC + "continueButton2.png";
+    public static final String PAUSE_PANEL = GC + "pausePanel.png";
+    public static final String PAUSE_TITLE = GC + "pauseTitle.png";
+    public static final String SHADOW = GC + "shadowPanel.png";
+    //------------isOver
+    public static final String SPOTLIGHT = GC + "spotLight.png";
+    public static final String TIME_UP = GC + "timeUp.png";
+    
     //Selection file
     private static final String SELE = ROOT + "SelectionScene/";
 
@@ -143,6 +154,18 @@ public class ImgPath {
     public static final String SHOPS_BASEBALL2 = SHOP + "ShopS_BaseBall2.png";
     public static final String SHOPS_VOLLEYBALL2 = SHOP + "ShopS_VolleyBall2.png";
 
+    //Info file
+    private static final String INFO = ROOT + "info/";
+    public static final String ACCOUNT_DATA = INFO + "accountData.png";
+    public static final String RANK_SCORE = INFO + "rankScore.png";
+    
+    //login file
+    private static final String LOGIN = ROOT + "login/";
+    public static final String ENTER_NAME = LOGIN + "enterName.png";
+    public static final String B_LOGIN= LOGIN + "loginButton.png";
+    public static final String B_LOGIN2 = LOGIN + "loginButton2.png";
+    public static final String B_LOGIN3 = LOGIN + "loginButton3.png";
+    
     //countDown part
     public static final String[] numbers() {
         String[] numbers = new String[10];
