@@ -5,6 +5,7 @@
  */
 package scenes;
 
+import audio.AudioObject;
 import controllers.SceneController;
 import gameobj.Img;
 import gameobj.ImgArr;
@@ -12,6 +13,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import util.AudioPath;
 import util.CommandSolver;
 import util.CommandSolver.MouseCommandListener;
 import util.CommandSolver.MouseState;
@@ -30,6 +32,8 @@ public class MainScene extends Scene {
     private String[] rolePaths = {TSAI, ZHANG, SHU, ZHOU, WANG};
     private String[] basicPic = {BK_TITLE};
     private String[] bButtonPaths = {BB_TIPS, BB_INFO, BB_RECORD, BB_SHOP, BB_GAMESTART};
+    private AudioObject backMusic;
+
 //    private String[] bButton2Paths = {BB_TIPS2, BB_INFO2, BB_RECORD2, BB_SHOP2, BB_GAMESTART2};
 
     private class MyMouseCommandListener implements MouseCommandListener {
@@ -81,10 +85,13 @@ public class MainScene extends Scene {
         super(sceneController);
 
         this.roleNum = 0;    //預設為 蔡捷如
+        this.backMusic = new AudioObject("Main",AudioPath.MAIN);
         this.mmcl = new MyMouseCommandListener();
     }
 
     public void sceneBegin() {
+        this.backMusic.getAudio().loop();
+        
         imgs.add(new Img(ImgPath.HOW_TO_PLAY, (int) (Global.SCREEN_X * 0.13 * Global.ADJ), (int) (Global.SCREEN_Y * 0.17 * Global.ADJ), true));
         imgs.add(new Img(ImgPath.BK_TITLE, 0, 0, true)); //背景 i=0
 
@@ -121,6 +128,7 @@ public class MainScene extends Scene {
     }
 
     public void sceneEnd() {
+        this.backMusic.getAudio().stop();
     }
 
     public void paint(Graphics g) {
@@ -154,9 +162,9 @@ public class MainScene extends Scene {
             imgs.get(HOW_TO_PLAY).paint(g);
         }
 
-        //寫字測試
-        g.setFont(new Font("微軟正黑體", Font.PLAIN, 100));
-        g.drawString("test", 100, 100);
+//        //寫字測試
+//        g.setFont(new Font("微軟正黑體", Font.PLAIN, 100));
+//        g.drawString("test", 100, 100);
     }
 
     @Override
