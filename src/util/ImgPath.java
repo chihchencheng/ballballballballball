@@ -24,6 +24,7 @@ public class ImgPath {
     public static final String SHUTTLECOCK = BALL + "shuttlecock.png";
     public static final String BASEBALL = BALL + "Baseball.png";
     public static final String VOLLEYBALL = BALL + "Volleyball.png";
+    public static final String STAR = BALL + "star.png";
 
     //-----number file 
     private static final String NUMBER = COM + "number/";

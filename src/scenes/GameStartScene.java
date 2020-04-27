@@ -2,6 +2,7 @@ package scenes;
 
 import audio.AudioObject;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -101,6 +102,7 @@ public class GameStartScene extends Scene {
 	private boolean isPause;
 	private int preCountDown;
 	private int countDown;
+	private int countDownActive;
 	private boolean timeUpStart;
 	private boolean timeUpOver;
 	private int frameAfterTimeUp = 0;
@@ -114,6 +116,7 @@ public class GameStartScene extends Scene {
 	private AudioObject clean;
 
 	private int skill;
+	private int[] skillCDtime = { 0, 120, 300, 600, 180, 200 };
 
 	private String[] componentPaths = { BK_MAIN, TIME_PANEL, LEFT_PANEL, RIGHT_PANEL, SKILL_BANNER };
 	private String[] ballPaths = { CHEERBALL, BASKETBALL, SHUTTLECOCK, BASEBALL, VOLLEYBALL };
@@ -156,6 +159,7 @@ public class GameStartScene extends Scene {
 		this.coinUnits = new int[10];
 		this.expUnits = new int[10];
 		this.digsMove = 0;
+		this.countDownActive = 0;
 		this.exp = 0;
 		this.coin = 0;
 		this.mmcl = new MyMouseCommandListener();
@@ -208,6 +212,7 @@ public class GameStartScene extends Scene {
 		// Time's up Scene 2
 		imgs.add(new Img(ImgPath.SPOTLIGHT, (int) (0 * Global.ADJ_X), (int) (0 * Global.ADJ_Y), true));
 		imgs.add(new Img(ImgPath.TIME_UP, (int) (0.18 * Global.ADJ_X), (int) (-0.35 * Global.ADJ_Y), true));
+		imgs.add(new Img(ImgPath.STAR));
 
 		// gray dig8
 		// ------------score
@@ -249,11 +254,15 @@ public class GameStartScene extends Scene {
 			countDown--;
 
 		}
+		if (countDownActive > 0) {
+			Global.log("countDownActive=" + countDownActive);
+			countDownActive--;
+			Global.log("skill(CDA)=" + skill);
+		}
 		if (preCountDown > 0) {
 			Global.log("preCountDown=" + preCountDown);
 			preCountDown--;
 		}
-
 		if ((!isPause && countDown == 0 && this.time >= 0) || (preCountDown > 0 && countDown > 0)) {
 			checkIfLess(listOfBalls);
 			for (int i = 0; i < listOfBalls.size(); i++) {
@@ -264,6 +273,7 @@ public class GameStartScene extends Scene {
 					}
 				}
 			}
+
 			if (isSkillLevelFull(this.skillLevel)) {
 				Global.log("----------------------------[skillTrig()]");
 				skillTrig();
@@ -290,14 +300,13 @@ public class GameStartScene extends Scene {
 			scoreUnitsGen(scoreUnits, totalScore);
 			expUnitsGen(expUnits);
 			coinUnitsGen(coinUnits);
-			// 倒數計時器，當球滿了，且最後一顆已經落下停止時
-			if (ballAmount == Global.LIMIT) {
-				if (this.time >= 0 && timeDelay.isTrig()) {
-					units = time % 10;
-					tens = time / 10;
-					this.time -= 1;
-				}
+			// 倒數計時器
+			if (this.time >= 0 && timeDelay.isTrig()) {
+				units = time % 10;
+				tens = time / 10;
+				this.time -= 1;
 			}
+
 		}
 
 		timeUpStart = (this.time == -1);
@@ -328,57 +337,67 @@ public class GameStartScene extends Scene {
 				imgs.get(TIME_UP).offset(0, 1);
 			}
 		}
-		if (countDown == 0) {
+
+		if (countDown == 0 && countDownActive == 0) {
 			this.skill = 0;
 		}
+//		if (countDownActive == 0) {
+//			this.skill = 0;
+//		}
 
 		switch (skill) {
-		/*
-		 * switch (this.rolePath) { case SMALL_ZHANG:// Zhang-baseketball skillLevel =
-		 * 0; this.skill = 2; this.countDown = 5; for (int i = 2; i < 4; i++) {
-		 * listOfBalls.get(2).remove(i); listOfBalls.get(4).remove(i); } for (int i = 1;
-		 * i < 4; i++) { listOfBalls.get(3).remove(i); } break; case SMALL_WANG://
-		 * Wang-volleyball skillLevel = 0; this.skill = 5; this.countDown = 5; for (int
-		 * i = 0; i < 10; i++) { int c = (int) (Math.random() * listOfBalls.size()); int
-		 * r = (int) (Math.random() * listOfBalls.get(0).size());
-		 * listOfBalls.get(c).remove(r); } break; case SMALL_TSAI:// Tsai-cheerball
-		 * skillLevel = 0; this.skill = 1; this.countDown = 5; this.time += 5;
-		 * Global.log("Time:" + this.time); break; case SMALL_SHU:// Shu-shuttlecock
-		 * skillLevel = 0; this.skill = 3; this.countDown = 5; // int skillStartTime =
-		 * this.time; // do { // System.out.println(this.time); // this.totalScore +=
-		 * this.score * 1.4; // } while (this.time - skillStartTime < 7); break; case
-		 * SMALL_ZHOU:// Zhou-baseball
-		 * 
-		 * skillLevel = 0; this.skill = 4; this.countDown = 200; for (int i = 0; i <
-		 * listOfBalls.size(); i++) { skillLinkBalls.add(listOfBalls.get(i).get(4)); }
-		 * for (int i = 0; i < listOfBalls.get(3).size(); i++) {
-		 * skillLinkBalls.add(listOfBalls.get(3).get(i)); } skillLinkBalls.clear();
-		 * 
-		 * break; // this.timeDelay.start(); }
-		 */
-		case 1:
-//			System.out.println("update()_skill "+skill);
+		case 1:// CHOSE_CHEERBALL
+				// System.out.println("update()_skill "+skill);
+			if (countDownActive == skillCDtime[skill]) {
+				this.time += 5;
+				Global.log("Time:" + this.time);
+			}
+
 			break;
-		case 2:
+		case 2:// CHOSE_BASKETBALL
 			if (countDown == 1) {
 				for (int i = 2; i < 4; i++) {
 					listOfBalls.get(2).remove(i);
 					listOfBalls.get(4).remove(i);
 				}
-				for (int i = 1; i < 4; i++) {
+				for (int i = 1; i < 3; i++) {
+					listOfBalls.get(3).remove(i);
+					// System.out.println(i+" "+listOfBalls.get(3).get(i).getY());
+				}
+			}
+			// System.out.println("update()_skill " + skill);
+			break;
+		case 3:// CHOSE_BADMINTON
+			if (countDownActive == skillCDtime[skill]) {
+					Global.log("time: "+this.time);
+					this.totalScore += this.score * 1.4;
+			}
+			// System.out.println("update()_skill "+skill);
+			break;
+		case 4:// CHOSE_BASEBALL
+				// System.out.println("update()_skill "+skill);
+			if (countDown == 1) {
+				for (int i = 0; i < listOfBalls.size(); i++) {
+					listOfBalls.get(i).remove(4);
+				}
+				for (int i = 0; i < listOfBalls.get(3).size(); i++) {
+					if (i == 4) {
+						continue;
+					}
 					listOfBalls.get(3).remove(i);
 				}
 			}
-//			System.out.println("update()_skill " + skill);
+
 			break;
-		case 3:
-//			System.out.println("update()_skill "+skill);
-			break;
-		case 4:
-//			System.out.println("update()_skill "+skill);
-			break;
-		case 5:
-//			System.out.println("update()_skill "+skill);
+		case 5:// CHOSE_VOLLEYBALL
+			if (countDown == 1) {
+				for (int i = 0; i < 10; i++) {
+					int c = (int) (Math.random() * listOfBalls.size());
+					int r = (int) (Math.random() * listOfBalls.get(0).size());
+					listOfBalls.get(c).remove(r);
+				}
+			}
+			// System.out.println("update()_skill "+skill);
 			break;
 		default:
 			break;
@@ -453,21 +472,73 @@ public class GameStartScene extends Scene {
 				g2.setColor(Color.black);
 			}
 		}
-
+		// -----------------------------------------Skill part
 		switch (skill) {
 		case 1:
+			g.setColor(Color.RED);
+			g.setFont(new Font("微軟正黑體", Font.BOLD, 100));
+			g.drawString("Time +5", Global.XstartPoint - 2 * Global.UNIT_X, 360);
+			Global.log("paint_skill=" + rolePath);
+			break;
+		case 2:// basketball skill
+			if (countDown <= (skillCDtime[skill] - skillCDtime[skill] / 3 * 1)) {
+				// paint center star
+				g.drawImage(imgs.get(STAR).getImg(), listOfBalls.get(3).get(2).rect().left(),
+						listOfBalls.get(3).get(2).rect().top(), null);
+			}
+			if (countDown <= (skillCDtime[skill] - skillCDtime[skill] / 3 * 2)) {
+				// paint external star
+				g.drawImage(imgs.get(STAR).getImg(), listOfBalls.get(2).get(2).rect().left(),
+						listOfBalls.get(2).get(2).rect().top(), null);
+				g.drawImage(imgs.get(STAR).getImg(), listOfBalls.get(2).get(3).rect().left(),
+						listOfBalls.get(2).get(3).rect().top(), null);
+				g.drawImage(imgs.get(STAR).getImg(), listOfBalls.get(3).get(1).rect().left(),
+						listOfBalls.get(3).get(1).rect().top(), null);
+				g.drawImage(imgs.get(STAR).getImg(), listOfBalls.get(3).get(3).rect().left(),
+						listOfBalls.get(3).get(3).rect().top(), null);
+				g.drawImage(imgs.get(STAR).getImg(), listOfBalls.get(4).get(2).rect().left(),
+						listOfBalls.get(4).get(2).rect().top(), null);
+				g.drawImage(imgs.get(STAR).getImg(), listOfBalls.get(4).get(3).rect().left(),
+						listOfBalls.get(4).get(3).rect().top(), null);
+			}
+			break;
+		case 3:// CHOSE_BADMINTON
+				g.setColor(Color.RED);
+				g.setFont(new Font("微軟正黑體", Font.BOLD, 100));
+				g.drawString("Score X 2", Global.XstartPoint - 2 * Global.UNIT_X, 360);
+				Global.log("paint_skill=" + rolePath);
+			break;
+		case 4:// baseball skill
+
+			if (countDown <= (skillCDtime[skill] - skillCDtime[skill] / 3 * 1)) {
+				// paint center row star
+				for (int i = 0; i < listOfBalls.size(); i++) {
+					g.drawImage(imgs.get(STAR).getImg(), listOfBalls.get(i).get(4).rect().left(),
+							listOfBalls.get(i).get(4).rect().top(), null);
+				}
+			}
+			if (countDown <= (skillCDtime[skill] - skillCDtime[skill] / 3 * 2)) {
+				// paint center column star
+				for (int i = 0; i < listOfBalls.get(3).size(); i++) {
+					if (i == 4) {
+						continue;
+					}
+					g.drawImage(imgs.get(STAR).getImg(), listOfBalls.get(3).get(i).rect().left(),
+							listOfBalls.get(3).get(i).rect().top(), null);
+				}
+			}
 //			Global.log("paint_skill=" + rolePath);
 			break;
-		case 2:
-//			Global.log("paint_skill=" + rolePath);
-			break;
-		case 3:
-//			Global.log("paint_skill=" + rolePath);
-			break;
-		case 4:
-//			Global.log("paint_skill=" + rolePath);
-			break;
-		case 5:
+		case 5:// volleyball skill
+			if (countDown <= (skillCDtime[skill] - skillCDtime[skill] / 4 * 1)) {
+				// paint random star1
+			}
+			if (countDown <= (skillCDtime[skill] - skillCDtime[skill] / 4 * 2)) {
+				// paint random star2
+			}
+			if (countDown <= (skillCDtime[skill] - skillCDtime[skill] / 4 * 3)) {
+				// paint random star3
+			}
 //			Global.log("paint_skill=" + rolePath);
 			break;
 		default:
@@ -481,16 +552,16 @@ public class GameStartScene extends Scene {
 		if (timeUpStart) {// 時間到時
 			for (int i = 0; i < 10; i++) {
 				// score panel
-				g.drawImage(imgs.get(22).getImg(), (int) (0.19 * Global.ADJ_X + i * 28 + this.digsMove),
+				g.drawImage(imgs.get(EIGHT_D_GRAY).getImg(), (int) (0.19 * Global.ADJ_X + i * 28 + this.digsMove),
 						(int) (0.43 * Global.ADJ_Y), (int) (46 * 0.6f), (int) (70 * 0.6f), null);
 
 				// coin panel
-				g.drawImage(imgs.get(22).getImg(),
+				g.drawImage(imgs.get(EIGHT_D_GRAY).getImg(),
 						(int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20 + this.digsMove),
 						(int) (Global.SCREEN_Y * 0.577 * Global.ADJ), (int) (46 * 0.45f), (int) (70 * 0.45f), null);
 
 				// exp panel
-				g.drawImage(imgs.get(22).getImg(),
+				g.drawImage(imgs.get(EIGHT_D_GRAY).getImg(),
 						(int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20 + this.digsMove),
 						(int) (Global.SCREEN_Y * 0.679 * Global.ADJ), (int) (46 * 0.45f), (int) (70 * 0.45f), null);
 
@@ -502,15 +573,15 @@ public class GameStartScene extends Scene {
 				g.drawImage(numbers.get(tens).getImg(), 78, 38, null);// 十位數
 
 				// score panel
-				g.drawImage(imgs.get(22).getImg(), (int) (0.19 * Global.ADJ_X + i * 28), (int) (0.43 * Global.ADJ_Y),
-						(int) (46 * 0.6f), (int) (70 * 0.6f), null);
+				g.drawImage(imgs.get(EIGHT_D_GRAY).getImg(), (int) (0.19 * Global.ADJ_X + i * 28),
+						(int) (0.43 * Global.ADJ_Y), (int) (46 * 0.6f), (int) (70 * 0.6f), null);
 
 				// coin panel
-				g.drawImage(imgs.get(22).getImg(), (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
+				g.drawImage(imgs.get(EIGHT_D_GRAY).getImg(), (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
 						(int) (Global.SCREEN_Y * 0.577 * Global.ADJ), (int) (46 * 0.45f), (int) (70 * 0.45f), null);
 
 				// exp panel
-				g.drawImage(imgs.get(22).getImg(), (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
+				g.drawImage(imgs.get(EIGHT_D_GRAY).getImg(), (int) (Global.SCREEN_X * 0.255 * Global.ADJ + i * 20),
 						(int) (Global.SCREEN_Y * 0.679 * Global.ADJ), (int) (46 * 0.45f), (int) (70 * 0.45f), null);
 
 			}
@@ -785,33 +856,32 @@ public class GameStartScene extends Scene {
 	private boolean skillTrig() {// 技能條滿時發動
 		preCountDown = 30;
 		switch (this.rolePath) {
+		case SMALL_TSAI:// Tsai-cheerball
+			this.skill = 1;
+			this.countDownActive = skillCDtime[skill];
+			skillLevel = 0;
+//			Global.log("skillTrig()_tsai");
+			break;
 		case SMALL_ZHANG:// Zhang-baseketball
 			skillLevel = 0;
 			this.skill = 2;
-			this.countDown = 200;
-			break;
-		case SMALL_WANG:// Wang-volleyball
-			skillLevel = 0;
-			this.skill = 5;
-			this.countDown = 5;
-			break;
-		case SMALL_TSAI:// Tsai-cheerball
-			skillLevel = 0;
-			this.skill = 1;
-			this.countDown = 5;
+			this.countDown = skillCDtime[skill];
 			break;
 		case SMALL_SHU:// Shu-shuttlecock
 			skillLevel = 0;
 			this.skill = 3;
-			this.countDown = 5;
+			this.countDownActive = skillCDtime[skill];
 			break;
 		case SMALL_ZHOU:// Zhou-baseball
-
 			skillLevel = 0;
 			this.skill = 4;
-			this.countDown = 200;
-			skillLinkBalls.clear();
+			this.countDown = skillCDtime[skill];
+			break;
 
+		case SMALL_WANG:// Wang-volleyball
+			skillLevel = 0;
+			this.skill = 5;
+			this.countDown = skillCDtime[skill];
 			break;
 		}
 		Global.log("Skill Trig");
