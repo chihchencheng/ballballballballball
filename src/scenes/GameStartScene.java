@@ -369,8 +369,8 @@ public class GameStartScene extends Scene {
 			break;
 		case 3:// CHOSE_BADMINTON
 			if (countDownActive == skillCDtime[skill]) {
-					Global.log("time: "+this.time);
-					this.totalScore += this.score * 1.4;
+				Global.log("time: " + this.time);
+				this.totalScore += this.score * 1.4;
 			}
 			// System.out.println("update()_skill "+skill);
 			break;
@@ -380,7 +380,7 @@ public class GameStartScene extends Scene {
 				for (int i = 0; i < listOfBalls.size(); i++) {
 					listOfBalls.get(i).remove(4);
 				}
-				for (int i = 0; i < listOfBalls.get(3).size(); i++) {
+				for (int i = 0; i < 6; i++) {
 					if (i == 4) {
 						continue;
 					}
@@ -391,13 +391,8 @@ public class GameStartScene extends Scene {
 			break;
 		case 5:// CHOSE_VOLLEYBALL
 			if (countDown == 1) {
-				for (int i = 0; i < 10; i++) {
-					int c = (int) (Math.random() * listOfBalls.size());
-					int r = (int) (Math.random() * listOfBalls.get(0).size());
-					listOfBalls.get(c).remove(r);
-				}
+				listOfBalls.get(2).remove(1);
 			}
-			// System.out.println("update()_skill "+skill);
 			break;
 		default:
 			break;
@@ -503,10 +498,15 @@ public class GameStartScene extends Scene {
 			}
 			break;
 		case 3:// CHOSE_BADMINTON
-				g.setColor(Color.RED);
-				g.setFont(new Font("微軟正黑體", Font.BOLD, 100));
-				g.drawString("Score X 2", Global.XstartPoint - 2 * Global.UNIT_X, 360);
-				Global.log("paint_skill=" + rolePath);
+			g.setColor(Color.RED);
+			g.setFont(new Font("微軟正黑體", Font.BOLD, 40));
+			g.drawString(" X 2", 420, (int) (0.43 * Global.ADJ_Y) - 20);
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setColor(Color.RED);
+			g2.setStroke(new BasicStroke(5));
+			g.drawRect(315, (int) (0.43 * Global.ADJ_Y) - 60, 100, 40);
+			g2.setColor(Color.BLACK);
+			Global.log("paint_skill=" + rolePath);
 			break;
 		case 4:// baseball skill
 
@@ -532,12 +532,24 @@ public class GameStartScene extends Scene {
 		case 5:// volleyball skill
 			if (countDown <= (skillCDtime[skill] - skillCDtime[skill] / 4 * 1)) {
 				// paint random star1
+				for(int i=0;i<Global.ROW;i++) {
+					g.drawImage(imgs.get(STAR).getImg(), listOfBalls.get(2).get(i).rect().left(),
+							listOfBalls.get(2).get(i).rect().top(), null);
+				}
 			}
 			if (countDown <= (skillCDtime[skill] - skillCDtime[skill] / 4 * 2)) {
 				// paint random star2
+				for(int i=0;i<Global.ROW;i++) {
+					g.drawImage(imgs.get(STAR).getImg(), listOfBalls.get(3).get(i).rect().left(),
+							listOfBalls.get(3).get(i).rect().top(), null);
+				}
 			}
 			if (countDown <= (skillCDtime[skill] - skillCDtime[skill] / 4 * 3)) {
 				// paint random star3
+				for(int i=0;i<Global.ROW;i++) {
+					g.drawImage(imgs.get(STAR).getImg(), listOfBalls.get(4).get(i).rect().left(),
+							listOfBalls.get(4).get(i).rect().top(), null);
+				}
 			}
 //			Global.log("paint_skill=" + rolePath);
 			break;
@@ -837,15 +849,15 @@ public class GameStartScene extends Scene {
 			if (skillLevel >= 5) {
 				return true;
 			}
-		case CHOSE_BADMINTON:
+		case SMALL_SHU:
 			if (skillLevel >= 5) {
 				return true;
 			}
-		case CHOSE_BASEBALL:
+		case SMALL_ZHOU:
 			if (skillLevel >= 5) {
 				return true;
 			}
-		case CHOSE_VOLLEYBALL:
+		case SMALL_WANG:
 			if (skillLevel >= 5) {
 				return true;
 			}
