@@ -93,12 +93,12 @@ public abstract class GameObject {
 
     public void importPic(String imgPath) {
         imgs.add(new KeyPair(imgPath));
-        System.out.println(nowImg.imgPath+"追加圖片："+imgs.get(imgs.size()-1).imgPath);
+//        System.out.println(nowImg.imgPath+"追加圖片："+imgs.get(imgs.size()-1).imgPath);
     }
 
     public void switchNowImage(int i) {
         if (i < 0 || i >= imgs.size()) {
-            System.out.println("switchNowImage " + i + " 超出索引範圍");//test
+//            System.out.println("switchNowImage " + i + " 超出索引範圍");//test
         } else {
             nowImg = imgs.get(i);
         }
